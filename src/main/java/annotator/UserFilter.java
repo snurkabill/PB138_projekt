@@ -24,36 +24,21 @@ public class UserFilter implements Filter {
             throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
+        HttpSession session = request.getSession();
+        String path = request.getServletPath();
 
-        String auth = request.getHeader("Authorization");
-        if (auth == null) {
-            response401(response);
-            return;
-        }
-
-        String[] creds = parseAuthHeader(auth);
-        String username = creds[0];
-        String password = creds[1];
-
-        /* here goes check with users in mongoDB */
-        if (username.equals("admin") && password.equals("admin")) {
-            HttpSession session = request.getSession();
-            session.setAttribute("authenticatedUser", username);
+        System.err.println("filter " + path);
+        if (path.equals("/index.jsp") || path.equals("/Login")) {
             chain.doFilter(request, response);
-        } else {
-            response401(response);
             return;
         }
-    }
 
-    private String[] parseAuthHeader(String auth) {
-        return new String(DatatypeConverter.parseBase64Binary(auth.split(" ")[1])).split(":", 2);
-    }
+        if (session.getAttribute("authenticatedUser") == null) {
+            response.sendRedirect("index.jsp");
+            return;
+        }
 
-    private void response401(HttpServletResponse response) throws IOException {
-        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        response.setHeader("WWW-Authenticate", "Basic realm=\"Annotator\"");
-        response.getWriter().println("<html><body><h1>401 Unauthorized</h1></body></html>");
+        chain.doFilter(request, response);
     }
 
     @Override
