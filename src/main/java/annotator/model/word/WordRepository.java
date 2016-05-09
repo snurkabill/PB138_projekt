@@ -18,7 +18,7 @@ public class WordRepository extends AbstractRepository {
             throw new WordNotFoundException(word);
         }
         String typeId = document.getString("type_id");
-        if(!typeExists(typeId)) {
+        if(!typeIdExists(typeId)) {
             throw new TypeNotFoundException("Word: " + word + " has no-existing typeId: " + typeId);
         }
         return new Word(

@@ -24,7 +24,7 @@ public class PackageRepository extends AbstractRepository {
         }
 
         String typeId = document.getString("type_id");
-        if(!typeExists(typeId)) {
+        if(!typeIdExists(typeId)) {
             throw new TypeNotFoundException("Package: " + pack + " has no-existing typeId: " + typeId);
         }
 
