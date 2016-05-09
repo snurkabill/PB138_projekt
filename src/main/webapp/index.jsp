@@ -50,9 +50,9 @@
             <div class="masthead clearfix">
                 <div class="well well-spec navbar navbar-inverse">
                     <ul class="nav nav-tabs ">
-                        <li ><a  class="span2">Logged as ${sessionScope.authenticatedUser}</a></li>
+                        <li ><a  href="index.jsp" class="span2 active">Logged as ${sessionScope.authenticatedUser}</a></li>
                         <li><a href="Logout">Logout</a></li>
-                        <li class="active"><a href="#">Main</a></li>
+                        <li class=><a href="markWords.jsp">Mark Words</a></li>
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Statistics
                                 <span class="caret"></span></a>
@@ -69,16 +69,16 @@
                     </ul>
                 </div><!--/.well -->
             </div>
-            <div class="site-wrapper-body">
-                Packages
-                <ul class="nav nav-list package-nav">
-                    <li class="menuFont"><a class="menuFont" href="answerBlock.jsp">1.Package</a></li>
-                    <li class="menuFont"><a class="menuFont" href="#">2.Package</a></li>
-                    <li class="menuFont"><a class="menuFont" href="#">3.Package</a></li>
-                </ul>
+            <div class="site-wrapper-body span2">
+                <p>
+                    Vitajte v aplikácii na značkovanie slov, pre potreby následnej štúdie ich novodobého lexikálneho významu.
+                </p>
+                <p>
+                    Pre začatie značkovatia, kliknite na <b>Mark Words</b>, kde sa vám zobrazí Váš zoznam balíčkov, vrátane ich vyplnenia Vami. <br>
+                    Vyhodnotenie a prípadný export štatistík nájdete v sekcii <b>Statistics</b>. <br>
+                    Ak chcete vložiť nové balíčky slov vo formáte CSV (ine??), kliknite na <b>Upload Package</b>
+                </p>
             </div>
-
-
             <div class="mastfoot span2">
                 <p>Cover template for <a href="http://getbootstrap.com">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
             </div>

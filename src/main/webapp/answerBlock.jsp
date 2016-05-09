@@ -26,7 +26,7 @@
             <ul class=" nav nav-tabs ">
                 <li ><a  class="span2">Logged As </a></li>
                 <li><a href="#">LogOut</a></li>
-                <li class="active"><a href="#">Mark Words</a></li>
+                <li class="active"><a href="#">Marking</a></li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">Statistics
                         <span class="caret"></span></a>
@@ -38,7 +38,7 @@
                         <li><a href="#">Export statistic</a></li>
                     </ul>
                 </li>
-                <li><a href="#">Back</a></li>
+                <li><a href="markWords.jsp">Back</a></li>
 
             </ul>
         </div>
