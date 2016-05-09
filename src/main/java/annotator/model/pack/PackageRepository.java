@@ -30,7 +30,7 @@ public class PackageRepository extends AbstractRepository {
 
         List<String> wordList = new ArrayList<>();
 
-        throw new UnsupportedOperationException("Not supported yet :D ");
+        throw new UnsupportedOperationException("Not supported yet. Don't know how to get collection from JSON");
 //        document.get("words");
 //
 //        return new Package(
