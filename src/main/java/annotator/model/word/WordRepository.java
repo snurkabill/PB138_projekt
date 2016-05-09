@@ -1,16 +1,15 @@
 package annotator.model.word;
 
+import annotator.model.AbstractRepository;
 import annotator.model.type.TypeNotFoundException;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import org.bson.Document;
 
-public class WordRepository {
-
-    private MongoDatabase database;
+public class WordRepository extends AbstractRepository {
 
     public WordRepository(MongoDatabase database) {
-        this.database = database;
+        super(database);
     }
 
     public Word getWord(String word) throws TypeNotFoundException, WordNotFoundException {
@@ -18,15 +17,12 @@ public class WordRepository {
         if (document == null) {
             throw new WordNotFoundException(word);
         }
-        String wordTypeId = document.getString("type_id");
-        Document document2 = database.getCollection("types").find(Filters.eq("_id", wordTypeId)).first();
-
-        if (document2 == null) {
-            throw new TypeNotFoundException("Word: " + word + " has no-existing typeId: " + wordTypeId);
+        String typeId = document.getString("type_id");
+        if(!typeExists(typeId)) {
+            throw new TypeNotFoundException("Word: " + word + " has no-existing typeId: " + typeId);
         }
-
         return new Word(
-                wordTypeId,
+                typeId,
                 document.getString("word"),
                 document.getBoolean("isNoise")
         );

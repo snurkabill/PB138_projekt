@@ -6,7 +6,7 @@ import org.bson.Document;
 
 public class TypeRepository {
 
-    private MongoDatabase database;
+    private final MongoDatabase database;
 
     public TypeRepository(MongoDatabase database) {
         this.database = database;

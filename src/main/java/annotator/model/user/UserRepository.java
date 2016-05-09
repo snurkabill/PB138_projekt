@@ -1,15 +1,14 @@
 package annotator.model.user;
 
+import annotator.model.AbstractRepository;
 import org.bson.Document;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 
-public class UserRepository {
-
-    private MongoDatabase database;
+public class UserRepository extends AbstractRepository {
 
     public UserRepository(MongoDatabase database) {
-        this.database = database;
+        super(database);
     }
 
     public User getOneByEmail(String email) throws UserNotFoundException {
