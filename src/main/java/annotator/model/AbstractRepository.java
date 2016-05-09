@@ -19,9 +19,12 @@ public abstract class AbstractRepository {
         return database.getCollection("words").find(Filters.eq("_id", wordId)).first() != null;
     }
 
-    protected boolean userIdExists(String userid) {
+    protected boolean userIdExists(String userId) {
         return database.getCollection("users").find(Filters.eq("_id", userId)).first() != null;
     }
 
+    protected boolean packageIdExists(String packageId) {
+        return database.getCollection("packages").find(Filters.eq("_id", packageId)).first() != null;
+    }
 
 }
