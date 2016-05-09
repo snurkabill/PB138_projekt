@@ -2,8 +2,8 @@ package annotator.model.user;
 
 public class User {
 
-    private String email;
-    private String passwordHash;
+    private final String email;
+    private final String passwordHash;
 
     public User(String email, String passwordHash) {
         this.email = email;

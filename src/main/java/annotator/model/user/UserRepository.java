@@ -13,13 +13,13 @@ public class UserRepository {
     }
 
     public User getOneByEmail(String email) throws UserNotFoundException {
-        Document user = this.database.getCollection("users").find(Filters.eq("email", email)).first();
-        if (user == null) {
+        Document document = this.database.getCollection("users").find(Filters.eq("email", email)).first();
+        if (document == null) {
             throw new UserNotFoundException(email);
         }
         return new User(
-            user.getString("email"),
-            user.getString("passwordHash")
+            document.getString("email"),
+            document.getString("passwordHash")
         );
     }
 
