@@ -1,6 +1,5 @@
 package annotator.model.word;
 
-import annotator.model.type.Type;
 import annotator.model.type.TypeNotFoundException;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
@@ -19,16 +18,15 @@ public class WordRepository {
         if (document == null) {
             throw new WordNotFoundException(word);
         }
-        String wordType = document.getString("type_id");
-        Document document2 = database.getCollection("types").find(Filters.eq("_id", wordType)).first();
+        String wordTypeId = document.getString("type_id");
+        Document document2 = database.getCollection("types").find(Filters.eq("_id", wordTypeId)).first();
 
         if (document2 == null) {
-            throw new TypeNotFoundException("Word: " + word + " has no-existing type: " + wordType);
+            throw new TypeNotFoundException("Word: " + word + " has no-existing typeId: " + wordTypeId);
         }
 
         return new Word(
-                new Type(
-                        document2.getString("type")),
+                wordTypeId,
                 document.getString("word"),
                 document.getBoolean("isNoise")
         );
