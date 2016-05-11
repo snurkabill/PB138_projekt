@@ -52,7 +52,7 @@
             <ul class="nav nav-tabs ">
                 <li ><a href="index.jsp" class="span2">Logged as ${sessionScope.authenticatedUser}</a></li>
                 <li><a href="Logout">Logout</a></li>
-                <li class="active"><a href="markWords.jsp">Mark Words</a></li>
+                <li ><a href="markWords.jsp">Mark Words</a></li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">Statistics
                         <span class="caret"></span></a>
@@ -64,21 +64,18 @@
                         <li><a href="#">Export statistic</a></li>
                     </ul>
                 </li>
-                <li><a href="upload.jsp">Upload Package</a></li>
+                <li><a class="active" href="upload.jsp">Upload Package</a></li>
 
             </ul>
         </div><!--/.well -->
     </div>
     <div class="site-wrapper-body">
-        Packages
-        <ul class="nav nav-list package-nav">
-            <li class="menuFont"><a class="menuFont" href="answerBlock.jsp">1.Package</a></li>
-            <li class="menuFont"><a class="menuFont" href="#">2.Package</a></li>
-            <li class="menuFont"><a class="menuFont" href="#">3.Package</a></li>
-        </ul>
+        <p>Upload .csv file to parse as package</p>
+        <label class="btn btn-primary btn-default " for="my-file-selector">
+            <input id="my-file-selector" type="file" accept=".csv" style="border-bottom-left-radius: 10px" onload="return 5" onchange="$('#upload-file-info').html($(this).val());">
+        </label>
+        <span class='label label-info' id="upload-file-info"></span>
     </div>
-
-
     <div class="mastfoot span2">
         <p>Cover template for <a href="http://getbootstrap.com">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
     </div>

@@ -64,7 +64,7 @@
                                 <li><a href="#">Export statistic</a></li>
                             </ul>
                         </li>
-                        <li><a href="#">Upload Package</a></li>
+                        <li><a href="upload.jsp">Upload Package</a></li>
 
                     </ul>
                 </div><!--/.well -->
