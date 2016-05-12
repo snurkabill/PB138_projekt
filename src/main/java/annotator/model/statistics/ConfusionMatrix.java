@@ -1,8 +1,11 @@
 package annotator.model.statistics;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 import java.util.List;
 
-public class ConfusionMatrixStatistics {
+@XStreamAlias("ConfusionMatrix")
+public class ConfusionMatrix {
 
     private final Integer totalPopulation;
 
@@ -29,7 +32,7 @@ public class ConfusionMatrixStatistics {
     private final Double randomAgreementProbability;
     private final Double kappa;
 
-    public ConfusionMatrixStatistics(List<Boolean> predicted, List<Boolean> correct) {
+    public ConfusionMatrix(List<Boolean> predicted, List<Boolean> correct) {
         this.totalPopulation = predicted.size();
 
         Integer trueClassesCount = 0;
@@ -73,11 +76,11 @@ public class ConfusionMatrixStatistics {
         this.falsePositive = falsePositive;
         this.falseNegative = falseNegative;
 
-        this.trueAccuracy = ((double) this.trueClassesCount / this.truePositive) * 100;
-        this.falseAccuracy = ((double) this.falseClassesCount / this.trueNegative) * 100;
+        this.trueAccuracy = ((double) this.truePositive / this.trueClassesCount);
+        this.falseAccuracy = ((double) this.trueNegative / this.falseClassesCount);
 
-        this.predictedTrueAccuracy = ((double) this.predictedTrueClassesCount / this.truePositive) * 100;
-        this.predictedFalseAccuracy = ((double) this.predictedFalseClassesCount / this.falsePositive) * 100;
+        this.predictedTrueAccuracy = ((double) this.truePositive / this.predictedTrueClassesCount);
+        this.predictedFalseAccuracy = ((double) this.trueNegative / this.predictedFalseClassesCount);
 
         this.overallAccuracy = (this.truePositive + this.trueNegative) / (double) this.totalPopulation;
         this.averageAccuracy = (this.predictedTrueAccuracy + predictedFalseAccuracy) / 2.0;
@@ -85,8 +88,8 @@ public class ConfusionMatrixStatistics {
         this.meanClassificationAccuracy = (this.overallAccuracy + this.averageAccuracy) / 2.0;
 
         this.randomAgreementProbability = (
-                this.truePositive * this.predictedTrueClassesCount +
-                this.falsePositive * this.predictedFalseClassesCount)
+                this.trueClassesCount * this.predictedTrueClassesCount +
+                this.falseClassesCount * this.predictedFalseClassesCount)
                 / Math.pow(totalPopulation, 2.0);
 
         this.kappa = (this.overallAccuracy - randomAgreementProbability) / (1.0 - this.randomAgreementProbability);
