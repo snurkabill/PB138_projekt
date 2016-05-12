@@ -1,23 +1,24 @@
 package annotator.model.statistics;
 
+import annotator.model.vote.Vote;
+
+import java.util.List;
+
 public class PackageStatistics {
 
-    private final Long averagePackageDuration;
-    private final Long averageWordDurationInPackage;
+    private final Double averagePackageDuration;
     private final Double trueRatio;
 
-    public PackageStatistics(Long averagePackageDuration, Long averageWordDurationInPackage, Double trueRatio) {
-        this.averagePackageDuration = averagePackageDuration;
-        this.averageWordDurationInPackage = averageWordDurationInPackage;
-        this.trueRatio = trueRatio;
+    public PackageStatistics(List<Vote> voteList) {
+        this.averagePackageDuration = voteList.stream().mapToLong(Vote::getDuration).average().getAsDouble();
+        this.trueRatio = ((Long) voteList.stream()
+                    .filter(Vote::getBelongsToType)
+                    .count())
+                .doubleValue() / voteList.size();
     }
 
-    public Long getAveragePackageDuration() {
+    public Double getAveragePackageDuration() {
         return averagePackageDuration;
-    }
-
-    public Long getAverageWordDurationInPackage() {
-        return averageWordDurationInPackage;
     }
 
     public Double getTrueRatio() {
