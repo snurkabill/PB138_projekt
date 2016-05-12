@@ -1,3 +1,7 @@
+<%@ page import="annotator.model.activepackage.ActivePackage" %>
+<%@ page import="annotator.model.activepackage.ActivePackRepo" %>
+<%@ page import="annotator.ContextListener" %>
+<%@ page import="annotator.model.user.User" %>
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <html lang="en">
 <head>
@@ -57,9 +61,9 @@
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">Statistics
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li class="menuFont"><a href="#">1.Statistika</a></li>
-                        <li class="menuFont"><a href="#">2.Statistika</a></li>
-                        <li class="menuFont"><a href="#">3.Statistika</a></li>
+                        <li class="menuFont"><a href="#">Vote ratio</a></li>
+                        <li class="menuFont"><a href="#">Average word duration</a></li>
+                        <li class="menuFont"><a href="#">Cohen cappa</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="#">Export statistic</a></li>
                     </ul>
@@ -70,8 +74,14 @@
         </div><!--/.well -->
     </div>
     <div class="site-wrapper-body">
-        Packages
+        <p style="padding-top: 10%">Packages</p>
         <ul class="nav nav-list package-nav">
+            <%
+                ContextListener listener = new ContextListener();
+                User current = new User()
+                ActivePackRepo repositary = new ActivePackRepo(listener.getDatabase(),)
+            %>
+            %>
             <li class="menuFont"><a class="menuFont" href="answerBlock.jsp">1.Package</a></li>
             <li class="menuFont"><a class="menuFont" href="#">2.Package</a></li>
             <li class="menuFont"><a class="menuFont" href="#">3.Package</a></li>

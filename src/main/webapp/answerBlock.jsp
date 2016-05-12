@@ -31,9 +31,9 @@
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">Statistics
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li class="menuFont"><a href="#">1.Statistika</a></li>
-                        <li class="menuFont"><a href="#">2.Statistika</a></li>
-                        <li class="menuFont"><a href="#">3.Statistika</a></li>
+                        <li class="menuFont"><a href="#">Vote ratio</a></li>
+                        <li class="menuFont"><a href="#">Average word duration</a></li>
+                        <li class="menuFont"><a href="#">Cohen cappa</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="#">Export statistic</a></li>
                     </ul>
