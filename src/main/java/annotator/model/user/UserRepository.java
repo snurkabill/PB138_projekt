@@ -1,5 +1,6 @@
 package annotator.model.user;
 
+import com.mongodb.client.MongoCollection;
 import org.bson.Document;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
@@ -7,9 +8,11 @@ import com.mongodb.client.model.Filters;
 public class UserRepository {
 
     private MongoDatabase database;
+    MongoCollection users;
 
     public UserRepository(MongoDatabase database) {
         this.database = database;
+        users = database.getCollection("users");
     }
 
     public User getOneByEmail(String email) throws UserNotFoundException {
@@ -22,5 +25,4 @@ public class UserRepository {
             user.getString("passwordHash")
         );
     }
-
 }
