@@ -1,5 +1,10 @@
 package annotator.server;
 
+import annotator.model.user.User;
+import annotator.model.user.UserNotFoundException;
+import annotator.model.user.UserRepository;
+import com.mongodb.client.MongoDatabase;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,13 +25,19 @@ public class Login extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        if (username.equals("admin") && password.equals("admin")) {
-            /* Login successful */
+        UserRepository userRepository = new UserRepository(
+            (MongoDatabase) this.getServletContext().getAttribute("database")
+        );
+
+        try {
+            User user = userRepository.getOneByEmail(username);
+            // todo: check password
+
             HttpSession session = request.getSession();
             session.setAttribute("authenticatedUser", username);
             response.sendRedirect("index.jsp");
-        } else {
-            /* Login failed */
+
+        } catch (UserNotFoundException e) {
             request.setAttribute("message", "Invalid username/password");
             request.getRequestDispatcher("index.jsp").forward(request, response);
         }
