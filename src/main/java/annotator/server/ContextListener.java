@@ -14,18 +14,16 @@ public class ContextListener implements ServletContextListener {
     private MongoDatabase database;
 
     @Override
-    public void contextInitialized(ServletContextEvent ev) {
+    public void contextInitialized(ServletContextEvent event) {
         this.databaseClient = new MongoClient();
         this.database = this.databaseClient.getDatabase("annotator");
+
+        event.getServletContext().setAttribute("database", this.database);
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent ev) {
         this.databaseClient.close();
-    }
-
-    public MongoDatabase getDatabase() {
-        return this.database;
     }
 
 }
