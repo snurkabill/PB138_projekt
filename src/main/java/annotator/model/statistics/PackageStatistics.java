@@ -1,4 +1,4 @@
-package annotator.statistics;
+package annotator.model.statistics;
 
 public class PackageStatistics {
 
