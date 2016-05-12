@@ -13,13 +13,13 @@ public class Vote {
     private final Integer duration;
 
     public Vote(
-        String id,
-        String userId,
-        String wordId,
-        String typeId,
-        Boolean belongsToType,
-        Boolean voteBelongsToType,
-        Integer duration
+            String id,
+            String userId,
+            String wordId,
+            String typeId,
+            Boolean belongsToType,
+            Boolean voteBelongsToType,
+            Integer duration
     ) {
         this.id = id;
         this.userId = userId;
@@ -32,13 +32,13 @@ public class Vote {
 
     public Vote(Document document) {
         this(
-            document.getObjectId("_id").toString(),
-            document.getString("user_id"),
-            document.getString("word_id"),
-            document.getString("type_id"),
-            document.getBoolean("belongs_to_type"),
-            document.getBoolean("vote_belongs_to_type"),
-            document.getInteger("duration")
+                document.getObjectId("_id").toString(),
+                document.getString("user_id"),
+                document.getString("word_id"),
+                document.getString("type_id"),
+                document.getBoolean("belongs_to_type"),
+                document.getBoolean("vote_belongs_to_type"),
+                document.getInteger("duration")
         );
     }
 
