@@ -1,9 +1,11 @@
 package annotator.model.statistics;
 
 import annotator.model.vote.Vote;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 import java.util.List;
 
+@XStreamAlias("WordStatistics")
 public class WordStatistics {
 
     private final Double trueRatio;
