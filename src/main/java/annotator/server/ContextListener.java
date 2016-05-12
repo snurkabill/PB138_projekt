@@ -1,4 +1,4 @@
-package annotator;
+package annotator.server;
 
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
