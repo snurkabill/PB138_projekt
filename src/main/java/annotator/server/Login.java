@@ -35,7 +35,7 @@ public class Login extends Controller {
             this.session.setAttribute("authenticatedUser", username);
             response.sendRedirect("index.jsp");
 
-        } catch (UserNotFoundException | InvalidPasswordException e) {
+        } catch (UserNotFoundException | InvalidPasswordException | IllegalArgumentException e) {
             this.template.set("message", "Invalid username/password");
             this.render("index.jsp", request, response);
         }
