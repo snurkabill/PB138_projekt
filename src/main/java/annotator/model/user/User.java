@@ -7,17 +7,22 @@ import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
-import javax.print.Doc;
-
 public class User {
 
     private String id;
     private String email;
     private String passwordHash;
 
+    User(String email, String passwordHash ) {
+        this.id = null;
+        this.email = email;
+        this.passwordHash = passwordHash;
+    }
 
-    public User(String email, String passwordHash) {
-        id = "1";
+    User(String email, String passwordHash, String id ) throws UserNotFoundException {
+        if (id == null)
+            throw new UserNotFoundException("User : id not found");
+        this.id = id;
         this.email = email;
         this.passwordHash = passwordHash;
     }

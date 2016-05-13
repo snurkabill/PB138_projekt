@@ -2,6 +2,7 @@ package annotator.server;
 
 import annotator.model.user.User;
 import annotator.model.user.UserCreateConflictException;
+import annotator.model.user.UserNotFoundException;
 import annotator.model.user.UserRepository;
 import com.mongodb.MongoWriteException;
 import com.mongodb.client.MongoDatabase;
@@ -39,7 +40,8 @@ public class CreateUser extends HttpServlet {
             session.setAttribute("authenticatedUser", username);
             response.sendRedirect("index.jsp");
 
-        } catch (UserCreateConflictException | MongoWriteException e) {
+        } catch (UserCreateConflictException | MongoWriteException | UserNotFoundException e) {
+            e.printStackTrace();
             request.setAttribute("message", "Username already exists");
             request.getRequestDispatcher("index.jsp").forward(request, response);
         }

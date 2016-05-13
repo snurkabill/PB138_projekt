@@ -16,7 +16,9 @@ public class ActivePackage {
     private final String packageId;
     private Integer progress;
 
-    public ActivePackage(String id, String userId, String packageId, Integer progress) {
+    ActivePackage(String id, String userId, String packageId, Integer progress) throws ActivePackageNotFoundException {
+        if (id == null)
+            throw new ActivePackageNotFoundException("ActivePackage: id not found");
         this.id = id;
         this.userId = userId;
         this.packageId = packageId;

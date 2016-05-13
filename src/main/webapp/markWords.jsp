@@ -51,23 +51,9 @@
     <div class="site-wrapper-body">
         <p style="padding-top: 10%">Packages</p>
         <ul class="nav nav-list package-nav">
-            <%
-                try {
-                String email = (String)session.getAttribute("authenticatedUser");
-                MongoDatabase database = (MongoDatabase)session.getServletContext().getAttribute("database");
-                User user = new User(email, database);
-                ActivePackageRepository repository = new ActivePackageRepository( database,user.getId());
-                Document pack = repository.getNext();
-                while (pack != null) {
 
-            %>
             <li class="menuFont"><a class="menuFont" href="answerBlock.jsp"> Answer </a></li>
-            <%
-                    }
-                }catch (Exception e ){
-                    e.printStackTrace();
-                }
-            %>
+
         </ul>
     </div>
 <div class="mastfoot span2">
