@@ -1,6 +1,8 @@
-<%@ page import="annotator.model.activepackage.ActivePackage" %>
-<%@ page import="annotator.model.activepackage.ActivePackRepo" %>
-<%@ page import="annotator.ContextListener" %>
+<%@ page import="annotator.model.user.UserRepository" %>
+<%@ page import="com.mongodb.client.MongoDatabase" %>
+<%@ page import="annotator.server.ContextListener" %>
+<%@ page import="annotator.model.activepackage.ActivePackageRepository" %>
+<%@ page import="org.bson.Document" %>
 <%@ page import="annotator.model.user.User" %>
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <html lang="en">
@@ -23,33 +25,6 @@
 </head>
 
 <body>
-
-<%
-    if (session.getAttribute("authenticatedUser") == null) {
-%>
-<div class="site-wrapper">
-    <div class="masthead clearfix">
-        <div class="well well-spec navbar navbar-inverse">
-            <ul class="nav nav-tabs ">
-                <li ><a  class="span2">Welcome, you need to be logged in </a></li>
-            </ul>
-        </div><!--/.well -->
-    </div>
-    <div class="site-wrapper-body span2">
-        <form action="Login" method="post">
-            Username: <input type="text" name="username"><br/>
-            Password: <input type="password" name="password"><br/>
-            <input type="submit" value="Login"/>
-        </form>${message}
-    </div>
-
-    <div class="mastfoot span2">
-        <p>Cover template for <a href="http://getbootstrap.com">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
-    </div>
-</div>
-<%
-} else {
-%>
 <div class="site-wrapper">
     <div class="masthead clearfix">
         <div class="well well-spec navbar navbar-inverse">
@@ -77,28 +52,28 @@
         <p style="padding-top: 10%">Packages</p>
         <ul class="nav nav-list package-nav">
             <%
-                ContextListener listener = new ContextListener();
-                User current = new User()
-                ActivePackRepo repositary = new ActivePackRepo(listener.getDatabase(),)
+                try {
+                String email = (String)session.getAttribute("authenticatedUser");
+                MongoDatabase database = (MongoDatabase)session.getServletContext().getAttribute("database");
+                User user = new User(email, database);
+                ActivePackageRepository repository = new ActivePackageRepository( database,user.getId());
+                Document pack = repository.getNext();
+                while (pack != null) {
+
             %>
+            <li class="menuFont"><a class="menuFont" href="answerBlock.jsp"> Answer </a></li>
+            <%
+                    }
+                }catch (Exception e ){
+                    e.printStackTrace();
+                }
             %>
-            <li class="menuFont"><a class="menuFont" href="answerBlock.jsp">1.Package</a></li>
-            <li class="menuFont"><a class="menuFont" href="#">2.Package</a></li>
-            <li class="menuFont"><a class="menuFont" href="#">3.Package</a></li>
         </ul>
     </div>
-
-
-    <div class="mastfoot span2">
-        <p>Cover template for <a href="http://getbootstrap.com">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
-    </div>
-
+<div class="mastfoot span2">
+    <p>Cover template for <a href="http://getbootstrap.com">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
 </div>
-
-<%
-    }
-%>
-
+</div>
 
 
 <!-- Bootstrap core JavaScript
