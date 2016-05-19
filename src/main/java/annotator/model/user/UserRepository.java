@@ -2,16 +2,13 @@ package annotator.model.user;
 
 import annotator.model.AbstractRepository;
 import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoIterable;
-import org.bson.Document;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import org.bson.Document;
 import org.bson.types.ObjectId;
 
-public class UserRepository extends AbstractRepository{
+public class UserRepository extends AbstractRepository {
 
     private MongoCollection<Document> users;
 
@@ -28,7 +25,7 @@ public class UserRepository extends AbstractRepository{
         return convertTo(users.find(new BasicDBObject("_id", new ObjectId(id))).first());
     }
 
-    public static User convertTo(Document document) throws UserNotFoundException {
+    private static User convertTo(Document document) throws UserNotFoundException {
         return new User(document.getString("email"), document.getString("passwordHash"), document.get("_id").toString());
     }
 
@@ -39,6 +36,4 @@ public class UserRepository extends AbstractRepository{
         users.insertOne(newUser);
         return convertTo(newUser);
     }
-
-
 }

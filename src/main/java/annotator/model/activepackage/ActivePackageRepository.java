@@ -3,15 +3,16 @@ package annotator.model.activepackage;
 import annotator.model.AbstractRepository;
 import annotator.model.pack.Package;
 import com.mongodb.BasicDBObject;
-import com.mongodb.client.*;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
-import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 public class ActivePackageRepository extends AbstractRepository {
 
@@ -28,11 +29,11 @@ public class ActivePackageRepository extends AbstractRepository {
     }
 
     public MongoCursor<Document> getActivePackagesIterator() {
-        return  activePackages.find().iterator();
+        return activePackages.find().iterator();
     }
 
     MongoCursor<Document> getActivePackagesIterator(String user_id) {
-        return  activePackages.find(Filters.eq("user_id", user_id)).iterator();
+        return activePackages.find(Filters.eq("user_id", user_id)).iterator();
     }
 
     private static ActivePackage convertTo(Document document) throws ActivePackageNotFoundException {
@@ -42,12 +43,22 @@ public class ActivePackageRepository extends AbstractRepository {
 
     public Map<String, ActivePackage> getMapOfActivePackages(String user_id) throws ActivePackageNotFoundException {
         MongoCursor<Document> activePackages = this.getActivePackagesIterator(user_id);
-        Map<String, ActivePackage> mapOfActivePackages = new TreeMap<>();
+        Map<String, ActivePackage> mapOfActivePackages = new HashMap<>();
         while (activePackages.hasNext()) {
             ActivePackage add = ActivePackageRepository.convertTo(activePackages.next());
-            mapOfActivePackages.put(add.getId(), add);
+            mapOfActivePackages.put(add.getPackageId(), add);
         }
         return Collections.unmodifiableMap(mapOfActivePackages);
     }
+
+    public ActivePackage makeNew(Package pack, String userId) throws ActivePackageNotFoundException {
+        Document newPack = new Document("_id", new ObjectId())
+                .append("user_id", userId)
+                .append("package_id", pack.getId())
+                .append("progress", 0);
+        activePackages.insertOne(newPack);
+        return convertTo(newPack);
+    }
+
 
 }

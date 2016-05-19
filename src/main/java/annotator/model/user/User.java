@@ -13,13 +13,13 @@ public class User {
     private String email;
     private String passwordHash;
 
-    User(String email, String passwordHash ) {
+    User(String email, String passwordHash) {
         this.id = null;
         this.email = email;
         this.passwordHash = passwordHash;
     }
 
-    User(String email, String passwordHash, String id ) throws UserNotFoundException {
+    User(String email, String passwordHash, String id) throws UserNotFoundException {
         if (id == null)
             throw new UserNotFoundException("User : id not found");
         this.id = id;
@@ -27,7 +27,7 @@ public class User {
         this.passwordHash = passwordHash;
     }
 
-    public User(MongoDatabase database,String id) {
+    public User(MongoDatabase database, String id) {
         this.id = id;
         BasicDBObject idObject = new BasicDBObject();
         idObject.put("_id", id);
@@ -36,7 +36,7 @@ public class User {
         email = user.getString("email");
     }
 
-    public User(String email,MongoDatabase database) {
+    public User(String email, MongoDatabase database) {
         Document user = database.getCollection("users").find(Filters.eq("email", email)).first();
         passwordHash = user.getString("passwordHash");
         this.email = user.getString("email");

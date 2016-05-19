@@ -1,16 +1,16 @@
 package annotator.model.pack;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class Package {
 
     private final String id;
     private final String typeId;
     private final Integer wordCount;
-    private final List<String> wordList;
+    private final ArrayList<String> wordList;
 
 
-    public Package(String id,String typeId, Integer wordCount, List<String> wordList) throws PackageNotFoundException {
+    public Package(String id, String typeId, Integer wordCount, ArrayList<String> wordList) throws PackageNotFoundException {
         if (id == null)
             throw new PackageNotFoundException("Package: id not found");
         this.id = id;
@@ -31,7 +31,7 @@ public class Package {
         return wordCount;
     }
 
-    public List<String> getWordList() {
+    public ArrayList<String> getWordList() {
         return wordList;
     }
 }

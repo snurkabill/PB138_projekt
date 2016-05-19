@@ -1,15 +1,15 @@
 package annotator.model.vote;
 
 public class Vote {
-
     private final String id;
     private final String userId;
     private final String wordId;
     private final String typeId;
     private final Boolean belongsToType;
+    private final Boolean voteBelongsToType;
     private final Integer duration;
 
-    public Vote(String id, String userId, String wordId, String typeId, Boolean belongsToType, Integer duration) throws VoteNotFoundException {
+    public Vote(String id, String userId, String wordId, String typeId, Boolean belongsToType, Boolean voteBelongsToType, Integer duration) throws VoteNotFoundException {
         if (id == null)
             throw new VoteNotFoundException("Vote: id not found");
         this.id = id;
@@ -17,6 +17,7 @@ public class Vote {
         this.wordId = wordId;
         this.typeId = typeId;
         this.belongsToType = belongsToType;
+        this.voteBelongsToType = voteBelongsToType;
         this.duration = duration;
     }
 
@@ -36,7 +37,11 @@ public class Vote {
         return typeId;
     }
 
-    public Boolean isBelongsToType() {
+    public Boolean getVoteBelongsToType() {
+        return voteBelongsToType;
+    }
+
+    public Boolean getBelongsToType() {
         return belongsToType;
     }
 

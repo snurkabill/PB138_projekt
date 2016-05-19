@@ -30,17 +30,19 @@ public class ActivePackage {
                 .getCollection("activePackages")
                 .find(Filters.eq("_id", id))
                 .first();
-        if(document == null) {
+        if (document == null) {
             throw new ActivePackageNotFoundException(id);
         }
         this.id = id;
-        userId = document.getString("user_id");
-        packageId = document.getString("package_id");
-        progress = document.getInteger("progress");
+        this.userId = document.getString("user_id");
+        this.packageId = document.getString("package_id");
+        this.progress = document.getInteger("progress");
 
     }
 
-    public String getId() { return id; }
+    public String getId() {
+        return id;
+    }
 
     public String getUserId() {
         return userId;
@@ -55,12 +57,27 @@ public class ActivePackage {
     }
 
 
-    public boolean updateProgress(MongoDatabase database, Integer progress) {
+    public boolean increaseProgress(MongoDatabase database) {
+        this.progress++;
         UpdateResult result = database.getCollection("activePackages").updateOne(
-                new BasicDBObject("_id", new ObjectId(id)),
-                new BasicDBObject("$set", new BasicDBObject("progress", progress)));
-        this.progress = progress;
+                new BasicDBObject("_id", new ObjectId(this.id)),
+                new BasicDBObject("$set", new BasicDBObject("progress", this.progress)));
         return result.wasAcknowledged();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ActivePackage that = (ActivePackage) o;
+
+        return id.equals(that.id);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 }
