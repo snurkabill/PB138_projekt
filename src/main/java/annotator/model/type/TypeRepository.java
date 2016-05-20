@@ -14,14 +14,16 @@ public class TypeRepository extends AbstractRepository {
     }
 
     public Type getType(String typeId) throws TypeNotFoundException {
-        return convertTo(this.findOneById(
+        Document typeDocument = this.findOneById(
             this.types,
             typeId
-        ));
-    }
+        );
 
-    public static Type convertTo(Document document) throws TypeNotFoundException {
-        return new Type(document.get("_id").toString(), document.getString("type"));
+        if (typeDocument == null) {
+            throw new TypeNotFoundException(typeId);
+        }
+
+        return new Type(typeDocument);
     }
 }
 
