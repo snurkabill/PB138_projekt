@@ -6,9 +6,7 @@ import annotator.model.activepackage.ActivePackageNotFoundException;
 import annotator.model.type.TypeNotFoundException;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.model.Filters;
 import org.bson.Document;
-import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,9 +22,10 @@ public class PackageRepository extends AbstractRepository {
     }
 
     public Package getPackage(String package_id) throws TypeNotFoundException, PackageNotFoundException {
-        return convertTo(this.packages.find(
-            Filters.eq("_id", new ObjectId(package_id))
-        ).first());
+        return convertTo(this.findOneById(
+            this.packages,
+            package_id
+        ));
     }
 
     private static Package convertTo(Document document) throws PackageNotFoundException {

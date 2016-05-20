@@ -1,12 +1,11 @@
 package annotator.model.type;
 
+import annotator.model.AbstractRepository;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.model.Filters;
 import org.bson.Document;
-import org.bson.types.ObjectId;
 
-public class TypeRepository {
+public class TypeRepository extends AbstractRepository {
 
     private MongoCollection<Document> types;
 
@@ -16,9 +15,10 @@ public class TypeRepository {
 
 
     public Type getType(String type_id) throws TypeNotFoundException {
-        return convertTo(this.types.find(
-            Filters.eq("_id", new ObjectId(type_id))
-        ).first());
+        return convertTo(this.findOneById(
+            this.types,
+            type_id
+        ));
     }
 
     public static Type convertTo(Document document) throws TypeNotFoundException {

@@ -17,9 +17,10 @@ public class WordRepository extends AbstractRepository {
     }
 
     public Word getWord(String word_id) throws TypeNotFoundException, WordNotFoundException {
-        return convertTo(
-            this.words.find(Filters.eq("_id", new ObjectId(word_id))).first()
-        );
+        return convertTo(this.findOneById(
+            this.words,
+            word_id
+        ));
     }
 
     private static Word convertTo(Document document) throws WordNotFoundException {

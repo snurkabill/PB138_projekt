@@ -22,9 +22,10 @@ public class ActivePackageRepository extends AbstractRepository {
     }
 
     public ActivePackage getActivePackage(String activePackae_id) throws ActivePackageNotFoundException {
-        return convertTo(this.activePackages.find(
-            Filters.eq("_id", new ObjectId(activePackae_id))
-        ).first());
+        return convertTo(this.findOneById(
+            this.activePackages,
+            activePackae_id
+        ));
     }
 
     public MongoCursor<Document> getActivePackagesIterator(String user_id) {
