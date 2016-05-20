@@ -9,7 +9,6 @@ public class Package {
     private final Integer wordCount;
     private final ArrayList<String> wordList;
 
-
     public Package(String id, String typeId, Integer wordCount, ArrayList<String> wordList) throws PackageNotFoundException {
         if (id == null)
             throw new PackageNotFoundException("Package: id not found");

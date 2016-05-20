@@ -1,13 +1,9 @@
 package annotator.model.activepackage;
 
-
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.UpdateResult;
-import org.bson.Document;
 import org.bson.types.ObjectId;
-
 
 public class ActivePackage {
 
@@ -25,21 +21,6 @@ public class ActivePackage {
         this.progress = progress;
     }
 
-    public ActivePackage(MongoDatabase database, String id) throws ActivePackageNotFoundException {
-        Document document = database
-            .getCollection("activePackages")
-            .find(Filters.eq("_id", id))
-            .first();
-        if (document == null) {
-            throw new ActivePackageNotFoundException(id);
-        }
-        this.id = id;
-        this.userId = document.getString("user_id");
-        this.packageId = document.getString("package_id");
-        this.progress = document.getInteger("progress");
-
-    }
-
     public String getId() {
         return this.id;
     }
@@ -55,7 +36,6 @@ public class ActivePackage {
     public Integer getProgress() {
         return this.progress;
     }
-
 
     public boolean increaseProgress(MongoDatabase database) {
         this.progress++;

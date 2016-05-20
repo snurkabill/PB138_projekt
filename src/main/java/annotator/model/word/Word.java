@@ -1,6 +1,5 @@
 package annotator.model.word;
 
-
 public class Word {
 
     private final String id;

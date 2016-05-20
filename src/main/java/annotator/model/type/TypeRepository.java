@@ -13,7 +13,6 @@ public class TypeRepository extends AbstractRepository {
         this.types = database.getCollection("types");
     }
 
-
     public Type getType(String typeId) throws TypeNotFoundException {
         return convertTo(this.findOneById(
             this.types,
@@ -25,6 +24,4 @@ public class TypeRepository extends AbstractRepository {
         return new Type(document.get("_id").toString(), document.getString("type"));
     }
 }
-
-
 
