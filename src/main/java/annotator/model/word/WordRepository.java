@@ -13,7 +13,6 @@ public class WordRepository extends AbstractRepository {
     private MongoCollection<Document> words;
 
     public WordRepository(MongoDatabase database) {
-        super(database);
         this.words = database.getCollection("words");
     }
 

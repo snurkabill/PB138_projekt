@@ -20,7 +20,6 @@ public class PackageRepository extends AbstractRepository {
     private MongoCollection<Document> packages;
 
     public PackageRepository(MongoDatabase database) {
-        super(database);
         this.packages = database.getCollection("packages");
     }
 

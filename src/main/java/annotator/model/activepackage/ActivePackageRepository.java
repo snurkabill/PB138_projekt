@@ -18,7 +18,6 @@ public class ActivePackageRepository extends AbstractRepository {
     private MongoCollection<Document> activePackages;
 
     public ActivePackageRepository(MongoDatabase database) {
-        super(database);
         this.activePackages = database.getCollection("activePackages");
     }
 

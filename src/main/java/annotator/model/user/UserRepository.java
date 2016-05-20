@@ -12,7 +12,6 @@ public class UserRepository extends AbstractRepository {
     private MongoCollection<Document> users;
 
     public UserRepository(MongoDatabase database) {
-        super(database);
         this.users = database.getCollection("users");
     }
 

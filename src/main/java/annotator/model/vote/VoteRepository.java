@@ -12,7 +12,6 @@ public class VoteRepository extends AbstractRepository {
     private MongoCollection<Document> votes;
 
     public VoteRepository(MongoDatabase database) {
-        super(database);
         this.votes = database.getCollection("votes");
     }
 
