@@ -2,7 +2,6 @@ package annotator.model.activepackage;
 
 import annotator.model.AbstractRepository;
 import annotator.model.pack.Package;
-import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
@@ -25,7 +24,8 @@ public class ActivePackageRepository extends AbstractRepository {
 
     public ActivePackage getActivePackage(String activePackae_id) throws ActivePackageNotFoundException {
         return convertTo(this.activePackages.find(
-            new BasicDBObject("_id", new ObjectId(activePackae_id))).first());
+            Filters.eq("_id", new ObjectId(activePackae_id))
+        ).first());
     }
 
     public MongoCursor<Document> getActivePackagesIterator(String user_id) {
