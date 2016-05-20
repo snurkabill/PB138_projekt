@@ -14,11 +14,11 @@ public class WordRepository extends AbstractRepository {
 
     public WordRepository(MongoDatabase database) {
         super(database);
-        words = database.getCollection("words");
+        this.words = database.getCollection("words");
     }
 
     public Word getWord(String word_id) throws TypeNotFoundException, WordNotFoundException {
-        return convertTo(words.find(new BasicDBObject("_id", new ObjectId(word_id))).first());
+        return convertTo(this.words.find(new BasicDBObject("_id", new ObjectId(word_id))).first());
     }
 
     private static Word convertTo(Document document) throws WordNotFoundException {

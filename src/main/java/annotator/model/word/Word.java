@@ -27,19 +27,19 @@ public class Word {
     }
 
     public String getTypeId() {
-        return typeId;
+        return this.typeId;
     }
 
     public String getWord() {
-        return word;
+        return this.word;
     }
 
     public Boolean belongsToType() {
-        return belongsToType;
+        return this.belongsToType;
     }
 
     public String getId() {
-        return id;
+        return this.id;
     }
 
 }

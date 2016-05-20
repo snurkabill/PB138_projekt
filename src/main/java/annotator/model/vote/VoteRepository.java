@@ -13,7 +13,7 @@ public class VoteRepository extends AbstractRepository {
 
     public VoteRepository(MongoDatabase database) {
         super(database);
-        votes = database.getCollection("votes");
+        this.votes = database.getCollection("votes");
     }
 
     public void addVote(String userId, Word word, Boolean voteResult, Integer duration) {
@@ -24,7 +24,7 @@ public class VoteRepository extends AbstractRepository {
             .append("belongs_to_type", word.belongsToType())
             .append("vote_belongs_to_type", voteResult)
             .append("duration", duration);
-        votes.insertOne(newVote);
+        this.votes.insertOne(newVote);
     }
 
 }

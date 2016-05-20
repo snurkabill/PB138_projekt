@@ -41,19 +41,19 @@ public class ActivePackage {
     }
 
     public String getId() {
-        return id;
+        return this.id;
     }
 
     public String getUserId() {
-        return userId;
+        return this.userId;
     }
 
     public String getPackageId() {
-        return packageId;
+        return this.packageId;
     }
 
     public Integer getProgress() {
-        return progress;
+        return this.progress;
     }
 
 
@@ -68,16 +68,16 @@ public class ActivePackage {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || this.getClass() != o.getClass()) return false;
 
         ActivePackage that = (ActivePackage) o;
 
-        return id.equals(that.id);
+        return this.id.equals(that.id);
 
     }
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return this.id.hashCode();
     }
 }

@@ -21,11 +21,11 @@ public class PackageRepository extends AbstractRepository {
 
     public PackageRepository(MongoDatabase database) {
         super(database);
-        packages = database.getCollection("packages");
+        this.packages = database.getCollection("packages");
     }
 
     public Package getPackage(String package_id) throws TypeNotFoundException, PackageNotFoundException {
-        return convertTo(packages.find(
+        return convertTo(this.packages.find(
             new BasicDBObject("_id", new ObjectId(package_id))).first());
     }
 
@@ -42,7 +42,7 @@ public class PackageRepository extends AbstractRepository {
 
     public List<Package> getUnactive(String userId, Map<String, ActivePackage> activePackages) throws ActivePackageNotFoundException, PackageNotFoundException {
         ArrayList<Package> unactivePackages = new ArrayList<>();
-        for (Document document : packages.find()) {
+        for (Document document : this.packages.find()) {
             Package pack = convertTo(document);
             if (!activePackages.containsKey(pack.getId())) {
                 unactivePackages.add(pack);

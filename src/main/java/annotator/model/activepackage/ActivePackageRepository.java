@@ -20,16 +20,16 @@ public class ActivePackageRepository extends AbstractRepository {
 
     public ActivePackageRepository(MongoDatabase database) {
         super(database);
-        activePackages = database.getCollection("activePackages");
+        this.activePackages = database.getCollection("activePackages");
     }
 
     public ActivePackage getActivePackage(String activePackae_id) throws ActivePackageNotFoundException {
-        return convertTo(activePackages.find(
+        return convertTo(this.activePackages.find(
             new BasicDBObject("_id", new ObjectId(activePackae_id))).first());
     }
 
     MongoCursor<Document> getActivePackagesIterator(String user_id) {
-        return activePackages.find(Filters.eq("user_id", user_id)).iterator();
+        return this.activePackages.find(Filters.eq("user_id", user_id)).iterator();
     }
 
     private static ActivePackage convertTo(Document document) throws ActivePackageNotFoundException {
@@ -52,7 +52,7 @@ public class ActivePackageRepository extends AbstractRepository {
             .append("user_id", userId)
             .append("package_id", pack.getId())
             .append("progress", 0);
-        activePackages.insertOne(newPack);
+        this.activePackages.insertOne(newPack);
         return convertTo(newPack);
     }
 }

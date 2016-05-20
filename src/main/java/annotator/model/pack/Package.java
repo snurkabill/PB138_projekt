@@ -20,18 +20,18 @@ public class Package {
     }
 
     public String getId() {
-        return id;
+        return this.id;
     }
 
     public String getTypeId() {
-        return typeId;
+        return this.typeId;
     }
 
     public Integer getWordCount() {
-        return wordCount;
+        return this.wordCount;
     }
 
     public ArrayList<String> getWordList() {
-        return wordList;
+        return this.wordList;
     }
 }

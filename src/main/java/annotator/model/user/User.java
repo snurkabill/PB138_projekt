@@ -32,35 +32,35 @@ public class User {
         BasicDBObject idObject = new BasicDBObject();
         idObject.put("_id", id);
         Document user = database.getCollection("users").find(idObject).first();
-        passwordHash = user.getString("passwordHash");
-        email = user.getString("email");
+        this.passwordHash = user.getString("passwordHash");
+        this.email = user.getString("email");
     }
 
     public User(String email, MongoDatabase database) {
         Document user = database.getCollection("users").find(Filters.eq("email", email)).first();
-        passwordHash = user.getString("passwordHash");
+        this.passwordHash = user.getString("passwordHash");
         this.email = user.getString("email");
         this.id = user.get("_id").toString();
     }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public String getPasswordHash() {
-        return passwordHash;
+        return this.passwordHash;
     }
 
 
     public String getId() {
-        return id;
+        return this.id;
     }
 
     public boolean updateEmail(MongoDatabase database, String email) {
         UpdateResult result = database.getCollection("users").updateOne(
-            new BasicDBObject("_id", new ObjectId(id)),
+            new BasicDBObject("_id", new ObjectId(this.id)),
             new BasicDBObject("$set", new BasicDBObject("email", email)));
-        System.out.println(database.getCollection("users").find(new BasicDBObject("_id", new ObjectId(id))).first().getString("email"));
+        System.out.println(database.getCollection("users").find(new BasicDBObject("_id", new ObjectId(this.id))).first().getString("email"));
         this.email = email;
         return result.wasAcknowledged();
     }

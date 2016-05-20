@@ -13,11 +13,11 @@ public class UserRepository extends AbstractRepository {
 
     public UserRepository(MongoDatabase database) {
         super(database);
-        users = database.getCollection("users");
+        this.users = database.getCollection("users");
     }
 
     public User getOneByEmail(String email) throws UserNotFoundException {
-        return convertTo(users.find(Filters.eq("email", email)).first());
+        return convertTo(this.users.find(Filters.eq("email", email)).first());
     }
 
     private static User convertTo(Document document) throws UserNotFoundException {
@@ -28,7 +28,7 @@ public class UserRepository extends AbstractRepository {
         Document newUser = new Document("_id", new ObjectId())
             .append("email", email)
             .append("passwordHash", password);
-        users.insertOne(newUser);
+        this.users.insertOne(newUser);
         return convertTo(newUser);
     }
 }

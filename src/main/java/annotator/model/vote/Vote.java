@@ -22,30 +22,30 @@ public class Vote {
     }
 
     public String getId() {
-        return id;
+        return this.id;
     }
 
     public String getUserId() {
-        return userId;
+        return this.userId;
     }
 
     public String getWordId() {
-        return wordId;
+        return this.wordId;
     }
 
     public String getTypeId() {
-        return typeId;
+        return this.typeId;
     }
 
     public Boolean getVoteBelongsToType() {
-        return voteBelongsToType;
+        return this.voteBelongsToType;
     }
 
     public Boolean getBelongsToType() {
-        return belongsToType;
+        return this.belongsToType;
     }
 
     public Integer getDuration() {
-        return duration;
+        return this.duration;
     }
 }

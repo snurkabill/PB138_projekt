@@ -16,7 +16,7 @@ public class TypeRepository {
 
 
     public Type getType(String type_id) throws TypeNotFoundException {
-        return convertTo(types.find(new BasicDBObject("_id", new ObjectId(type_id))).first());
+        return convertTo(this.types.find(new BasicDBObject("_id", new ObjectId(type_id))).first());
     }
 
     public static Type convertTo(Document document) throws TypeNotFoundException {
