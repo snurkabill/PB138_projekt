@@ -1,12 +1,9 @@
 package annotator.model.word;
 
 import annotator.model.AbstractRepository;
-import annotator.model.type.TypeNotFoundException;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.model.Filters;
 import org.bson.Document;
-import org.bson.types.ObjectId;
 
 public class WordRepository extends AbstractRepository {
 
@@ -16,21 +13,16 @@ public class WordRepository extends AbstractRepository {
         this.words = database.getCollection("words");
     }
 
-    public Word getWord(String wordId) throws TypeNotFoundException, WordNotFoundException {
-        return convertTo(this.findOneById(
+    public Word getWord(String wordId) throws WordNotFoundException {
+        Document wordDocument = this.findOneById(
             this.words,
             wordId
-        ));
-    }
+        );
 
-    private static Word convertTo(Document document) throws WordNotFoundException {
-        if (document.containsValue("belongs_to_type")) {
-            return new Word(document.get("_id").toString(), document.getString("type_id"),
-                document.getString("word"), (Boolean) document.get("belongs_to_type"));
-        } else {
-            return new Word(document.get("_id").toString(), document.getString("type_id"),
-                document.getString("word"));
+        if (wordDocument == null) {
+            throw new WordNotFoundException(wordId);
         }
 
+        return new Word(wordDocument);
     }
 }

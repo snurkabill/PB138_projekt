@@ -1,5 +1,7 @@
 package annotator.model.word;
 
+import org.bson.Document;
+
 public class Word {
 
     private final String id;
@@ -7,22 +9,20 @@ public class Word {
     private final String word;
     private final Boolean belongsToType;
 
-    public Word(String id, String typeId, String word, boolean belongsToType) throws WordNotFoundException {
-        if (id == null)
-            throw new WordNotFoundException("Word: id not found");
+    public Word(String id, String typeId, String word, Boolean belongsToType) {
         this.id = id;
         this.typeId = typeId;
         this.word = word;
         this.belongsToType = belongsToType;
     }
 
-    public Word(String id, String typeId, String word) throws WordNotFoundException {
-        if (id == null)
-            throw new WordNotFoundException("Word: id not found");
-        this.id = id;
-        this.typeId = typeId;
-        this.word = word;
-        this.belongsToType = null;
+    public Word(Document document) {
+        this(
+            document.getObjectId("_id").toString(),
+            document.getString("type_id"),
+            document.getString("word"),
+            document.getBoolean("belongs_to_type")
+        );
     }
 
     public String getTypeId() {

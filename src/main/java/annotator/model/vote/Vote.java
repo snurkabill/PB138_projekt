@@ -1,6 +1,9 @@
 package annotator.model.vote;
 
+import org.bson.Document;
+
 public class Vote {
+
     private final String id;
     private final String userId;
     private final String wordId;
@@ -9,9 +12,15 @@ public class Vote {
     private final Boolean voteBelongsToType;
     private final Integer duration;
 
-    public Vote(String id, String userId, String wordId, String typeId, Boolean belongsToType, Boolean voteBelongsToType, Integer duration) throws VoteNotFoundException {
-        if (id == null)
-            throw new VoteNotFoundException("Vote: id not found");
+    public Vote(
+        String id,
+        String userId,
+        String wordId,
+        String typeId,
+        Boolean belongsToType,
+        Boolean voteBelongsToType,
+        Integer duration
+    ) {
         this.id = id;
         this.userId = userId;
         this.wordId = wordId;
@@ -19,6 +28,18 @@ public class Vote {
         this.belongsToType = belongsToType;
         this.voteBelongsToType = voteBelongsToType;
         this.duration = duration;
+    }
+
+    public Vote(Document document) {
+        this(
+            document.getObjectId("_id").toString(),
+            document.getString("user_id"),
+            document.getString("word_id"),
+            document.getString("type_id"),
+            document.getBoolean("belongs_to_type"),
+            document.getBoolean("vote_belongs_to_type"),
+            document.getInteger("duration")
+        );
     }
 
     public String getId() {
