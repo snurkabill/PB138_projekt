@@ -22,12 +22,12 @@ public class WordRepository extends AbstractRepository {
     }
 
     private static Word convertTo(Document document) throws WordNotFoundException {
-        if (document.containsValue("belongs_to_type")){
+        if (document.containsValue("belongs_to_type")) {
             return new Word(document.get("_id").toString(), document.getString("type_id"),
-                    document.getString("word"), (Boolean)document.get("belongs_to_type"));
-        }else {
+                document.getString("word"), (Boolean) document.get("belongs_to_type"));
+        } else {
             return new Word(document.get("_id").toString(), document.getString("type_id"),
-                    document.getString("word"));
+                document.getString("word"));
         }
 
     }

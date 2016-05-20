@@ -18,12 +18,12 @@ public class VoteRepository extends AbstractRepository {
 
     public void addVote(String userId, Word word, Boolean voteResult, Integer duration) {
         Document newVote = new Document("_id", new ObjectId())
-                .append("user_id", userId)
-                .append("word_id", word.getId())
-                .append("type_id", word.getTypeId())
-                .append("belongs_to_type", word.belongsToType())
-                .append("vote_belongs_to_type", voteResult)
-                .append("duration", duration);
+            .append("user_id", userId)
+            .append("word_id", word.getId())
+            .append("type_id", word.getTypeId())
+            .append("belongs_to_type", word.belongsToType())
+            .append("vote_belongs_to_type", voteResult)
+            .append("duration", duration);
         votes.insertOne(newVote);
     }
 

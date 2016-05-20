@@ -16,17 +16,17 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(urlPatterns={"/CreateUser"})
+@WebServlet(urlPatterns = {"/CreateUser"})
 public class CreateUser extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         String username = request.getParameter("username");
         String password = BCrypt.hashpw(request.getParameter("password"), BCrypt.gensalt());
 
         UserRepository userRepository = new UserRepository(
-                (MongoDatabase) this.getServletContext().getAttribute("database")
+            (MongoDatabase) this.getServletContext().getAttribute("database")
         );
 
         try {
@@ -36,7 +36,7 @@ public class CreateUser extends HttpServlet {
             }
 
             HttpSession session = request.getSession();
-            session.setAttribute("authentUser",user);
+            session.setAttribute("authentUser", user);
             session.setAttribute("authenticatedUser", username);
             response.sendRedirect("index.jsp");
 

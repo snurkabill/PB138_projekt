@@ -58,8 +58,8 @@ public class User {
 
     public boolean updateEmail(MongoDatabase database, String email) {
         UpdateResult result = database.getCollection("users").updateOne(
-                new BasicDBObject("_id", new ObjectId(id)),
-                new BasicDBObject("$set", new BasicDBObject("email", email)));
+            new BasicDBObject("_id", new ObjectId(id)),
+            new BasicDBObject("$set", new BasicDBObject("email", email)));
         System.out.println(database.getCollection("users").find(new BasicDBObject("_id", new ObjectId(id))).first().getString("email"));
         this.email = email;
         return result.wasAcknowledged();

@@ -25,7 +25,7 @@ public class ActivePackageRepository extends AbstractRepository {
 
     public ActivePackage getActivePackage(String activePackae_id) throws ActivePackageNotFoundException {
         return convertTo(activePackages.find(
-                new BasicDBObject("_id", new ObjectId(activePackae_id))).first());
+            new BasicDBObject("_id", new ObjectId(activePackae_id))).first());
     }
 
     MongoCursor<Document> getActivePackagesIterator(String user_id) {
@@ -34,7 +34,7 @@ public class ActivePackageRepository extends AbstractRepository {
 
     private static ActivePackage convertTo(Document document) throws ActivePackageNotFoundException {
         return new ActivePackage(document.get("_id").toString(), document.getString("user_id"),
-                document.getString("package_id"), document.getInteger("progress"));
+            document.getString("package_id"), document.getInteger("progress"));
     }
 
     public Map<String, ActivePackage> getMapOfActivePackages(String user_id) throws ActivePackageNotFoundException {
@@ -49,9 +49,9 @@ public class ActivePackageRepository extends AbstractRepository {
 
     public ActivePackage makeNew(Package pack, String userId) throws ActivePackageNotFoundException {
         Document newPack = new Document("_id", new ObjectId())
-                .append("user_id", userId)
-                .append("package_id", pack.getId())
-                .append("progress", 0);
+            .append("user_id", userId)
+            .append("package_id", pack.getId())
+            .append("progress", 0);
         activePackages.insertOne(newPack);
         return convertTo(newPack);
     }

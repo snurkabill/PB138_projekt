@@ -27,9 +27,9 @@ public class ActivePackage {
 
     public ActivePackage(MongoDatabase database, String id) throws ActivePackageNotFoundException {
         Document document = database
-                .getCollection("activePackages")
-                .find(Filters.eq("_id", id))
-                .first();
+            .getCollection("activePackages")
+            .find(Filters.eq("_id", id))
+            .first();
         if (document == null) {
             throw new ActivePackageNotFoundException(id);
         }
@@ -60,8 +60,8 @@ public class ActivePackage {
     public boolean increaseProgress(MongoDatabase database) {
         this.progress++;
         UpdateResult result = database.getCollection("activePackages").updateOne(
-                new BasicDBObject("_id", new ObjectId(this.id)),
-                new BasicDBObject("$set", new BasicDBObject("progress", this.progress)));
+            new BasicDBObject("_id", new ObjectId(this.id)),
+            new BasicDBObject("$set", new BasicDBObject("progress", this.progress)));
         return result.wasAcknowledged();
     }
 

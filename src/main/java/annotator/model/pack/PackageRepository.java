@@ -26,7 +26,7 @@ public class PackageRepository extends AbstractRepository {
 
     public Package getPackage(String package_id) throws TypeNotFoundException, PackageNotFoundException {
         return convertTo(packages.find(
-                new BasicDBObject("_id", new ObjectId(package_id))).first());
+            new BasicDBObject("_id", new ObjectId(package_id))).first());
     }
 
     private static Package convertTo(Document document) throws PackageNotFoundException {
@@ -36,8 +36,8 @@ public class PackageRepository extends AbstractRepository {
             words.add((String) word_id);
         }
         return new Package(document.get("_id").toString(),
-                document.getString("type_id"),
-                document.getDouble("word_count").intValue(), words);
+            document.getString("type_id"),
+            document.getDouble("word_count").intValue(), words);
     }
 
     public List<Package> getUnactive(String userId, Map<String, ActivePackage> activePackages) throws ActivePackageNotFoundException, PackageNotFoundException {
