@@ -13,13 +13,13 @@ public class User {
     private String email;
     private String passwordHash;
 
-    User(String email, String passwordHash) {
+    public User(String email, String passwordHash) {
         this.id = null;
         this.email = email;
         this.passwordHash = passwordHash;
     }
 
-    User(String email, String passwordHash, String id) throws UserNotFoundException {
+    public User(String email, String passwordHash, String id) throws UserNotFoundException {
         if (id == null)
             throw new UserNotFoundException("User : id not found");
         this.id = id;

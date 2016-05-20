@@ -28,7 +28,7 @@ public class ActivePackageRepository extends AbstractRepository {
             new BasicDBObject("_id", new ObjectId(activePackae_id))).first());
     }
 
-    MongoCursor<Document> getActivePackagesIterator(String user_id) {
+    public MongoCursor<Document> getActivePackagesIterator(String user_id) {
         return this.activePackages.find(Filters.eq("user_id", user_id)).iterator();
     }
 
