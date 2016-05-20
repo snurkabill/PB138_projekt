@@ -21,18 +21,18 @@ public class PackageRepository extends AbstractRepository {
         this.packages = database.getCollection("packages");
     }
 
-    public Package getPackage(String package_id) throws TypeNotFoundException, PackageNotFoundException {
+    public Package getPackage(String packageId) throws TypeNotFoundException, PackageNotFoundException {
         return convertTo(this.findOneById(
             this.packages,
-            package_id
+            packageId
         ));
     }
 
     private static Package convertTo(Document document) throws PackageNotFoundException {
         ArrayList<Document> wordsList = (ArrayList<Document>) document.get("words");
         ArrayList<String> words = new ArrayList<>();
-        for (Object word_id : wordsList) {
-            words.add((String) word_id);
+        for (Object wordId : wordsList) {
+            words.add((String) wordId);
         }
         return new Package(document.get("_id").toString(),
             document.getString("type_id"),

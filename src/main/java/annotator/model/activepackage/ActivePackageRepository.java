@@ -21,15 +21,15 @@ public class ActivePackageRepository extends AbstractRepository {
         this.activePackages = database.getCollection("activePackages");
     }
 
-    public ActivePackage getActivePackage(String activePackae_id) throws ActivePackageNotFoundException {
+    public ActivePackage getActivePackage(String activePackaeId) throws ActivePackageNotFoundException {
         return convertTo(this.findOneById(
             this.activePackages,
-            activePackae_id
+            activePackaeId
         ));
     }
 
-    public MongoCursor<Document> getActivePackagesIterator(String user_id) {
-        return this.activePackages.find(Filters.eq("user_id", user_id)).iterator();
+    public MongoCursor<Document> getActivePackagesIterator(String userId) {
+        return this.activePackages.find(Filters.eq("user_id", userId)).iterator();
     }
 
     private static ActivePackage convertTo(Document document) throws ActivePackageNotFoundException {
@@ -37,8 +37,8 @@ public class ActivePackageRepository extends AbstractRepository {
             document.getString("package_id"), document.getInteger("progress"));
     }
 
-    public Map<String, ActivePackage> getMapOfActivePackages(String user_id) throws ActivePackageNotFoundException {
-        MongoCursor<Document> activePackages = this.getActivePackagesIterator(user_id);
+    public Map<String, ActivePackage> getMapOfActivePackages(String userId) throws ActivePackageNotFoundException {
+        MongoCursor<Document> activePackages = this.getActivePackagesIterator(userId);
         Map<String, ActivePackage> mapOfActivePackages = new HashMap<>();
         while (activePackages.hasNext()) {
             ActivePackage add = ActivePackageRepository.convertTo(activePackages.next());

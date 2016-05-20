@@ -14,10 +14,10 @@ public class TypeRepository extends AbstractRepository {
     }
 
 
-    public Type getType(String type_id) throws TypeNotFoundException {
+    public Type getType(String typeId) throws TypeNotFoundException {
         return convertTo(this.findOneById(
             this.types,
-            type_id
+            typeId
         ));
     }
 

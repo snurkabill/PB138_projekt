@@ -16,10 +16,10 @@ public class WordRepository extends AbstractRepository {
         this.words = database.getCollection("words");
     }
 
-    public Word getWord(String word_id) throws TypeNotFoundException, WordNotFoundException {
+    public Word getWord(String wordId) throws TypeNotFoundException, WordNotFoundException {
         return convertTo(this.findOneById(
             this.words,
-            word_id
+            wordId
         ));
     }
 
