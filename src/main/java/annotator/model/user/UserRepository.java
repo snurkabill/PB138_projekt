@@ -1,7 +1,6 @@
 package annotator.model.user;
 
 import annotator.model.AbstractRepository;
-import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
@@ -19,10 +18,6 @@ public class UserRepository extends AbstractRepository {
 
     public User getOneByEmail(String email) throws UserNotFoundException {
         return convertTo(users.find(Filters.eq("email", email)).first());
-    }
-
-    public User getUser(String id) throws UserNotFoundException {
-        return convertTo(users.find(new BasicDBObject("_id", new ObjectId(id))).first());
     }
 
     private static User convertTo(Document document) throws UserNotFoundException {

@@ -28,10 +28,6 @@ public class ActivePackageRepository extends AbstractRepository {
                 new BasicDBObject("_id", new ObjectId(activePackae_id))).first());
     }
 
-    public MongoCursor<Document> getActivePackagesIterator() {
-        return activePackages.find().iterator();
-    }
-
     MongoCursor<Document> getActivePackagesIterator(String user_id) {
         return activePackages.find(Filters.eq("user_id", user_id)).iterator();
     }
@@ -59,6 +55,4 @@ public class ActivePackageRepository extends AbstractRepository {
         activePackages.insertOne(newPack);
         return convertTo(newPack);
     }
-
-
 }
