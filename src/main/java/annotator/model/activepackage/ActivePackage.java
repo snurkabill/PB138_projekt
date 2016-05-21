@@ -3,6 +3,7 @@ package annotator.model.activepackage;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.result.UpdateResult;
+import org.bson.Document;
 import org.bson.types.ObjectId;
 
 public class ActivePackage {
@@ -12,13 +13,25 @@ public class ActivePackage {
     private final String packageId;
     private Integer progress;
 
-    public ActivePackage(String id, String userId, String packageId, Integer progress) throws ActivePackageNotFoundException {
-        if (id == null)
-            throw new ActivePackageNotFoundException("ActivePackage: id not found");
+    public ActivePackage(
+        String id,
+        String userId,
+        String packageId,
+        Integer progress
+    ) {
         this.id = id;
         this.userId = userId;
         this.packageId = packageId;
         this.progress = progress;
+    }
+
+    public ActivePackage(Document document) {
+        this(
+            document.getObjectId("_id").toString(),
+            document.getString("user_id"),
+            document.getString("package_id"),
+            document.getInteger("progress")
+        );
     }
 
     public String getId() {
