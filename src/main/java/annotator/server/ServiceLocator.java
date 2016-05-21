@@ -1,6 +1,11 @@
 package annotator.server;
 
+import annotator.model.activepackage.ActivePackageRepository;
+import annotator.model.pack.PackageRepository;
+import annotator.model.type.TypeRepository;
 import annotator.model.user.UserRepository;
+import annotator.model.vote.VoteRepository;
+import annotator.model.word.WordRepository;
 import com.mongodb.client.MongoDatabase;
 
 import java.util.HashMap;
@@ -30,4 +35,38 @@ public class ServiceLocator {
         );
     }
 
+    public ActivePackageRepository getActivePackageRepository() {
+        return (ActivePackageRepository) this.getService(
+            "active_package_repository",
+            () -> new ActivePackageRepository(this.database)
+        );
+    }
+
+    public PackageRepository getPackageRepository() {
+        return (PackageRepository) this.getService(
+            "package_repository",
+            () -> new PackageRepository(this.database)
+        );
+    }
+
+    public WordRepository getWordRepository() {
+        return (WordRepository) this.getService(
+            "word_repository",
+            () -> new WordRepository(this.database)
+        );
+    }
+
+    public VoteRepository getVoteRepository() {
+        return (VoteRepository) this.getService(
+            "vote_repository",
+            () -> new VoteRepository(this.database)
+        );
+    }
+
+    public TypeRepository getTypeRepository() {
+        return (TypeRepository) this.getService(
+            "type_repository",
+            () -> new TypeRepository(this.database)
+        );
+    }
 }
