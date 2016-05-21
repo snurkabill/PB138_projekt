@@ -22,27 +22,22 @@ public class PackageRepository extends AbstractRepository {
     }
 
     public Package getPackage(String packageId) throws TypeNotFoundException, PackageNotFoundException {
-        return convertTo(this.findOneById(
+        Document packageDocument = this.findOneById(
             this.packages,
             packageId
-        ));
-    }
+        );
 
-    private static Package convertTo(Document document) throws PackageNotFoundException {
-        ArrayList<Document> wordsList = (ArrayList<Document>) document.get("words");
-        ArrayList<String> words = new ArrayList<>();
-        for (Object wordId : wordsList) {
-            words.add((String) wordId);
+        if (packageDocument == null) {
+            throw new PackageNotFoundException(packageId);
         }
-        return new Package(document.get("_id").toString(),
-            document.getString("type_id"),
-            document.getDouble("word_count").intValue(), words);
+
+        return new Package(packageDocument);
     }
 
     public List<Package> getUnactive(String userId, Map<String, ActivePackage> activePackages) throws ActivePackageNotFoundException, PackageNotFoundException {
         ArrayList<Package> unactivePackages = new ArrayList<>();
         for (Document document : this.packages.find()) {
-            Package pack = convertTo(document);
+            Package pack = new Package(document);
             if (!activePackages.containsKey(pack.getId())) {
                 unactivePackages.add(pack);
             }

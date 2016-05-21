@@ -1,5 +1,7 @@
 package annotator.model.pack;
 
+import org.bson.Document;
+
 import java.util.ArrayList;
 
 public class Package {
@@ -9,13 +11,23 @@ public class Package {
     private final Integer wordCount;
     private final ArrayList<String> wordList;
 
-    public Package(String id, String typeId, Integer wordCount, ArrayList<String> wordList) throws PackageNotFoundException {
-        if (id == null)
-            throw new PackageNotFoundException("Package: id not found");
+    public Package(
+        String id,
+        String typeId,
+        ArrayList<String> wordList
+    ) {
         this.id = id;
         this.typeId = typeId;
-        this.wordCount = wordCount;
+        this.wordCount = wordList.size();
         this.wordList = wordList;
+    }
+
+    public Package(Document document) {
+        this(
+            document.getObjectId("_id").toString(),
+            document.getString("type_id"),
+            (ArrayList<String>) document.get("words")
+        );
     }
 
     public String getId() {
