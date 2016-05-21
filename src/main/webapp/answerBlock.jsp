@@ -18,29 +18,9 @@
 <%@ page import="java.time.temporal.ChronoUnit" %>
 <%@ page import="annotator.model.vote.VoteRepository" %>
 <%@ page import="java.time.LocalDateTime" %>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="Kejsty">
-    <link rel="icon" href="">
 
-    <title>Package</title>
+<jsp:include page="common/header.jsp"/>
 
-    <!-- Bootstrap core CSS -->
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-
-    <link href="bootstrap/css/answerBox.css" rel="stylesheet" type="text/css">
-
-</head>
-
-<body>
-
-<div class="site-wrapper">
     <div class="masthead clearfix">
         <div class="well navbar navbar-inverse">
             <ul class=" nav nav-tabs ">
@@ -149,14 +129,5 @@
                 href="https://twitter.com/mdo">@mdo</a>.</p>
     </div>
 
-</div>
 
-
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-<script src="bootstrap/js/bootstrap.min.js"></script>
-</body>
-</html>
+<jsp:include page="common/footer.jsp"/>
