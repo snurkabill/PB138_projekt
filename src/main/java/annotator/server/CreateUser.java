@@ -24,7 +24,7 @@ public class CreateUser extends Controller {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
         String username = request.getParameter("username");
-        String password = request.getParameter("passowrd");
+        String password = request.getParameter("password");
 
         try {
             User user = this.userCreator.create(username, password);
