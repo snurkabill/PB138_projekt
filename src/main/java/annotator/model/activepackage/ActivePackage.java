@@ -50,12 +50,9 @@ public class ActivePackage {
         return this.progress;
     }
 
-    public boolean increaseProgress(MongoDatabase database) {
+    public ActivePackage increaseProgress() {
         this.progress++;
-        UpdateResult result = database.getCollection("activePackages").updateOne(
-            new BasicDBObject("_id", new ObjectId(this.id)),
-            new BasicDBObject("$set", new BasicDBObject("progress", this.progress)));
-        return result.wasAcknowledged();
+        return this;
     }
 
     @Override
