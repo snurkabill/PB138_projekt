@@ -14,7 +14,7 @@ public class UserStatistics {
     private final Double averageDurationOnNoisyData;
     private final ConfusionMatrix confusionMatrix;
 
-    public UserStatistics(List<Vote> noisyVoteList, List<Boolean> noisyRealLabels,  List<Vote> allVoteList) {
+    public UserStatistics(List<Vote> noisyVoteList,  List<Vote> allVoteList) {
         this.trueRatio = ((Long) allVoteList.stream()
                 .filter(Vote::getBelongsToType)
                 .count())
@@ -22,8 +22,8 @@ public class UserStatistics {
         this.averageDuration = allVoteList.stream().mapToLong(Vote::getDuration).average().getAsDouble();
         this.averageDurationOnNoisyData = noisyVoteList.stream().mapToLong(Vote::getDuration).average().getAsDouble();
         confusionMatrix = new ConfusionMatrix(
-                noisyVoteList.stream().map(Vote::getBelongsToType).collect(Collectors.toList()),
-                noisyRealLabels);
+                noisyVoteList.stream().map(Vote::getVoteBelongsToType).collect(Collectors.toList()),
+                noisyVoteList.stream().map(Vote::getBelongsToType).collect(Collectors.toList()));
     }
 
     public Double getTrueRatio() {
