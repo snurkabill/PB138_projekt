@@ -30,7 +30,13 @@ public class ConfusionMatrix {
     private final Double averageAccuracy;
     private final Double meanClassificationAccuracy;
     private final Double randomAgreementProbability;
+    private final Double falsePrecision;
+    private final Double truePrecision;
+    private final Double trueRecall;
+    private final Double falseRecall;
     private final Double kappa;
+    private final Double f1Positive;
+    private final Double f1Negative;
 
     public ConfusionMatrix(List<Boolean> predicted, List<Boolean> correct) {
         this.totalPopulation = predicted.size();
@@ -91,6 +97,15 @@ public class ConfusionMatrix {
                 this.trueClassesCount * this.predictedTrueClassesCount +
                 this.falseClassesCount * this.predictedFalseClassesCount)
                 / Math.pow(totalPopulation, 2.0);
+
+        this.truePrecision = this.truePositive / (double) (this.truePositive + this.falsePositive);
+        this.falsePrecision = this.falsePositive / (double) (this.truePositive + this.falsePositive);
+
+        this.trueRecall = this.truePositive / (double) (this.truePositive + this.falsePositive);
+        this.falseRecall = this.falsePositive / (double) (this.trueNegative + this.falseNegative);
+
+        this.f1Positive = 2.0 * this.truePrecision * this.trueRecall / (this.truePrecision + this.trueRecall);
+        this.f1Negative = 2.0 * this.falsePrecision * this.falseRecall / (this.falsePrecision + this.falseRecall);
 
         this.kappa = (this.overallAccuracy - randomAgreementProbability) / (1.0 - this.randomAgreementProbability);
     }
@@ -157,6 +172,30 @@ public class ConfusionMatrix {
 
     public Double getMeanClassificationAccuracy() {
         return meanClassificationAccuracy;
+    }
+
+    public Double getFalsePrecision() {
+        return falsePrecision;
+    }
+
+    public Double getTruePrecision() {
+        return truePrecision;
+    }
+
+    public Double getTrueRecall() {
+        return trueRecall;
+    }
+
+    public Double getFalseRecall() {
+        return falseRecall;
+    }
+
+    public Double getF1Positive() {
+        return f1Positive;
+    }
+
+    public Double getF1Negative() {
+        return f1Negative;
     }
 
     public Double getRandomAgreementProbability() {
