@@ -20,29 +20,7 @@
 <%@ page import="java.time.LocalDateTime" %>
 
 <jsp:include page="common/header.jsp"/>
-
-    <div class="masthead clearfix">
-        <div class="well navbar navbar-inverse">
-            <ul class=" nav nav-tabs ">
-                <li><a class="span2">Logged As </a></li>
-                <li><a href="Logout">Logout</a></li>
-                <li class="active"><a href="#">Marking</a></li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Statistics
-                        <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li class="menuFont"><a href="#">Vote ratio</a></li>
-                        <li class="menuFont"><a href="#">Average word duration</a></li>
-                        <li class="menuFont"><a href="#">Cohen cappa</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">Export statistic</a></li>
-                    </ul>
-                </li>
-                <li><a href="package-list">Back</a></li>
-
-            </ul>
-        </div>
-    </div>
+<jsp:include page="common/menu.jsp"/>
 
     <div class="site-wrapper-body">
 
