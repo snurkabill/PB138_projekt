@@ -12,6 +12,6 @@ public class WordStatisticsCollector {
     }
 
     public WordStatistics getWordStatistics(String wordId) {
-        return new WordStatistics(voteRepository.getVoteByWordId(wordId));
+        return new WordStatistics(voteRepository.getVotesByWordId(wordId));
     }
 }

@@ -40,7 +40,7 @@ public class VoteRepository extends AbstractRepository {
         return votes;
     }
 
-    public List<Vote> getVoteByWordId(String wordId) {
+    public List<Vote> getVotesByWordId(String wordId) {
         MongoCursor<Document> cursor = votes.find(
                 Filters.eq("word_id", wordId)
         ).iterator();
