@@ -66,6 +66,4 @@ public class VoteRepository extends AbstractRepository {
         return getVotes(cursor);
     }
 
-
-
 }
