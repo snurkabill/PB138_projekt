@@ -31,7 +31,8 @@ public class ServiceLocator {
     }
 
     public UserRepository getUserRepository() {
-        return (UserRepository) this.getService("user_repository",
+        return (UserRepository) this.getService(
+            "user_repository",
             () -> new UserRepository(this.database)
         );
     }
