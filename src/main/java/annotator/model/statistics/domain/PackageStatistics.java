@@ -1,4 +1,4 @@
-package annotator.model.statistics;
+package annotator.model.statistics.domain;
 
 import annotator.model.vote.Vote;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
