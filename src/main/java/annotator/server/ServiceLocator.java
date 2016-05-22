@@ -3,6 +3,7 @@ package annotator.server;
 import annotator.model.activepackage.ActivePackageRepository;
 import annotator.model.pack.PackageRepository;
 import annotator.model.type.TypeRepository;
+import annotator.model.user.UserCreator;
 import annotator.model.user.UserRepository;
 import annotator.model.vote.VoteRepository;
 import annotator.model.word.WordRepository;
@@ -67,6 +68,13 @@ public class ServiceLocator {
         return (TypeRepository) this.getService(
             "type_repository",
             () -> new TypeRepository(this.database)
+        );
+    }
+
+    public UserCreator getUserCreator() {
+        return (UserCreator) this.getService(
+            "user_creator",
+            () -> new UserCreator(this.database)
         );
     }
 }
