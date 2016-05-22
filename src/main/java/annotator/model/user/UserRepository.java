@@ -1,26 +1,37 @@
 package annotator.model.user;
 
-import org.bson.Document;
+import annotator.model.AbstractRepository;
+import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import org.bson.Document;
 
-public class UserRepository {
+public class UserRepository extends AbstractRepository {
 
-    private MongoDatabase database;
+    private MongoCollection<Document> users;
 
     public UserRepository(MongoDatabase database) {
-        this.database = database;
+        this.users = database.getCollection("users");
     }
 
     public User getOneByEmail(String email) throws UserNotFoundException {
-        Document user = this.database.getCollection("users").find(Filters.eq("email", email)).first();
-        if (user == null) {
-            throw new UserNotFoundException(email);
+        Document userDocument = this.users.find(Filters.eq(
+            "email",
+            email
+        )).first();
+
+        if (userDocument == null) {
+            throw new UserNotFoundException("User not found: " + email);
         }
-        return new User(
-            user.getString("email"),
-            user.getString("passwordHash")
-        );
+
+        return new User(userDocument);
     }
 
+    public User createUser(String email, String password) throws UserNotFoundException {
+        Document userDocument = new Document()
+            .append("email", email)
+            .append("passwordHash", password);
+        this.users.insertOne(userDocument);
+        return new User(userDocument);
+    }
 }

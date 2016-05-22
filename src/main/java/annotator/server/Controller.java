@@ -1,5 +1,6 @@
 package annotator.server;
 
+import annotator.model.user.User;
 import annotator.server.template.TemplateParameters;
 import com.mongodb.client.MongoDatabase;
 
@@ -30,6 +31,10 @@ public abstract class Controller extends HttpServlet {
 
     protected void initializeDependencies(ServiceLocator serviceLocator) {
 
+    }
+
+    protected User getUser() {
+        return (User) this.session.getAttribute("loggedUser");
     }
 
     protected void render(String templateName, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

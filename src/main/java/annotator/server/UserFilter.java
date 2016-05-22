@@ -25,14 +25,14 @@ public class UserFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain)
-            throws IOException, ServletException {
+        throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();
         String path = request.getServletPath();
 
         System.err.println("filter " + path);
-        if (path.equals("/index.jsp") || path.equals("/Login")) {
+        if (path.equals("/index.jsp") || path.equals("/Login") || path.equals("/CreateUser")) {
             chain.doFilter(request, response);
             return;
         }
