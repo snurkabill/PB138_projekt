@@ -33,7 +33,7 @@ public class VoteRepository extends AbstractRepository {
 
     private List<Vote> getVotes(MongoCursor<Document> cursor) {
         List<Vote> votes = new ArrayList<>();
-        for (; cursor.hasNext(); ) {
+        while (cursor.hasNext()) {
             votes.add(new Vote(cursor.next()));
         }
         cursor.close();
@@ -42,26 +42,26 @@ public class VoteRepository extends AbstractRepository {
 
     public List<Vote> getVotesByWordId(String wordId) {
         MongoCursor<Document> cursor = votes.find(
-                Filters.eq("word_id", wordId)
+            Filters.eq("word_id", wordId)
         ).iterator();
         return getVotes(cursor);
     }
 
     public List<Vote> getAllVotesByUserId(String userId) {
         MongoCursor<Document> cursor = votes.find(
-                Filters.eq("user_id", userId)
+            Filters.eq("user_id", userId)
         ).iterator();
         return getVotes(cursor);
     }
 
     public List<Vote> getNoisyVotesByUserId(String userId) {
         MongoCursor<Document> cursor = votes.find(
-                Filters.and(
-                        Filters.eq("user_id", userId),
-                        Filters.not(
-                                Filters.eq("belongs_to_type", null)
-                        )
+            Filters.and(
+                Filters.eq("user_id", userId),
+                Filters.not(
+                    Filters.eq("belongs_to_type", null)
                 )
+            )
         ).iterator();
         return getVotes(cursor);
     }
