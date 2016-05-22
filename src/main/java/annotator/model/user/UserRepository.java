@@ -26,12 +26,4 @@ public class UserRepository extends AbstractRepository {
 
         return new User(userDocument);
     }
-
-    public User createUser(String email, String password) throws UserNotFoundException {
-        Document userDocument = new Document()
-            .append("email", email)
-            .append("passwordHash", password);
-        this.users.insertOne(userDocument);
-        return new User(userDocument);
-    }
 }
