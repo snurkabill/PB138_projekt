@@ -3,15 +3,14 @@ package annotator.model.pack;
 import annotator.model.AbstractRepository;
 import annotator.model.activepackage.ActivePackage;
 import annotator.model.activepackage.ActivePackageNotFoundException;
+import annotator.model.type.Type;
 import annotator.model.type.TypeNotFoundException;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 import org.bson.Document;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class PackageRepository extends AbstractRepository {
 
@@ -32,6 +31,28 @@ public class PackageRepository extends AbstractRepository {
         }
 
         return new Package(packageDocument);
+    }
+
+    public Map<String, Package> getPackagesMap() {
+        HashMap<String, Package> packages = new HashMap<>();
+
+        Package pack;
+        for (Document document: this.packages.find()) {
+            pack = new Package(document);
+            packages.put(pack.getId(), pack);
+        }
+
+        return packages;
+    }
+
+    public List<Package> getPackagesByType(Type type) {
+        ArrayList<Package> packages = new ArrayList<>();
+
+        for (Document document: this.packages.find(Filters.eq("type_id", type.getId()))) {
+            packages.add(new Package(document));
+        }
+
+        return packages;
     }
 
     public List<Package> getUnactive(String userId, Map<String, ActivePackage> activePackages) throws ActivePackageNotFoundException, PackageNotFoundException {

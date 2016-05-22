@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="annotator.model.user.UserRepository" %>
 <%@ page import="com.mongodb.client.MongoDatabase" %>
 <%@ page import="annotator.server.ContextListener" %>
@@ -20,7 +21,7 @@
             <ul class="nav nav-tabs ">
                 <li><a href="index.jsp" class="span2">Logged as ${sessionScope.authenticatedUser}</a></li>
                 <li><a href="Logout">Logout</a></li>
-                <li class="active"><a href="markWords.jsp">Mark Words</a></li>
+                <li class="active"><a href="package-list">Mark Words</a></li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">Statistics
                         <span class="caret"></span></a>
@@ -39,43 +40,18 @@
     </div>
     <div class="site-wrapper-body">
         <p style="padding-top: 10%">Packages</p>
-        <ul class="nav nav-list package-nav">
-            <%
-                MongoDatabase database = (MongoDatabase) session.getAttribute("database");
+        <ul class="">
+            <c:forEach items="${types}" var="type">
+                <li>
+                    ${type.getType()}
 
-                ActivePackageRepository activePackageRepository = new ActivePackageRepository(database);
-                User activeUser = (User) session.getAttribute("loggedUser");
-                try {
-                    Map<String, ActivePackage> activePackageMap = activePackageRepository.getMapOfActivePackages(activeUser.getId());
-                    List<annotator.model.pack.Package> unactivePackageList = new PackageRepository(database).
-                            getUnactive(activeUser.getId(), activePackageMap);
-                    for (ActivePackage active : activePackageMap.values()) {
-                        session.setAttribute("active", active);
-            %>
-
-            <li><a class="menuFont" href="answerBlock.jsp?active=${sessionScope.active.getId()}"> Package </a></li>
-
-            <%
-                    }
-                    for (Package unactive : unactivePackageList) {
-                        session.setAttribute("unactive", unactive);
-                        System.out.println(unactive.getId());
-            %>
-
-            <li><a class="menuFont" href="answerBlock.jsp?unactive=${sessionScope.unactive.getId()}"> Package </a></li>
-
-            <%
-                    }
-                } catch (Exception e) {
-                        System.out.println(e.getMessage());
-                        e.printStackTrace();
-            %>
-
-            <p class="span4"> there is no package. Tip: upload some! </p>
-
-            <%
-                }
-            %>
+                    <ul>
+                        <c:forEach items="${typePackages.get(type.getId())}" var="pack">
+                            <li>${pack.getName()}</li>
+                        </c:forEach>
+                    </ul>
+                </li>
+            </c:forEach>
 
         </ul>
     </div>

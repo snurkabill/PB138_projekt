@@ -49,7 +49,7 @@
         <ul class="nav nav-tabs ">
             <li><a href="index.jsp" class="span2 active">Logged as ${sessionScope.authenticatedUser}</a></li>
             <li><a href="Logout">Logout</a></li>
-            <li class=><a href="markWords.jsp">Mark Words</a></li>
+            <li class=><a href="package-list">Mark Words</a></li>
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Statistics
                     <span class="caret"></span></a>

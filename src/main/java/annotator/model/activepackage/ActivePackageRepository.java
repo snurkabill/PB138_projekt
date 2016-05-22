@@ -2,15 +2,14 @@ package annotator.model.activepackage;
 
 import annotator.model.AbstractRepository;
 import annotator.model.pack.Package;
+import annotator.model.user.User;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import org.bson.Document;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ActivePackageRepository extends AbstractRepository {
 
@@ -31,20 +30,6 @@ public class ActivePackageRepository extends AbstractRepository {
         }
 
         return new ActivePackage(activePackageDocument);
-    }
-
-    public MongoCursor<Document> getActivePackagesIterator(String userId) {
-        return this.activePackages.find(Filters.eq("user_id", userId)).iterator();
-    }
-
-    public Map<String, ActivePackage> getMapOfActivePackages(String userId) {
-        MongoCursor<Document> activePackages = this.getActivePackagesIterator(userId);
-        Map<String, ActivePackage> mapOfActivePackages = new HashMap<>();
-        while (activePackages.hasNext()) {
-            ActivePackage add = new ActivePackage(activePackages.next());
-            mapOfActivePackages.put(add.getPackageId(), add);
-        }
-        return Collections.unmodifiableMap(mapOfActivePackages);
     }
 
     public ActivePackage makeNew(Package pack, String userId) {

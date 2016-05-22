@@ -3,7 +3,14 @@ package annotator.model.type;
 import annotator.model.AbstractRepository;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 import org.bson.Document;
+import org.bson.types.ObjectId;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class TypeRepository extends AbstractRepository {
 
@@ -24,6 +31,16 @@ public class TypeRepository extends AbstractRepository {
         }
 
         return new Type(typeDocument);
+    }
+
+    public ArrayList<Type> getTypesList() {
+        ArrayList<Type> types = new ArrayList<>();
+
+        for (Document document: this.types.find()) {
+            types.add(new Type(document));
+        }
+
+        return types;
     }
 }
 

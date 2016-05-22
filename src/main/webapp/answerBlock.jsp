@@ -38,7 +38,7 @@
                         <li><a href="#">Export statistic</a></li>
                     </ul>
                 </li>
-                <li><a href="markWords.jsp">Back</a></li>
+                <li><a href="package-list">Back</a></li>
 
             </ul>
         </div>
@@ -73,7 +73,7 @@
                             }
 
                             if (activePackage.getProgress().equals(pack.getWordCount())) {
-                                response.sendRedirect("markWords.jsp");
+                                response.sendRedirect("package-list");
                             }
                             ArrayList<String> words = pack.getWordList();
                             session.setAttribute("pack", pack);
