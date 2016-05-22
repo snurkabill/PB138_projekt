@@ -1,9 +1,15 @@
 package annotator.model.word;
 
 import annotator.model.AbstractRepository;
+import annotator.model.vote.Vote;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 import org.bson.Document;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class WordRepository extends AbstractRepository {
 
@@ -24,5 +30,17 @@ public class WordRepository extends AbstractRepository {
         }
 
         return new Word(wordDocument);
+    }
+
+    public List<Word> getWordByPackageId(String packageId) {
+        MongoCursor<Document> cursor = words.find(
+                Filters.eq("package_id", packageId)
+        ).iterator();
+        List<Word> words = new ArrayList<>();
+        for (; cursor.hasNext(); ) {
+            words.add(new Word(cursor.next()));
+        }
+        cursor.close();
+        return words;
     }
 }
