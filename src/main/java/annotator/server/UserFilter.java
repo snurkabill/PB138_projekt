@@ -38,7 +38,7 @@ public class UserFilter implements Filter {
         }
 
         if (session.getAttribute("authenticatedUser") == null) {
-            response.sendRedirect("index.jsp");
+            response.sendRedirect("/Login");
             return;
         }
 

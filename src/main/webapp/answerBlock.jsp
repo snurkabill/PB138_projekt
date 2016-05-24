@@ -1,5 +1,5 @@
-<jsp:include page="common/markingHeader.jsp"/>
-<jsp:include page="common/menu.jsp"/>
+<jsp:include page="WEB-INF/markingHeader.jsp"/>
+<jsp:include page="WEB-INF/menu.jsp"/>
 
 <div class="site-wrapper-body">
 
@@ -28,4 +28,4 @@
             href="https://twitter.com/mdo">@mdo</a>.</p>
 </div>
 
-<jsp:include page="common/footer.jsp"/>
+<jsp:include page="WEB-INF/footer.jsp"/>

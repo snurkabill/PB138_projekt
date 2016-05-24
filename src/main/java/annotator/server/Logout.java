@@ -14,6 +14,7 @@ public class Logout extends Controller {
         this.session.removeAttribute("authenticatedUser");
         this.session.invalidate();
         this.template.set("message", "You have been successfully logged out");
-        this.render("index.jsp", request, response);
+
+        response.sendRedirect("/Login");
     }
 }
