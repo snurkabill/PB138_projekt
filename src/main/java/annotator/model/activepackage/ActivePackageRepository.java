@@ -5,16 +5,12 @@ import annotator.model.pack.Package;
 import annotator.model.pack.PackageNotFoundException;
 import annotator.model.pack.PackageRepository;
 import annotator.model.type.TypeNotFoundException;
-import annotator.model.user.User;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.model.Filters;
 import org.bson.Document;
 import org.bson.types.ObjectId;
-
-import java.util.*;
 
 public class ActivePackageRepository extends AbstractRepository {
 
@@ -47,15 +43,16 @@ public class ActivePackageRepository extends AbstractRepository {
     }
 
     public ActivePackage getOrMakeNew(String packageId, String userId, PackageRepository packageRepository) throws PackageNotFoundException, TypeNotFoundException {
-        ActivePackage activePackage = null;
+        ActivePackage activePackage;
         try {
             activePackage = this.getActivePackage(packageId);
-        }catch (ActivePackageNotFoundException e){
+        } catch (ActivePackageNotFoundException e) {
             System.out.println("There is no active package od this type, creating new...\n");
             activePackage = null;
         }
-        return activePackage == null ? this.makeNew(
-                packageRepository.getPackage(packageId), userId) : activePackage;
+        return activePackage == null
+            ? this.makeNew(packageRepository.getPackage(packageId), userId)
+            : activePackage;
     }
 
     public void update(ActivePackage activePackage){

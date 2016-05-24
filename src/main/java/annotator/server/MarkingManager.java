@@ -42,11 +42,11 @@ public class MarkingManager extends Controller {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         if (request.getParameter("packageId") != null) {
 
-            if (!loadWord(request.getParameter("packageId"))) {
+            if (!this.loadWord(request.getParameter("packageId"))) {
                 response.sendRedirect("package-list");
+
             } else {
                 this.render(
                         "answerBlock.jsp",
@@ -56,19 +56,21 @@ public class MarkingManager extends Controller {
             }
 
         } else if (request.getParameter("vote") != null) {
-            vote(request.getParameter("package"),
-                    request.getParameter("vote"),
-                    Long.parseLong(request.getParameter("start")),
-                    request.getParameter("word"));
+            this.vote(
+                request.getParameter("package"),
+                request.getParameter("vote"),
+                Long.parseLong(request.getParameter("start")),
+                request.getParameter("word")
+            );
             response.sendRedirect("marking-manager?packageId=".concat(request.getParameter("package")));
 
         } else {
             System.out.println("invalid page");
             this.template.set("message", "invalid page");
             this.render(
-                    "answerBlock.jsp",
-                    request,
-                    response
+                "answerBlock.jsp",
+                request,
+                response
             );
         }
     }
@@ -77,24 +79,25 @@ public class MarkingManager extends Controller {
         try {
             Date date = new Date();
             this.template.set("start", date.getTime());
-            ActivePackage activePackage = activePackageRepository.getOrMakeNew(
-                    packageId,
-                    ((User) this.session.getAttribute("loggedUser")).getId(),
-                    packageRepository);
+            ActivePackage activePackage = this.activePackageRepository.getOrMakeNew(
+                packageId,
+                ((User) this.session.getAttribute("loggedUser")).getId(),
+                this.packageRepository
+            );
 
-            Package pack = packageRepository.getPackage(activePackage.getPackageId());
+            Package pack = this.packageRepository.getPackage(activePackage.getPackageId());
             if (activePackage.getProgress().equals(pack.getWordCount())) {
                 return false;
             }
 
             ArrayList<String> words = pack.getWordList();
-            Word word = wordRepository.getWord(words.get(activePackage.getProgress()));
+            Word word = this.wordRepository.getWord(words.get(activePackage.getProgress()));
 
             this.template.set("packageId", activePackage.getId());
             this.template.set("word", word);
             this.template.set("currentPosition", activePackage.getProgress() + 1);
             this.template.set("fullSize", pack.getWordCount());
-            this.template.set("type", typeRepository.getType(word.getTypeId()));
+            this.template.set("type", this.typeRepository.getType(word.getTypeId()));
 
         } catch (PackageNotFoundException | TypeNotFoundException | WordNotFoundException e) {
             e.printStackTrace();
@@ -109,11 +112,15 @@ public class MarkingManager extends Controller {
             Date now = new Date();
             Integer duration = ((Long) (now.getTime() - longDuration)).intValue();
 
-            ActivePackage activePackage = activePackageRepository.getActivePackage(activePackageId);
+            ActivePackage activePackage = this.activePackageRepository.getActivePackage(activePackageId);
 
-            voteRepository.addVote(((User) session.getAttribute("loggedUser")).getId(),
-                    wordRepository.getWord(wordId), vote.equals("yes"), duration);
-            activePackageRepository.update(activePackage.increaseProgress());
+            this.voteRepository.addVote(
+                ((User) session.getAttribute("loggedUser")).getId(),
+                wordRepository.getWord(wordId),
+                vote.equals("yes"),
+                duration
+            );
+            this.activePackageRepository.update(activePackage.increaseProgress());
 
         } catch (ActivePackageNotFoundException | WordNotFoundException e) {
             System.out.println(e.getMessage());
