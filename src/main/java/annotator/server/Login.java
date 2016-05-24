@@ -39,7 +39,16 @@ public class Login extends Controller {
 
         } catch (UserNotFoundException | InvalidPasswordException | IllegalArgumentException e) {
             this.template.set("message", "Invalid username/password");
-            this.render("index.jsp", request, response);
+            this.render("/WEB-INF/login.jsp", request, response);
         }
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        this.render(
+            "/WEB-INF/login.jsp",
+            request,
+            response
+        );
     }
 }
