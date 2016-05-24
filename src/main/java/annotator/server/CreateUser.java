@@ -29,7 +29,7 @@ public class CreateUser extends Controller {
         try {
             User user = this.userCreator.create(username, password);
 
-            this.session.setAttribute("authentUser", user);
+            this.session.setAttribute("loggedUser", user);
             this.session.setAttribute("authenticatedUser", username);
             response.sendRedirect("index.jsp");
 
