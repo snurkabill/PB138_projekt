@@ -24,7 +24,7 @@
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="menuFont"><a href="/Logout">Logout</a></li>
+                        <li class="menuFont"><a href="/auth/Logout">Logout</a></li>
                     </ul>
                 </li>
             </ul>

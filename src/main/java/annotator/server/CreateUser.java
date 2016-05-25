@@ -31,7 +31,7 @@ public class CreateUser extends Controller {
 
             this.session.setAttribute("loggedUser", user);
             this.session.setAttribute("authenticatedUser", username);
-            response.sendRedirect("index.jsp");
+            response.sendRedirect("auth/index.jsp");
 
         } catch (UserCreateConflictException e) {
             this.template.set("message", "Username already exists");
