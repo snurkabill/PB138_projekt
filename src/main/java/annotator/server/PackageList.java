@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
-@WebServlet(urlPatterns = {"/package-list"})
+@WebServlet(urlPatterns = {"/auth/package-list"})
 public class PackageList extends Controller {
 
     private PackageRepository packageRepository;

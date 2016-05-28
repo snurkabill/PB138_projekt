@@ -16,7 +16,7 @@ import java.io.IOException;
  * This should prevent unauthorized access to application
  * Created by simon on 1.5.16.
  */
-@WebFilter(urlPatterns = {"/*"})
+@WebFilter(urlPatterns = {"/auth/*"})
 public class UserFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -29,13 +29,6 @@ public class UserFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();
-        String path = request.getServletPath();
-
-        System.err.println("filter " + path);
-        if (path.equals("/index.jsp") || path.equals("/Login") || path.equals("/CreateUser")) {
-            chain.doFilter(request, response);
-            return;
-        }
 
         if (session.getAttribute("authenticatedUser") == null) {
             response.sendRedirect("/Login");

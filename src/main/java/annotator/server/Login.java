@@ -35,7 +35,7 @@ public class Login extends Controller {
             this.session.setAttribute("authenticatedUser", username);
             this.session.setAttribute("loggedUser", user);
             this.session.setAttribute("database", this.getServletContext().getAttribute("database"));
-            response.sendRedirect("index.jsp");
+            response.sendRedirect("auth/index.jsp");
 
         } catch (UserNotFoundException | InvalidPasswordException | IllegalArgumentException e) {
             this.template.set("message", "Invalid username/password");

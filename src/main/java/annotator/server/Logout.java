@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = {"/Logout"})
+@WebServlet(urlPatterns = {"/auth/Logout"})
 public class Logout extends Controller {
 
     @Override

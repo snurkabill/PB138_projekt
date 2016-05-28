@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
-@WebServlet(urlPatterns = {"/marking-manager"})
+@WebServlet(urlPatterns = {"/auth/marking-manager"})
 public class MarkingManager extends Controller {
 
     private PackageRepository packageRepository;
