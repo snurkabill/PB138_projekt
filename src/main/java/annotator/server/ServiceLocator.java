@@ -3,6 +3,7 @@ package annotator.server;
 import annotator.model.activepackage.ActivePackageRepository;
 import annotator.model.pack.PackageCreator;
 import annotator.model.pack.PackageRepository;
+import annotator.model.type.TypeCreator;
 import annotator.model.type.TypeRepository;
 import annotator.model.user.UserCreator;
 import annotator.model.user.UserRepository;
@@ -92,6 +93,13 @@ public class ServiceLocator {
         return (WordCreator) this.getService(
             "word_creator",
             () -> new WordCreator(this.database)
+        );
+    }
+
+    public TypeCreator getTypeCreator() {
+        return (TypeCreator) this.getService(
+            "type_creator",
+            () -> new TypeCreator(this.database)
         );
     }
 }
