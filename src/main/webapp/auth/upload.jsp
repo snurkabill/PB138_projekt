@@ -4,9 +4,20 @@
 <jsp:include page="../WEB-INF/menu.jsp"/>
 
     <div class="inner cover">
+        <c:if test="${not empty alertMessage}">
+            <div class="alert alert-danger">${alertMessage}</div>
+        </c:if>
+        <c:if test="${not empty message}">
+            ${message}
+        </c:if>
+
         <p style="padding-top: 10%">Upload .csv file to parse as package</p>
         <label class="btn btn-primary btn-default " for="my-file-selector">
-            <input id="my-file-selector" type="file" accept=".csv" style="border-bottom-left-radius: 10px" onload="return 5" onchange="$('#upload-file-info').html($(this).val());">
+            <form action="Upload" method="post" enctype="multipart/form-data">
+                Typ balíku: <input name="packageType" type="text"/>
+                Súbor: <input id="my-file-selector" name="file" type="file" accept=".csv" style="border-bottom-left-radius: 10px" onload="return 5" onchange="$('#upload-file-info').html($(this).val());">
+                <input type="submit" value="Nahraj"/>
+            </form>
         </label>
         <span class='label label-info' id="upload-file-info"></span>
     </div>
