@@ -1,11 +1,13 @@
 package annotator.server;
 
 import annotator.model.activepackage.ActivePackageRepository;
+import annotator.model.pack.PackageCreator;
 import annotator.model.pack.PackageRepository;
 import annotator.model.type.TypeRepository;
 import annotator.model.user.UserCreator;
 import annotator.model.user.UserRepository;
 import annotator.model.vote.VoteRepository;
+import annotator.model.word.WordCreator;
 import annotator.model.word.WordRepository;
 import com.mongodb.client.MongoDatabase;
 
@@ -76,6 +78,20 @@ public class ServiceLocator {
         return (UserCreator) this.getService(
             "user_creator",
             () -> new UserCreator(this.database)
+        );
+    }
+
+    public PackageCreator getPackageCreator() {
+        return (PackageCreator) this.getService(
+            "package_creator",
+            () -> new PackageCreator(this.database)
+        );
+    }
+
+    public WordCreator getWordCreator() {
+        return (WordCreator) this.getService(
+            "word_creator",
+            () -> new WordCreator(this.database)
         );
     }
 }
