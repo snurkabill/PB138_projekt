@@ -13,7 +13,7 @@
 
                 <ul>
                     <c:forEach items="${typePackages.get(type.getId())}" var="pack">
-                        <li><a href="">${pack.getName()}</a></li>
+                        <li><a href="/auth/marking-manager?packageId=${pack.getId()}">${pack.getName()}</a></li>
                     </c:forEach>
                 </ul>
             </li>
