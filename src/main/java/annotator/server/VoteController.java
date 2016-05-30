@@ -2,6 +2,7 @@ package annotator.server;
 
 import annotator.model.activepackage.ActivePackage;
 import annotator.model.activepackage.ActivePackageNotFoundException;
+import annotator.model.activepackage.ActivePackageProgressKeeper;
 import annotator.model.activepackage.ActivePackageRepository;
 import annotator.model.vote.Voter;
 import annotator.model.word.WordNotFoundException;
@@ -20,12 +21,14 @@ public class VoteController extends Controller {
     private Voter voter;
     private ActivePackageRepository activePackageRepository;
     private WordRepository wordRepository;
+    private ActivePackageProgressKeeper activePackageProgressKeeper;
 
     @Override
     protected void initializeDependencies(ServiceLocator serviceLocator) {
         this.voter = serviceLocator.getVoter();
         this.activePackageRepository = serviceLocator.getActivePackageRepository();
         this.wordRepository = serviceLocator.getWordRepository();
+        this.activePackageProgressKeeper = serviceLocator.getActivePackageProgressKeeper();
     }
 
     @Override
@@ -60,7 +63,7 @@ public class VoteController extends Controller {
                 vote.equals("yes"),
                 duration
             );
-            this.activePackageRepository.update(activePackage.increaseProgress());
+            this.activePackageProgressKeeper.update(activePackage.increaseProgress());
 
         } catch (ActivePackageNotFoundException | WordNotFoundException e) {
             System.out.println(e.getMessage());
