@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 @WebServlet(urlPatterns = {"/auth/marking-manager"})
-public class MarkingManager extends Controller {
+public class MarkingManagerController extends Controller {
 
     private PackageRepository packageRepository;
     private ActivePackageRepository activePackageRepository;

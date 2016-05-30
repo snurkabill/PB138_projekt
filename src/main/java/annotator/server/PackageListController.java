@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @WebServlet(urlPatterns = {"/auth/package-list"})
-public class PackageList extends Controller {
+public class PackageListController extends Controller {
 
     private PackageRepository packageRepository;
     private TypeRepository typeRepository;

@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(urlPatterns={"/Login"})
-public class Login extends Controller {
+public class LoginController extends Controller {
 
     private UserRepository userRepository;
 
