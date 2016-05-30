@@ -1,7 +1,7 @@
 package annotator.server;
 
 import annotator.model.activepackage.ActivePackage;
-import annotator.model.activepackage.ActivePackageRepository;
+import annotator.model.activepackage.ActivePackageCreator;
 import annotator.model.pack.Package;
 import annotator.model.pack.PackageNotFoundException;
 import annotator.model.pack.PackageRepository;
@@ -23,16 +23,16 @@ import java.util.Date;
 public class MarkingManagerController extends Controller {
 
     private PackageRepository packageRepository;
-    private ActivePackageRepository activePackageRepository;
     private WordRepository wordRepository;
     private TypeRepository typeRepository;
+    private ActivePackageCreator activePackageCreator;
 
     @Override
     protected void initializeDependencies(ServiceLocator serviceLocator) {
         this.packageRepository = serviceLocator.getPackageRepository();
-        this.activePackageRepository = serviceLocator.getActivePackageRepository();
         this.wordRepository = serviceLocator.getWordRepository();
         this.typeRepository = serviceLocator.getTypeRepository();
+        this.activePackageCreator = serviceLocator.getActivePackageCreator();
     }
 
     @Override
@@ -53,11 +53,8 @@ public class MarkingManagerController extends Controller {
         try {
             Date date = new Date();
             this.template.set("start", date.getTime());
-            ActivePackage activePackage = this.activePackageRepository.getOrMakeNew(
-                packageId,
-                this.getUser().getId(),
-                this.packageRepository
-            );
+
+            ActivePackage activePackage = this.activePackageCreator.createIfDoesNotExist(packageId, this.getUser().getId());
 
             Package pack = this.packageRepository.getPackage(activePackage.getPackageId());
             if (activePackage.getProgress().equals(pack.getWordCount())) {
@@ -67,7 +64,7 @@ public class MarkingManagerController extends Controller {
             ArrayList<String> words = pack.getWordList();
             Word word = this.wordRepository.getWord(words.get(activePackage.getProgress()));
 
-            this.template.set("packageId", activePackage.getId());
+            this.template.set("packageId", pack.getId());
             this.template.set("word", word);
             this.template.set("currentPosition", activePackage.getProgress() + 1);
             this.template.set("fullSize", pack.getWordCount());

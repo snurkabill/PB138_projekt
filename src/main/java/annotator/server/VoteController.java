@@ -44,12 +44,15 @@ public class VoteController extends Controller {
         response.sendRedirect("marking-manager?packageId=" + request.getParameter("packageId"));
     }
 
-    private void vote(String activePackageId, String vote, long longDuration, String wordId) {
+    private void vote(String packageId, String vote, long longDuration, String wordId) {
         try {
             Date now = new Date();
             Integer duration = ((Long) (now.getTime() - longDuration)).intValue();
 
-            ActivePackage activePackage = this.activePackageRepository.getActivePackage(activePackageId);
+            ActivePackage activePackage = this.activePackageRepository.getActivePackage(
+                packageId,
+                this.getUser().getId()
+            );
 
             this.voter.vote(
                 this.getUser().getId(),

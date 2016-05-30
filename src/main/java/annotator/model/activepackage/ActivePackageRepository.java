@@ -9,6 +9,7 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
@@ -20,39 +21,17 @@ public class ActivePackageRepository extends AbstractRepository {
         this.activePackages = database.getCollection("activePackages");
     }
 
-    public ActivePackage getActivePackage(String activePackageId) throws ActivePackageNotFoundException {
-        Document activePackageDocument = this.findOneById(
-            this.activePackages,
-            activePackageId
-        );
+    public ActivePackage getActivePackage(String packageId, String userId) throws ActivePackageNotFoundException {
+        Document activePackageDocument = this.activePackages.find(Filters.and(
+            Filters.eq("package_id", packageId),
+            Filters.eq("user_id", userId)
+        )).first();
 
         if (activePackageDocument == null) {
-            throw new ActivePackageNotFoundException(activePackageId);
+            throw new ActivePackageNotFoundException(packageId, userId);
         }
 
         return new ActivePackage(activePackageDocument);
-    }
-
-    public ActivePackage makeNew(Package pack, String userId) {
-        Document newPack = new Document()
-            .append("user_id", userId)
-            .append("package_id", pack.getId())
-            .append("progress", 0);
-        this.activePackages.insertOne(newPack);
-        return new ActivePackage(newPack);
-    }
-
-    public ActivePackage getOrMakeNew(String packageId, String userId, PackageRepository packageRepository) throws PackageNotFoundException, TypeNotFoundException {
-        ActivePackage activePackage;
-        try {
-            activePackage = this.getActivePackage(packageId);
-        } catch (ActivePackageNotFoundException e) {
-            System.out.println("There is no active package od this type, creating new...\n");
-            activePackage = null;
-        }
-        return activePackage == null
-            ? this.makeNew(packageRepository.getPackage(packageId), userId)
-            : activePackage;
     }
 
     public void update(ActivePackage activePackage){

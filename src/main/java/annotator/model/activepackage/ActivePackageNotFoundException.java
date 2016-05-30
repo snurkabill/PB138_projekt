@@ -2,10 +2,11 @@ package annotator.model.activepackage;
 
 public class ActivePackageNotFoundException extends Exception {
 
-    public ActivePackageNotFoundException(String activePackageId) {
+    public ActivePackageNotFoundException(String packageId, String userId) {
         super(String.format(
-            "Active package %s not found.",
-            activePackageId
+            "Active package not found for package id %s and user id %s.",
+            packageId,
+            userId
         ));
     }
 }
