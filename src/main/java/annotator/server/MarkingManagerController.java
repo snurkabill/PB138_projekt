@@ -8,7 +8,7 @@ import annotator.model.pack.PackageNotFoundException;
 import annotator.model.pack.PackageRepository;
 import annotator.model.type.TypeNotFoundException;
 import annotator.model.type.TypeRepository;
-import annotator.model.vote.VoteRepository;
+import annotator.model.vote.Voter;
 import annotator.model.word.Word;
 import annotator.model.word.WordNotFoundException;
 import annotator.model.word.WordRepository;
@@ -28,7 +28,7 @@ public class MarkingManagerController extends Controller {
     private ActivePackageRepository activePackageRepository;
     private WordRepository wordRepository;
     private TypeRepository typeRepository;
-    private VoteRepository voteRepository;
+    private Voter voter;
 
     @Override
     protected void initializeDependencies(ServiceLocator serviceLocator) {
@@ -36,7 +36,7 @@ public class MarkingManagerController extends Controller {
         this.activePackageRepository = serviceLocator.getActivePackageRepository();
         this.wordRepository = serviceLocator.getWordRepository();
         this.typeRepository = serviceLocator.getTypeRepository();
-        this.voteRepository = serviceLocator.getVoteRepository();
+        this.voter = serviceLocator.getVoter();
     }
 
     @Override
@@ -48,9 +48,9 @@ public class MarkingManagerController extends Controller {
 
             } else {
                 this.render(
-                        "answerBlock.jsp",
-                        request,
-                        response
+                    "answerBlock.jsp",
+                    request,
+                    response
                 );
             }
 
@@ -113,9 +113,9 @@ public class MarkingManagerController extends Controller {
 
             ActivePackage activePackage = this.activePackageRepository.getActivePackage(activePackageId);
 
-            this.voteRepository.addVote(
+            this.voter.vote(
                 this.getUser().getId(),
-                wordRepository.getWord(wordId),
+                this.wordRepository.getWord(wordId),
                 vote.equals("yes"),
                 duration
             );

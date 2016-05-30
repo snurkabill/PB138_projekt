@@ -8,6 +8,7 @@ import annotator.model.type.TypeRepository;
 import annotator.model.user.UserCreator;
 import annotator.model.user.UserRepository;
 import annotator.model.vote.VoteRepository;
+import annotator.model.vote.Voter;
 import annotator.model.word.WordCreator;
 import annotator.model.word.WordRepository;
 import com.mongodb.client.MongoDatabase;
@@ -100,6 +101,13 @@ public class ServiceLocator {
         return (TypeCreator) this.getService(
             "type_creator",
             () -> new TypeCreator(this.database)
+        );
+    }
+
+    public Voter getVoter() {
+        return (Voter) this.getService(
+            "voter",
+            () -> new Voter(this.database)
         );
     }
 }
