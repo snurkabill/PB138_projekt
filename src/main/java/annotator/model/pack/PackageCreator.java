@@ -14,10 +14,11 @@ public class PackageCreator {
 
     public PackageCreator(MongoDatabase database) { this.packages = database.getCollection("packages"); }
 
-    public Package create(String typeId, Integer wordCount, ArrayList<String> wordList) throws PackageCreateConflictException {
+    public Package create(String typeId, String name, Integer wordCount, ArrayList<String> wordList) throws PackageCreateConflictException {
         try {
             Document packageDocument = new Document()
                     .append("type_id", typeId)
+                    .append("name", name)
                     .append("word_count", wordCount)
                     .append("words", wordList);
 
@@ -25,7 +26,7 @@ public class PackageCreator {
             return new Package(packageDocument);
 
         } catch (MongoWriteException e) {
-            throw new PackageCreateConflictException();
+            throw new PackageCreateConflictException("Conflict with package " + name);
         }
     }
 }

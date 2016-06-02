@@ -52,5 +52,14 @@ public class TypeRepository extends AbstractRepository {
 
         return new Type(typeDocument);
     }
+
+    public void removeType(String typeId) {
+        Document typeDocument = this.findOneById(
+                this.types,
+                typeId
+        );
+
+        this.types.deleteOne(typeDocument);
+    }
 }
 

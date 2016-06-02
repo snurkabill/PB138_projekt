@@ -66,4 +66,7 @@ public class PackageRepository extends AbstractRepository {
         return Collections.unmodifiableList(unactivePackages);
     }
 
+    public boolean existsPackageByName(String name) {
+        return this.packages.find(Filters.eq("name", name)).first() == null;
+    }
 }

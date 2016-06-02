@@ -14,8 +14,9 @@
         <p style="padding-top: 10%">Upload .csv file to parse as package</p>
         <label class="btn btn-primary btn-default " for="my-file-selector">
             <form action="Upload" method="post" enctype="multipart/form-data">
-                Typ balíku: <input name="packageType" type="text"/>
-                Súbor: <input id="my-file-selector" name="file" type="file" accept=".csv" style="border-bottom-left-radius: 10px" onload="return 5" onchange="$('#upload-file-info').html($(this).val());">
+                Meno balíku: <input name="packageName" type="text" required="required"/>
+                Typ balíku: <input name="packageType" type="text" required="required"/>
+                Súbor: <input id="my-file-selector" name="file" type="file" required="required" accept=".csv" style="border-bottom-left-radius: 10px" onload="return 5" onchange="$('#upload-file-info').html($(this).val());">
                 <input type="submit" value="Nahraj"/>
             </form>
         </label>

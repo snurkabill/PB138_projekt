@@ -7,6 +7,7 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import org.bson.Document;
 
+import javax.print.Doc;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,5 +42,16 @@ public class WordRepository extends AbstractRepository {
         }
         cursor.close();
         return words;
+    }
+
+    public void removeWord(String wordId) {
+        Document wordDocument = this.findOneById(
+                this.words,
+                wordId
+        );
+
+        if (wordDocument != null) {
+            this.words.deleteOne(wordDocument);
+        }
     }
 }
