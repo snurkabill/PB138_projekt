@@ -2,7 +2,7 @@ package annotator.model.pack;
 
 import org.bson.Document;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Package {
 
@@ -10,13 +10,13 @@ public class Package {
     private final String typeId;
     private final String name;
     private final Integer wordCount;
-    private final ArrayList<String> wordList;
+    private final List<String> wordList;
 
     public Package(
         String id,
         String typeId,
         String name,
-        ArrayList<String> wordList
+        List<String> wordList
     ) {
         this.id = id;
         this.typeId = typeId;
@@ -30,7 +30,7 @@ public class Package {
             document.getObjectId("_id").toString(),
             document.getString("type_id"),
             document.getString("name"),
-            (ArrayList<String>) document.get("words")
+            (List<String>) document.get("words")
         );
     }
 
@@ -50,7 +50,7 @@ public class Package {
         return this.wordCount;
     }
 
-    public ArrayList<String> getWordList() {
+    public List<String> getWordList() {
         return this.wordList;
     }
 }

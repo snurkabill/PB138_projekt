@@ -16,8 +16,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @WebServlet(urlPatterns = {"/auth/marking-manager"})
 public class MarkingManagerController extends Controller {
@@ -61,7 +61,7 @@ public class MarkingManagerController extends Controller {
                 return false;
             }
 
-            ArrayList<String> words = pack.getWordList();
+            List<String> words = pack.getWordList();
             Word word = this.wordRepository.getWord(words.get(activePackage.getProgress()));
 
             this.template.set("packageId", pack.getId());
