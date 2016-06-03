@@ -1,8 +1,6 @@
 package annotator.model.statistics.collector;
 
-import annotator.model.statistics.domain.Statistics;
-import annotator.model.statistics.domain.UserStatistics;
-import annotator.model.statistics.domain.WordStatistics;
+import annotator.model.statistics.domain.*;
 import annotator.model.vote.Vote;
 import annotator.model.vote.VoteRepository;
 import annotator.model.word.WordRepository;
@@ -33,9 +31,11 @@ public class AllStatisticsCollector {
         List<Vote> allVotesList = voteRepository.getAllVotes();
         Set<String> userIdSet = new HashSet<>();
         Set<String> wordIdSet = new HashSet<>();
+        Set<String> packageIdSet = new HashSet<>();
         for (Vote vote : allVotesList) {
             userIdSet.add(vote.getUserId());
             wordIdSet.add(vote.getWordId());
+            packageIdSet.add(vote.getPackageId());
         }
 
         List<UserStatistics> userStatisticsList = new ArrayList<>();
@@ -48,10 +48,18 @@ public class AllStatisticsCollector {
             wordStatisticsList.add((WordStatistics)wordStatisticsCollector.getWordStatistics(wordId));
         }
 
-        throw new UnsupportedOperationException("TODO: finish all statistics");
+        List<PackageStatistics> packageStatisticsList = new ArrayList<>();
+        for (String packageId : packageIdSet) {
+            packageStatisticsList.add((PackageStatistics)packageStatisticsCollector.getPackageStatistics(packageId));
+        }
 
-//        return new AllStatistics(userStatisticsList, wordStatisticsList,
-//                userStatisticsCollector.getAllUserStatistics(), wordStatisticsCollector.getAllWordStatistics());
+        return new AllStatistics(
+                userStatisticsList,
+                wordStatisticsList,
+                packageStatisticsList,
+                userStatisticsCollector.getAllUserStatistics(),
+                wordStatisticsCollector.getAllWordStatistics()
+        );
     }
 
 }
