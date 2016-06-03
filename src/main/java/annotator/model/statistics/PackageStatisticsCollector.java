@@ -1,6 +1,7 @@
 package annotator.model.statistics;
 
 import annotator.model.statistics.domain.PackageStatistics;
+import annotator.model.statistics.domain.Statistics;
 import annotator.model.vote.Vote;
 import annotator.model.vote.VoteRepository;
 import annotator.model.word.Word;
@@ -19,7 +20,7 @@ public class PackageStatisticsCollector {
         this.wordRepository = wordRepository;
     }
 
-    public PackageStatistics getPackageStatistics(String packageId) {
+    public Statistics getPackageStatistics(String packageId) {
         List<Word> wordList = wordRepository.getWordByPackageId(packageId);
         List<Vote> voteList = new ArrayList<>();
         for (Word aWordList : wordList) {
