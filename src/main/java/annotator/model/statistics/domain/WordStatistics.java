@@ -6,7 +6,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.util.List;
 
 @XStreamAlias("WordStatistics")
-public class WordStatistics {
+public class WordStatistics extends Statistics {
 
     private final Double trueRatio;
     private final Double averageDuration;

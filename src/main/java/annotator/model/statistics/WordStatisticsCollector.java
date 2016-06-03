@@ -1,5 +1,6 @@
 package annotator.model.statistics;
 
+import annotator.model.statistics.domain.Statistics;
 import annotator.model.statistics.domain.WordStatistics;
 import annotator.model.vote.VoteRepository;
 
@@ -11,7 +12,7 @@ public class WordStatisticsCollector {
         this.voteRepository = voteRepository;
     }
 
-    public WordStatistics getWordStatistics(String wordId) {
+    public Statistics getWordStatistics(String wordId) {
         return new WordStatistics(voteRepository.getVotesByWordId(wordId));
     }
 }
