@@ -3,8 +3,6 @@ package annotator.server;
 import annotator.model.pack.PackageCreateConflictException;
 import annotator.model.pack.PackageCreator;
 import annotator.model.type.*;
-import annotator.model.word.Word;
-import annotator.model.word.WordCreateConflictException;
 import annotator.model.word.WordCreator;
 import annotator.model.word.WordRepository;
 import au.com.bytecode.opencsv.CSVReader;
@@ -17,7 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @WebServlet(urlPatterns = {"/auth/Upload"})
 @MultipartConfig
@@ -55,8 +55,8 @@ public class UploadController extends Controller {
 
         Type type = this.typeCreator.createIfDoesNotExist(packageType);
 
-        ArrayList<String> wordIds = null;
-        ArrayList<Word> words = new ArrayList<>();
+        List<String> wordIds = null;
+        Map<String, Boolean> words = new HashMap<>();
         String typeId = type.getId();
         int wordCounter = 0;
         int packageCounter = 0;
@@ -67,12 +67,12 @@ public class UploadController extends Controller {
 
                 if (wordCounter % 1000 == 0 && wordCounter != 0) {
                     /* Create new package */
-                    wordIds = this.insertWordsToDatabase(words);
+                    wordIds = this.wordCreator.createMany(typeId, words);
 
                     this.packageCreator.create(typeId, packageName + "-" + packageCounter, wordIds);
                     ++packageCounter;
-                    words.clear();
                     wordIds.clear();
+                    words.clear();
                 }
 
                 String wordName = line[0];
@@ -101,7 +101,8 @@ public class UploadController extends Controller {
                     throw new InvalidFileFormatException("Invalid file format on line " + (wordCounter + 1));
                 }
 
-                words.add(new Word(null, typeId, wordName, belongsToType));
+                words.put(wordName, belongsToType);
+
                 ++wordCounter;
             }
 
@@ -109,14 +110,14 @@ public class UploadController extends Controller {
                 throw new InvalidFileFormatException("File is empty");
             }
 
-            wordIds = this.insertWordsToDatabase(words);
+            wordIds = this.wordCreator.createMany(typeId, words);
             this.packageCreator.create(typeId, (packageCounter > 1) ? packageName + "-" + packageCounter : packageName, wordIds);
             ++packageCounter;
 
             this.template.set("message", "File was successfully uploaded as " + packageCounter + (packageCounter == 1 ? " package" : " packages"));
             this.render("/auth/upload.jsp", request, response);
 
-        } catch (InvalidFileFormatException | WordCreateConflictException | PackageCreateConflictException e) {
+        } catch (InvalidFileFormatException | PackageCreateConflictException e) {
             if (wordIds != null) {
                 for (String wordId : wordIds) {
                     this.wordRepository.removeWord(wordId);
@@ -125,25 +126,5 @@ public class UploadController extends Controller {
             this.template.set("alertMessage", "Error uploading file: " + e.getMessage() + "<br/>" + packageCounter + (packageCounter == 1 ? " package" : " packages") + " created");
             this.render("/auth/upload.jsp", request, response);
         }
-    }
-
-    private ArrayList<String> insertWordsToDatabase(ArrayList<Word> words) throws WordCreateConflictException {
-
-        ArrayList<String> wordIds = new ArrayList<>();
-
-        try {
-            for (Word w : words) {
-                Word insertedWord = this.wordCreator.create(w.getTypeId(), w.getWord(), w.belongsToType());
-                wordIds.add(insertedWord.getId());
-            }
-
-        } catch (WordCreateConflictException e) {
-            for (String wordId : wordIds) {
-                this.wordRepository.removeWord(wordId);
-            }
-            throw new WordCreateConflictException(e.getMessage());
-        }
-
-        return wordIds;
     }
 }

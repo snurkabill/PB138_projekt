@@ -6,6 +6,11 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 public class WordCreator {
 
     private final MongoCollection<Document> words;
@@ -14,18 +19,23 @@ public class WordCreator {
         this.words = database.getCollection("words");
     }
 
-    public Word create(String typeId, String word, Boolean belongsToType) throws WordCreateConflictException {
-        try {
-            Document wordDocument = new Document()
-                .append("type_id", typeId)
-                .append("word", word)
-                .append("belongs_to_type", belongsToType);
+    public List<String> createMany(String typeId, Map<String, Boolean> words) {
+        List<Document> wordList = words
+            .entrySet()
+            .stream()
+            .map(
+                word -> new Document()
+                    .append("type_id", typeId)
+                    .append("word", word.getKey())
+                    .append("belongs_to_type", word.getValue())
+            )
+            .collect(Collectors.toList());
 
-            this.words.insertOne(wordDocument);
-            return new Word(wordDocument);
+        this.words.insertMany(wordList);
 
-        } catch (MongoWriteException e) {
-            throw new WordCreateConflictException();
-        }
+        return wordList
+            .stream()
+            .map(word -> word.getObjectId("_id").toString())
+            .collect(Collectors.toList());
     }
 }
