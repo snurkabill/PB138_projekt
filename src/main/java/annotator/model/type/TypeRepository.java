@@ -42,5 +42,24 @@ public class TypeRepository extends AbstractRepository {
 
         return types;
     }
+
+    public Type findOneByType(String type) {
+        Document typeDocument = types.find(Filters.eq("type", type)).first();
+
+        if (typeDocument == null) {
+            return null;
+        }
+
+        return new Type(typeDocument);
+    }
+
+    public void removeType(String typeId) {
+        Document typeDocument = this.findOneById(
+                this.types,
+                typeId
+        );
+
+        this.types.deleteOne(typeDocument);
+    }
 }
 
