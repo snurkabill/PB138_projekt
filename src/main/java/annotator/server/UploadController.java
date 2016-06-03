@@ -54,12 +54,12 @@ public class UploadController extends Controller {
             return;
         }
 
-        Type type = typeRepository.findOneByType(packageType);
+        Type type = this.typeRepository.findOneByType(packageType);
         boolean typeCreated = false;
 
         try {
             if (type == null) {
-                type = typeCreator.create(packageType);
+                type = this.typeCreator.create(packageType);
                 typeCreated = true;
             }
         } catch (TypeCreateConflictException e) {
@@ -79,9 +79,9 @@ public class UploadController extends Controller {
 
                 if (wordCounter % 1000 == 0 && wordCounter != 0) {
                     /* Create new package */
-                    wordIds = insertWordsToDatabase(words);
+                    wordIds = this.insertWordsToDatabase(words);
 
-                    packageCreator.create(typeId, packageName + "-" + packageCounter, wordIds);
+                    this.packageCreator.create(typeId, packageName + "-" + packageCounter, wordIds);
                     ++packageCounter;
                     words.clear();
                     wordIds.clear();
@@ -123,8 +123,8 @@ public class UploadController extends Controller {
                 throw new InvalidFileFormatException("File is empty");
             }
 
-            wordIds = insertWordsToDatabase(words);
-            packageCreator.create(typeId, (packageCounter > 1) ? packageName + "-" + packageCounter : packageName, wordIds);
+            wordIds = this.insertWordsToDatabase(words);
+            this.packageCreator.create(typeId, (packageCounter > 1) ? packageName + "-" + packageCounter : packageName, wordIds);
             ++packageCounter;
 
             this.template.set("message", "File was successfully uploaded as " + packageCounter + (packageCounter == 1 ? " package" : " packages"));
@@ -133,11 +133,11 @@ public class UploadController extends Controller {
         } catch (InvalidFileFormatException | WordCreateConflictException | PackageCreateConflictException e) {
             if (wordIds != null) {
                 for (String wordId : wordIds) {
-                    wordRepository.removeWord(wordId);
+                    this.wordRepository.removeWord(wordId);
                 }
             }
             if (typeCreated && packageCounter == 0) {
-                typeRepository.removeType(typeId);
+                this.typeRepository.removeType(typeId);
             }
             this.template.set("alertMessage", "Error uploading file: " + e.getMessage() + "<br/>" + packageCounter + (packageCounter == 1 ? " package" : " packages") + " created");
             this.render("/auth/upload.jsp", request, response);
@@ -150,13 +150,13 @@ public class UploadController extends Controller {
 
         try {
             for (Word w : words) {
-                Word insertedWord = wordCreator.create(w.getTypeId(), w.getWord(), w.belongsToType());
+                Word insertedWord = this.wordCreator.create(w.getTypeId(), w.getWord(), w.belongsToType());
                 wordIds.add(insertedWord.getId());
             }
 
         } catch (WordCreateConflictException e) {
             for (String wordId : wordIds) {
-                wordRepository.removeWord(wordId);
+                this.wordRepository.removeWord(wordId);
             }
             throw new WordCreateConflictException(e.getMessage());
         }

@@ -41,21 +41,21 @@ public class VoteRepository extends AbstractRepository {
     }
 
     public List<Vote> getVotesByWordId(String wordId) {
-        MongoCursor<Document> cursor = votes.find(
+        MongoCursor<Document> cursor = this.votes.find(
             Filters.eq("word_id", wordId)
         ).iterator();
-        return getVotes(cursor);
+        return this.getVotes(cursor);
     }
 
     public List<Vote> getAllVotesByUserId(String userId) {
-        MongoCursor<Document> cursor = votes.find(
+        MongoCursor<Document> cursor = this.votes.find(
             Filters.eq("user_id", userId)
         ).iterator();
-        return getVotes(cursor);
+        return this.getVotes(cursor);
     }
 
     public List<Vote> getNoisyVotesByUserId(String userId) {
-        MongoCursor<Document> cursor = votes.find(
+        MongoCursor<Document> cursor = this.votes.find(
             Filters.and(
                 Filters.eq("user_id", userId),
                 Filters.not(
@@ -63,7 +63,7 @@ public class VoteRepository extends AbstractRepository {
                 )
             )
         ).iterator();
-        return getVotes(cursor);
+        return this.getVotes(cursor);
     }
 
 }

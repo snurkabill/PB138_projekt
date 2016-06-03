@@ -37,7 +37,7 @@ public class PackageRepository extends AbstractRepository {
         HashMap<String, Package> packages = new HashMap<>();
 
         Package pack;
-        for (Document document: this.packages.find()) {
+        for (Document document : this.packages.find()) {
             pack = new Package(document);
             packages.put(pack.getId(), pack);
         }
@@ -48,7 +48,7 @@ public class PackageRepository extends AbstractRepository {
     public List<Package> getPackagesByType(Type type) {
         ArrayList<Package> packages = new ArrayList<>();
 
-        for (Document document: this.packages.find(Filters.eq("type_id", type.getId()))) {
+        for (Document document : this.packages.find(Filters.eq("type_id", type.getId()))) {
             packages.add(new Package(document));
         }
 

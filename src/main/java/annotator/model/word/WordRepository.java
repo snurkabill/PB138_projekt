@@ -7,7 +7,6 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import org.bson.Document;
 
-import javax.print.Doc;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +32,7 @@ public class WordRepository extends AbstractRepository {
     }
 
     public List<Word> getWordByPackageId(String packageId) {
-        MongoCursor<Document> cursor = words.find(
+        MongoCursor<Document> cursor = this.words.find(
             Filters.eq("package_id", packageId)
         ).iterator();
         List<Word> words = new ArrayList<>();
@@ -46,8 +45,8 @@ public class WordRepository extends AbstractRepository {
 
     public void removeWord(String wordId) {
         Document wordDocument = this.findOneById(
-                this.words,
-                wordId
+            this.words,
+            wordId
         );
 
         if (wordDocument != null) {

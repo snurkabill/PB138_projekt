@@ -1,11 +1,6 @@
 package annotator.model.user;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.model.Filters;
-import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
-import org.bson.types.ObjectId;
 
 public class User {
 

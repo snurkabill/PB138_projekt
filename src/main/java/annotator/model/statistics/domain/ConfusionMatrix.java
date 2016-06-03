@@ -94,9 +94,9 @@ public class ConfusionMatrix {
         this.meanClassificationAccuracy = (this.overallAccuracy + this.averageAccuracy) / 2.0;
 
         this.randomAgreementProbability = (
-                this.trueClassesCount * this.predictedTrueClassesCount +
+            this.trueClassesCount * this.predictedTrueClassesCount +
                 this.falseClassesCount * this.predictedFalseClassesCount)
-                / Math.pow(totalPopulation, 2.0);
+            / Math.pow(totalPopulation, 2.0);
 
         this.truePrecision = this.truePositive / (double) (this.truePositive + this.falsePositive);
         this.falsePrecision = this.falsePositive / (double) (this.truePositive + this.falsePositive);

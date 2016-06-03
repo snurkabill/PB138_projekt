@@ -5,12 +5,8 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import org.bson.Document;
-import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class TypeRepository extends AbstractRepository {
 
@@ -36,7 +32,7 @@ public class TypeRepository extends AbstractRepository {
     public ArrayList<Type> getTypesList() {
         ArrayList<Type> types = new ArrayList<>();
 
-        for (Document document: this.types.find()) {
+        for (Document document : this.types.find()) {
             types.add(new Type(document));
         }
 
@@ -44,7 +40,7 @@ public class TypeRepository extends AbstractRepository {
     }
 
     public Type findOneByType(String type) {
-        Document typeDocument = types.find(Filters.eq("type", type)).first();
+        Document typeDocument = this.types.find(Filters.eq("type", type)).first();
 
         if (typeDocument == null) {
             return null;
@@ -55,8 +51,8 @@ public class TypeRepository extends AbstractRepository {
 
     public void removeType(String typeId) {
         Document typeDocument = this.findOneById(
-                this.types,
-                typeId
+            this.types,
+            typeId
         );
 
         this.types.deleteOne(typeDocument);

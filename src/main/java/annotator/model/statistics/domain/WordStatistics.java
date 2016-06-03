@@ -13,9 +13,9 @@ public class WordStatistics {
 
     public WordStatistics(List<Vote> voteList) {
         this.trueRatio = ((Long) voteList.stream()
-                .filter(Vote::getBelongsToType)
-                .count())
-                .doubleValue() / voteList.size();
+            .filter(Vote::getBelongsToType)
+            .count())
+            .doubleValue() / voteList.size();
         this.averageDuration = voteList.stream().mapToLong(Vote::getDuration).average().getAsDouble();
     }
 
