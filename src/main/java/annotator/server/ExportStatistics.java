@@ -3,7 +3,11 @@ package annotator.server;
 
 import annotator.model.activepackage.ActivePackageCreator;
 import annotator.model.pack.PackageRepository;
+import annotator.model.statistics.StatisticsToXmlExporter;
+import annotator.model.statistics.WordStatisticsCollector;
+import annotator.model.statistics.domain.Statistics;
 import annotator.model.type.TypeRepository;
+import annotator.model.user.UserRepository;
 import annotator.model.vote.VoteRepository;
 import annotator.model.word.WordRepository;
 
@@ -19,29 +23,28 @@ import java.io.*;
 public class ExportStatistics extends Controller {
 
     private VoteRepository voteRepository;
+    private WordRepository wordRepository;
+    private UserRepository userRepository;
 
     @Override
     protected void initializeDependencies(ServiceLocator serviceLocator) {
         this.voteRepository = serviceLocator.getVoteRepository();
+        this.wordRepository = serviceLocator.getWordRepository();
+        this.userRepository = serviceLocator.getUserRepository();
     }
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String filePath = getServletContext().getRealPath("") + "auth/output.xml";
         PrintWriter printWriter = new PrintWriter(filePath);
-        
-        //        File outputFile;
-//        if (this.session.getAttribute("authenticatedUser") == "admin") {
-//            //admin can export all data
-//            //File my_file =
-//
-//        }else {
-//            //user can export only his data
-//            //File my_file =
-//        }
 
+//        WordStatisticsCollector wordStatisticsCollector = new WordStatisticsCollector(this.voteRepository);
+//        Statistics statistics = wordStatisticsCollector.getWordStatistics("11");
+//        String output = new StatisticsToXmlExporter(statistics).getInXml();
 
-
+        String output = "<statistic> ahoj </statistic>";
+        printWriter.append(output);
+        printWriter.close();
         File downloadFile = new File(filePath);
         FileInputStream inStream = new FileInputStream(downloadFile);
         // if you want to use a relative path to context root:
