@@ -41,7 +41,7 @@ public class PackageListController extends Controller {
         this.template.set("typePackages", packages);
 
         this.render(
-            "markWords.jsp",
+            "packageList.jsp",
             request,
             response
         );

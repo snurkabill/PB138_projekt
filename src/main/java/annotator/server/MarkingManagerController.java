@@ -8,7 +8,6 @@ import annotator.model.pack.PackageNotFoundException;
 import annotator.model.pack.PackageRepository;
 import annotator.model.type.TypeNotFoundException;
 import annotator.model.type.TypeRepository;
-import annotator.model.user.User;
 import annotator.model.vote.VoteRepository;
 import annotator.model.word.Word;
 import annotator.model.word.WordNotFoundException;
@@ -81,7 +80,7 @@ public class MarkingManagerController extends Controller {
             this.template.set("start", date.getTime());
             ActivePackage activePackage = this.activePackageRepository.getOrMakeNew(
                 packageId,
-                ((User) this.session.getAttribute("loggedUser")).getId(),
+                this.getUser().getId(),
                 this.packageRepository
             );
 
@@ -115,7 +114,7 @@ public class MarkingManagerController extends Controller {
             ActivePackage activePackage = this.activePackageRepository.getActivePackage(activePackageId);
 
             this.voteRepository.addVote(
-                ((User) session.getAttribute("loggedUser")).getId(),
+                this.getUser().getId(),
                 wordRepository.getWord(wordId),
                 vote.equals("yes"),
                 duration
