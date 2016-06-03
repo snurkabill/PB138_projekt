@@ -40,17 +40,17 @@ public class AllStatisticsCollector {
 
         List<UserStatistics> userStatisticsList = new ArrayList<>();
         for (String userId : userIdSet) {
-            userStatisticsList.add((UserStatistics)userStatisticsCollector.getUserStatistics(userId));
+            userStatisticsList.add((UserStatistics) userStatisticsCollector.getUserStatistics(userId));
         }
 
         List<WordStatistics> wordStatisticsList = new ArrayList<>();
         for (String wordId : wordIdSet) {
-            wordStatisticsList.add((WordStatistics)wordStatisticsCollector.getWordStatistics(wordId));
+            wordStatisticsList.add((WordStatistics) wordStatisticsCollector.getWordStatistics(wordId));
         }
 
         List<PackageStatistics> packageStatisticsList = new ArrayList<>();
         for (String packageId : packageIdSet) {
-            packageStatisticsList.add((PackageStatistics)packageStatisticsCollector.getPackageStatistics(packageId));
+            packageStatisticsList.add((PackageStatistics) packageStatisticsCollector.getPackageStatistics(packageId));
         }
 
         return new AllStatistics(

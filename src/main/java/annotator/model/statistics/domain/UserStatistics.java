@@ -18,7 +18,7 @@ public class UserStatistics extends Statistics {
     public UserStatistics(List<Vote> noisyVoteList, List<Vote> allVoteList, String userId) {
         this.userId = userId;
         this.trueRatio = ((Long) allVoteList.stream()
-            .filter(Vote::getBelongsToType)
+            .filter(vote -> vote.getBelongsToType() != null)
             .count())
             .doubleValue() / allVoteList.size();
         this.averageDuration = allVoteList.stream().mapToLong(Vote::getDuration).average().getAsDouble();

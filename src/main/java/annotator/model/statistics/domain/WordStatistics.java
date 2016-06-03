@@ -15,6 +15,7 @@ public class WordStatistics extends Statistics {
     public WordStatistics(List<Vote> voteList, String wordId) {
         this.wordId = wordId;
         this.trueRatio = ((Long) voteList.stream()
+            .filter(vote -> vote.getBelongsToType() != null)
             .count())
             .doubleValue() / voteList.size();
         this.averageDuration = voteList.stream().mapToLong(Vote::getDuration).average().getAsDouble();
