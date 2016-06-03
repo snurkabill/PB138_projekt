@@ -26,7 +26,6 @@ public class UploadController extends Controller {
     private WordCreator wordCreator;
     private WordRepository wordRepository;
     private TypeCreator typeCreator;
-    private TypeRepository typeRepository;
 
     @Override
     protected void initializeDependencies(ServiceLocator serviceLocator) {
@@ -34,7 +33,6 @@ public class UploadController extends Controller {
         this.wordCreator = serviceLocator.getWordCreator();
         this.wordRepository = serviceLocator.getWordRepository();
         this.typeCreator = serviceLocator.getTypeCreator();
-        this.typeRepository = serviceLocator.getTypeRepository();
     }
 
     @Override
@@ -54,19 +52,7 @@ public class UploadController extends Controller {
             return;
         }
 
-        Type type = this.typeRepository.findOneByType(packageType);
-        boolean typeCreated = false;
-
-        try {
-            if (type == null) {
-                type = this.typeCreator.create(packageType);
-                typeCreated = true;
-            }
-        } catch (TypeCreateConflictException e) {
-            this.template.set("alertMessage", "Error creating type: " + e.getMessage());
-            this.render("/auth/upload.jsp", request, response);
-            return;
-        }
+        Type type = this.typeCreator.createIfDoesNotExist(packageType);
 
         ArrayList<String> wordIds = null;
         ArrayList<Word> words = new ArrayList<>();
@@ -135,9 +121,6 @@ public class UploadController extends Controller {
                 for (String wordId : wordIds) {
                     this.wordRepository.removeWord(wordId);
                 }
-            }
-            if (typeCreated && packageCounter == 0) {
-                this.typeRepository.removeType(typeId);
             }
             this.template.set("alertMessage", "Error uploading file: " + e.getMessage() + "<br/>" + packageCounter + (packageCounter == 1 ? " package" : " packages") + " created");
             this.render("/auth/upload.jsp", request, response);
