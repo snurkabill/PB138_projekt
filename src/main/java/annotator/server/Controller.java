@@ -16,14 +16,12 @@ public abstract class Controller extends HttpServlet {
 
     private ServiceLocator services;
     protected TemplateParameters template;
-    protected MongoDatabase database;
     protected HttpSession session;
 
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         this.template = new TemplateParameters();
-        this.database = (MongoDatabase) request.getServletContext().getAttribute("database");
-        this.services = new ServiceLocator(this.database);
+        this.services = new ServiceLocator((MongoDatabase) request.getServletContext().getAttribute("database"));
         this.session = request.getSession();
         this.initializeDependencies(this.services);
         super.service(request, response);
