@@ -14,7 +14,7 @@
                         <li class="menuFont"><a href="#">Average word duration</a></li>
                         <li class="menuFont"><a href="#">Cohen cappa</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="#">Export statistics</a></li>
+                        <li><a href="/auth/Export">Export statistics</a></li>
                     </ul>
                 </li>
                 <li><a href="upload.jsp">Upload Package</a></li>

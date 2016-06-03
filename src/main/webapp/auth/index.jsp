@@ -2,6 +2,9 @@
 <jsp:include page="../WEB-INF/header.jsp" />
 <jsp:include page="../WEB-INF/menu.jsp" />
 
+<%
+
+%>
 <div class="inner cover">
     <h1 class="cover-heading">Annotator</h1>
     <p>
