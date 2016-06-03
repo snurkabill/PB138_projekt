@@ -19,4 +19,11 @@ public class UserStatisticsCollector {
         List<Vote> noisyVotesList = voteRepository.getNoisyVotesByUserId(userId);
         return new UserStatistics(noisyVotesList, allVotesList);
     }
+
+    public UserStatistics getAllUserStatistics() {
+        List<Vote> allVotesList = voteRepository.getAllVotes();
+        List<Vote> allNoisyVotesList = voteRepository.getAllNoisyVotes();
+        return new UserStatistics(allNoisyVotesList, allVotesList);
+    }
+
 }
