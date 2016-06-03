@@ -13,14 +13,25 @@
         </c:if>
 
         <p style="padding-top: 10%">Upload .csv file to parse as package</p>
-        <label class="btn btn-primary btn-default " for="my-file-selector">
-            <form action="Upload" method="post" enctype="multipart/form-data">
-                Meno balíku: <input name="packageName" type="text" required="required"/>
-                Typ balíku: <input name="packageType" type="text" required="required"/>
-                Súbor: <input id="my-file-selector" name="file" type="file" required="required" accept=".csv" style="border-bottom-left-radius: 10px" onload="return 5" onchange="$('#upload-file-info').html($(this).val());">
-                <input type="submit" value="Nahraj"/>
-            </form>
-        </label>
+        <form action="Upload" method="post" enctype="multipart/form-data">
+
+            <div class="form-group">
+                <label for="package-name">Meno balíku:</label>
+                <input type="text" name="packageName" id="package-name" class="form-control" required />
+            </div>
+
+            <div class="form-group">
+                <label for="package-type">Typ balíku:</label>
+                <input type="text" name="packageType" id="package-type" class="form-control" required />
+            </div>
+
+            <div class="form-group">
+                <label for="my-file-selector">Súbor:</label>
+                <input type="file" name="file" id="my-file-selector" accept=".csv" required />
+            </div>
+
+            <button type="submit" class="btn btn-default">Nahraj</button>
+        </form>
         <span class='label label-info' id="upload-file-info"></span>
     </div>
 
