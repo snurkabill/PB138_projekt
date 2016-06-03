@@ -7,6 +7,7 @@ import annotator.model.word.Word;
 import annotator.model.word.WordCreateConflictException;
 import annotator.model.word.WordCreator;
 import annotator.model.word.WordRepository;
+import au.com.bytecode.opencsv.CSVReader;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -15,8 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 @WebServlet(urlPatterns = {"/auth/Upload"})
 @MultipartConfig
@@ -40,11 +41,11 @@ public class UploadController extends Controller {
 
         String packageName = request.getParameter("packageName");
         String packageType = request.getParameter("packageType");
-        Scanner fileContent;
+        CSVReader csv;
 
         try {
             Part file = request.getPart("file");
-            fileContent = new Scanner(file.getInputStream(), "UTF-8").useDelimiter("\\A");
+            csv = new CSVReader(new InputStreamReader(file.getInputStream()));
 
         } catch (ServletException | IOException e) {
             this.template.set("alertMessage", "Cannot upload file: " + e.getMessage());
@@ -61,7 +62,8 @@ public class UploadController extends Controller {
         int packageCounter = 0;
 
         try {
-            while (fileContent.hasNextLine()) {
+            String[] line;
+            while ((line = csv.readNext()) != null) {
 
                 if (wordCounter % 1000 == 0 && wordCounter != 0) {
                     /* Create new package */
@@ -73,19 +75,17 @@ public class UploadController extends Controller {
                     wordIds.clear();
                 }
 
-                String line = fileContent.nextLine();
-                String[] parts = line.split(",");
-                String wordName = parts[0];
+                String wordName = line[0];
                 if (wordName.equals("")) {
                     throw new InvalidFileFormatException("Invalid file format on line " + (wordCounter + 1));
                 }
 
                 Boolean belongsToType;
-                if (parts.length == 1) {
+                if (line.length == 1) {
                     belongsToType = null;
 
-                } else if (parts.length == 2) {
-                    switch (parts[1]) {
+                } else if (line.length == 2) {
+                    switch (line[1]) {
                         case "TRUE":
                             belongsToType = Boolean.TRUE;
                             break;
