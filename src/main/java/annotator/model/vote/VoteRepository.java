@@ -54,6 +54,20 @@ public class VoteRepository extends AbstractRepository {
         return this.getVotes(cursor);
     }
 
+    public List<Vote> getAllVotes() {
+        MongoCursor<Document> cursor = this.votes.find().iterator();
+        return this.getVotes(cursor);
+    }
+
+    public List<Vote> getAllNoisyVotes() {
+        MongoCursor<Document> cursor = this.votes.find(
+                Filters.not(
+                        Filters.eq("belongs_to_type", null)
+                )
+        ).iterator();
+        return this.getVotes(cursor);
+    }
+
     public List<Vote> getNoisyVotesByUserId(String userId) {
         MongoCursor<Document> cursor = this.votes.find(
             Filters.and(
