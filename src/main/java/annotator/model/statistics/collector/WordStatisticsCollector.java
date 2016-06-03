@@ -13,6 +13,10 @@ public class WordStatisticsCollector {
     }
 
     public Statistics getWordStatistics(String wordId) {
-        return new WordStatistics(voteRepository.getVotesByWordId(wordId));
+        return new WordStatistics(voteRepository.getVotesByWordId(wordId), wordId);
+    }
+
+    public WordStatistics getAllWordStatistics() {
+        return new WordStatistics(voteRepository.getAllVotes(), "allUsersCombined");
     }
 }

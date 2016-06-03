@@ -18,13 +18,13 @@ public class UserStatisticsCollector {
     public Statistics getUserStatistics(String userId) {
         List<Vote> allVotesList = voteRepository.getAllVotesByUserId(userId);
         List<Vote> noisyVotesList = voteRepository.getNoisyVotesByUserId(userId);
-        return new UserStatistics(noisyVotesList, allVotesList);
+        return new UserStatistics(noisyVotesList, allVotesList, userId);
     }
 
     public UserStatistics getAllUserStatistics() {
         List<Vote> allVotesList = voteRepository.getAllVotes();
         List<Vote> allNoisyVotesList = voteRepository.getAllNoisyVotes();
-        return new UserStatistics(allNoisyVotesList, allVotesList);
+        return new UserStatistics(allNoisyVotesList, allVotesList, "allUsersCombined");
     }
 
 }

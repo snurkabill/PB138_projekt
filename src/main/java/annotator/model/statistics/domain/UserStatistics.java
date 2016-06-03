@@ -9,12 +9,14 @@ import java.util.stream.Collectors;
 @XStreamAlias("UserStatistics")
 public class UserStatistics extends Statistics {
 
+    private final String userId;
     private final Double trueRatio;
     private final Double averageDuration;
     private final Double averageDurationOnNoisyData;
     private final ConfusionMatrix confusionMatrix;
 
-    public UserStatistics(List<Vote> noisyVoteList, List<Vote> allVoteList) {
+    public UserStatistics(List<Vote> noisyVoteList, List<Vote> allVoteList, String userId) {
+        this.userId = userId;
         this.trueRatio = ((Long) allVoteList.stream()
             .filter(Vote::getBelongsToType)
             .count())
@@ -24,6 +26,10 @@ public class UserStatistics extends Statistics {
         confusionMatrix = new ConfusionMatrix(
             noisyVoteList.stream().map(Vote::getVoteBelongsToType).collect(Collectors.toList()),
             noisyVoteList.stream().map(Vote::getBelongsToType).collect(Collectors.toList()));
+    }
+
+    public String getUserId() {
+        return userId;
     }
 
     public Double getTrueRatio() {

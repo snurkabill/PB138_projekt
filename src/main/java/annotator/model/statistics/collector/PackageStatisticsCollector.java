@@ -26,7 +26,7 @@ public class PackageStatisticsCollector {
         for (Word aWordList : wordList) {
             voteList.addAll(voteRepository.getVotesByWordId(aWordList.getId()));
         }
-        return new PackageStatistics(voteList);
+        return new PackageStatistics(voteList, packageId);
     }
 
 }
