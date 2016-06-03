@@ -59,6 +59,7 @@ public class VoteController extends Controller {
 
             this.voter.vote(
                 this.getUser().getId(),
+                packageId,
                 this.wordRepository.getWord(wordId),
                 vote.equals("yes"),
                 duration
