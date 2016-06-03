@@ -1,4 +1,4 @@
-package annotator.model.statistics;
+package annotator.model.statistics.collector;
 
 import annotator.model.statistics.domain.PackageStatistics;
 import annotator.model.statistics.domain.Statistics;
