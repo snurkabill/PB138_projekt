@@ -16,7 +16,7 @@ public class PackageStatistics extends Statistics {
         this.packageId = packageId;
         this.averagePackageDuration = voteList.stream().mapToLong(Vote::getDuration).average().getAsDouble();
         this.trueRatio = ((Long) voteList.stream()
-            .filter(vote -> vote.getBelongsToType() != null)
+            .filter(Vote::getVoteBelongsToType)
             .count())
             .doubleValue() / voteList.size();
     }
