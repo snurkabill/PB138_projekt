@@ -22,7 +22,7 @@ import java.util.function.Supplier;
 public class ServiceLocator {
 
     private final MongoDatabase database;
-    private Map<String, Object> services;
+    private final Map<String, Object> services;
 
     public ServiceLocator(MongoDatabase database) {
         this.database = database;

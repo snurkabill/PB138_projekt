@@ -30,7 +30,7 @@ public class PackageListController extends Controller {
         List<Type> types = this.typeRepository.getTypesList();
 
         HashMap<String, List<Package>> packages = new HashMap<>();
-        for (Type type: types) {
+        for (Type type : types) {
             packages.put(
                 type.getId(),
                 this.packageRepository.getPackagesByType(type)

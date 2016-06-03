@@ -38,7 +38,7 @@ public abstract class Controller extends HttpServlet {
     }
 
     protected void render(String templateName, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        for (Map.Entry<String, Object> entry: this.template.getParameters()) {
+        for (Map.Entry<String, Object> entry : this.template.getParameters()) {
             request.setAttribute(entry.getKey(), entry.getValue());
         }
 

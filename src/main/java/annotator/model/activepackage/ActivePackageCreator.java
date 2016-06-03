@@ -6,8 +6,8 @@ import org.bson.Document;
 
 public class ActivePackageCreator {
 
-    private MongoCollection<Document> activePackages;
-    private ActivePackageRepository activePackageRepository;
+    private final MongoCollection<Document> activePackages;
+    private final ActivePackageRepository activePackageRepository;
 
     public ActivePackageCreator(MongoDatabase database, ActivePackageRepository activePackageRepository) {
         this.activePackages = database.getCollection("activePackages");

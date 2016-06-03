@@ -1,13 +1,12 @@
 package annotator.server.template;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 public class TemplateParameters {
 
-    private Map<String, Object> parameters;
+    private final Map<String, Object> parameters;
 
     public TemplateParameters() {
         this.parameters = new HashMap<>();
@@ -21,7 +20,7 @@ public class TemplateParameters {
         return (String) this.get(name);
     }
 
-    public Set<Map.Entry<String,Object>> getParameters() {
+    public Set<Map.Entry<String, Object>> getParameters() {
         return this.parameters.entrySet();
     }
 

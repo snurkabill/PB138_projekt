@@ -7,14 +7,16 @@ import org.bson.Document;
 
 public class TypeCreator {
 
-    private MongoCollection<Document> types;
+    private final MongoCollection<Document> types;
 
-    public TypeCreator(MongoDatabase database) { this.types = database.getCollection("types"); }
+    public TypeCreator(MongoDatabase database) {
+        this.types = database.getCollection("types");
+    }
 
     public Type create(String type) throws TypeCreateConflictException {
         try {
             Document typeDocument = new Document()
-                    .append("type", type);
+                .append("type", type);
 
             this.types.insertOne(typeDocument);
             return new Type(typeDocument);

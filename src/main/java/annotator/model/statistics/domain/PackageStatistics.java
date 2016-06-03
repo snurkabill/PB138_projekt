@@ -14,9 +14,9 @@ public class PackageStatistics {
     public PackageStatistics(List<Vote> voteList) {
         this.averagePackageDuration = voteList.stream().mapToLong(Vote::getDuration).average().getAsDouble();
         this.trueRatio = ((Long) voteList.stream()
-                    .filter(Vote::getBelongsToType)
-                    .count())
-                .doubleValue() / voteList.size();
+            .filter(Vote::getBelongsToType)
+            .count())
+            .doubleValue() / voteList.size();
     }
 
     public Double getAveragePackageDuration() {

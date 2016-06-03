@@ -1,17 +1,12 @@
 package annotator.model.user;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.model.Filters;
-import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
-import org.bson.types.ObjectId;
 
 public class User {
 
-    private String id;
-    private String email;
-    private String passwordHash;
+    private final String id;
+    private final String email;
+    private final String passwordHash;
 
     public User(String id, String email, String passwordHash) {
         this.id = id;
