@@ -14,7 +14,7 @@ import java.util.List;
 
 public class VoteRepository extends AbstractRepository {
 
-    private MongoCollection<Document> votes;
+    private final MongoCollection<Document> votes;
 
     public VoteRepository(MongoDatabase database) {
         this.votes = database.getCollection("votes");

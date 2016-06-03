@@ -6,7 +6,7 @@ import java.util.Set;
 
 public class TemplateParameters {
 
-    private Map<String, Object> parameters;
+    private final Map<String, Object> parameters;
 
     public TemplateParameters() {
         this.parameters = new HashMap<>();

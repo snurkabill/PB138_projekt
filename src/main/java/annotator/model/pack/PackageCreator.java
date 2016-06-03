@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class PackageCreator {
 
-    private MongoCollection<Document> packages;
+    private final MongoCollection<Document> packages;
 
     public PackageCreator(MongoDatabase database) {
         this.packages = database.getCollection("packages");

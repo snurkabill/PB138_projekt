@@ -8,7 +8,7 @@ import org.bson.types.ObjectId;
 
 public class ActivePackageProgressKeeper {
 
-    private MongoCollection<Document> activePackages;
+    private final MongoCollection<Document> activePackages;
 
     public ActivePackageProgressKeeper(MongoDatabase database) {
         this.activePackages = database.getCollection("activePackages");

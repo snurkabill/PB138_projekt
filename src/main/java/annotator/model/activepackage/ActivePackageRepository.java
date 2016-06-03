@@ -8,7 +8,7 @@ import org.bson.Document;
 
 public class ActivePackageRepository extends AbstractRepository {
 
-    private MongoCollection<Document> activePackages;
+    private final MongoCollection<Document> activePackages;
 
     public ActivePackageRepository(MongoDatabase database) {
         this.activePackages = database.getCollection("activePackages");

@@ -12,7 +12,7 @@ import java.util.List;
 
 public class WordRepository extends AbstractRepository {
 
-    private MongoCollection<Document> words;
+    private final MongoCollection<Document> words;
 
     public WordRepository(MongoDatabase database) {
         this.words = database.getCollection("words");

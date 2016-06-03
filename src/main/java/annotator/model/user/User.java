@@ -4,9 +4,9 @@ import org.bson.Document;
 
 public class User {
 
-    private String id;
-    private String email;
-    private String passwordHash;
+    private final String id;
+    private final String email;
+    private final String passwordHash;
 
     public User(String id, String email, String passwordHash) {
         this.id = id;

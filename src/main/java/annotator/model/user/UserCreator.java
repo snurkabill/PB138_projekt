@@ -10,7 +10,7 @@ public class UserCreator {
 
     public static final int PASSWORD_COST = 14;
 
-    private MongoCollection<Document> users;
+    private final MongoCollection<Document> users;
 
     public UserCreator(MongoDatabase database) {
         this.users = database.getCollection("users");

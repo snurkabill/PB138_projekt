@@ -8,7 +8,7 @@ import org.bson.Document;
 
 public class UserRepository extends AbstractRepository {
 
-    private MongoCollection<Document> users;
+    private final MongoCollection<Document> users;
 
     public UserRepository(MongoDatabase database) {
         this.users = database.getCollection("users");

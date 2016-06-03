@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class TypeRepository extends AbstractRepository {
 
-    private MongoCollection<Document> types;
+    private final MongoCollection<Document> types;
 
     public TypeRepository(MongoDatabase database) {
         this.types = database.getCollection("types");

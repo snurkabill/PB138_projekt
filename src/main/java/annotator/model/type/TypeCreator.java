@@ -7,7 +7,7 @@ import org.bson.Document;
 
 public class TypeCreator {
 
-    private MongoCollection<Document> types;
+    private final MongoCollection<Document> types;
 
     public TypeCreator(MongoDatabase database) {
         this.types = database.getCollection("types");

@@ -11,7 +11,7 @@ import java.util.*;
 
 public class PackageRepository extends AbstractRepository {
 
-    private MongoCollection<Document> packages;
+    private final MongoCollection<Document> packages;
 
     public PackageRepository(MongoDatabase database) {
         this.packages = database.getCollection("packages");

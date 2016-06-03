@@ -7,7 +7,7 @@ import org.bson.Document;
 
 public class Voter {
 
-    private MongoCollection<Document> votes;
+    private final MongoCollection<Document> votes;
 
     public Voter(MongoDatabase database) {
         this.votes = database.getCollection("votes");

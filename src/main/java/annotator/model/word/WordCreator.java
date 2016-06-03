@@ -8,7 +8,7 @@ import org.bson.Document;
 
 public class WordCreator {
 
-    private MongoCollection<Document> words;
+    private final MongoCollection<Document> words;
 
     public WordCreator(MongoDatabase database) {
         this.words = database.getCollection("words");
