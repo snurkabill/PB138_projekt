@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @XStreamAlias("UserStatistics")
-public class UserStatistics {
+public class UserStatistics extends Statistics {
 
     private final Double trueRatio;
     private final Double averageDuration;

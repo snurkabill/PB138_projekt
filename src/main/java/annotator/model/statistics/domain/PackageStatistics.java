@@ -6,7 +6,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.util.List;
 
 @XStreamAlias("PackageStatistics")
-public class PackageStatistics {
+public class PackageStatistics extends Statistics {
 
     private final Double averagePackageDuration;
     private final Double trueRatio;
