@@ -2,7 +2,7 @@
 <jsp:include page="../WEB-INF/menu.jsp"/>
 
 
-    <a href="marking-manager?vote=no&package=${packageId}&start=${start}&word=${word.getId()}">
+    <a href="vote?vote=no&packageId=${packageId}&start=${start}&word=${word.getId()}">
         <div class="left-answer-box"></div>
     </a>
 
@@ -15,7 +15,7 @@
         ${message}
     </div>
 
-    <a href="marking-manager?vote=no&package=${packageId}&start=${start}&word=${word.getId()}">
+    <a href="vote?vote=yes&packageId=${packageId}&start=${start}&word=${word.getId()}">
         <div class="right-answer-box"></div>
     </a>
 

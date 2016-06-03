@@ -1,14 +1,12 @@
 package annotator.server;
 
 import annotator.model.activepackage.ActivePackage;
-import annotator.model.activepackage.ActivePackageNotFoundException;
-import annotator.model.activepackage.ActivePackageRepository;
+import annotator.model.activepackage.ActivePackageCreator;
 import annotator.model.pack.Package;
 import annotator.model.pack.PackageNotFoundException;
 import annotator.model.pack.PackageRepository;
 import annotator.model.type.TypeNotFoundException;
 import annotator.model.type.TypeRepository;
-import annotator.model.vote.VoteRepository;
 import annotator.model.word.Word;
 import annotator.model.word.WordNotFoundException;
 import annotator.model.word.WordRepository;
@@ -25,47 +23,24 @@ import java.util.Date;
 public class MarkingManagerController extends Controller {
 
     private PackageRepository packageRepository;
-    private ActivePackageRepository activePackageRepository;
     private WordRepository wordRepository;
     private TypeRepository typeRepository;
-    private VoteRepository voteRepository;
+    private ActivePackageCreator activePackageCreator;
 
     @Override
     protected void initializeDependencies(ServiceLocator serviceLocator) {
         this.packageRepository = serviceLocator.getPackageRepository();
-        this.activePackageRepository = serviceLocator.getActivePackageRepository();
         this.wordRepository = serviceLocator.getWordRepository();
         this.typeRepository = serviceLocator.getTypeRepository();
-        this.voteRepository = serviceLocator.getVoteRepository();
+        this.activePackageCreator = serviceLocator.getActivePackageCreator();
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (request.getParameter("packageId") != null) {
-
-            if (!this.loadWord(request.getParameter("packageId"))) {
-                response.sendRedirect("package-list");
-
-            } else {
-                this.render(
-                        "answerBlock.jsp",
-                        request,
-                        response
-                );
-            }
-
-        } else if (request.getParameter("vote") != null) {
-            this.vote(
-                request.getParameter("package"),
-                request.getParameter("vote"),
-                Long.parseLong(request.getParameter("start")),
-                request.getParameter("word")
-            );
-            response.sendRedirect("marking-manager?packageId=".concat(request.getParameter("package")));
+        if (!this.loadWord(request.getParameter("packageId"))) {
+            response.sendRedirect("package-list");
 
         } else {
-            System.out.println("invalid page");
-            this.template.set("message", "invalid page");
             this.render(
                 "answerBlock.jsp",
                 request,
@@ -78,11 +53,8 @@ public class MarkingManagerController extends Controller {
         try {
             Date date = new Date();
             this.template.set("start", date.getTime());
-            ActivePackage activePackage = this.activePackageRepository.getOrMakeNew(
-                packageId,
-                this.getUser().getId(),
-                this.packageRepository
-            );
+
+            ActivePackage activePackage = this.activePackageCreator.createIfDoesNotExist(packageId, this.getUser().getId());
 
             Package pack = this.packageRepository.getPackage(activePackage.getPackageId());
             if (activePackage.getProgress().equals(pack.getWordCount())) {
@@ -92,7 +64,7 @@ public class MarkingManagerController extends Controller {
             ArrayList<String> words = pack.getWordList();
             Word word = this.wordRepository.getWord(words.get(activePackage.getProgress()));
 
-            this.template.set("packageId", activePackage.getId());
+            this.template.set("packageId", pack.getId());
             this.template.set("word", word);
             this.template.set("currentPosition", activePackage.getProgress() + 1);
             this.template.set("fullSize", pack.getWordCount());
@@ -104,27 +76,5 @@ public class MarkingManagerController extends Controller {
         }
 
         return true;
-    }
-
-    private void vote(String activePackageId, String vote, long longDuration, String wordId) {
-        try {
-            Date now = new Date();
-            Integer duration = ((Long) (now.getTime() - longDuration)).intValue();
-
-            ActivePackage activePackage = this.activePackageRepository.getActivePackage(activePackageId);
-
-            this.voteRepository.addVote(
-                this.getUser().getId(),
-                wordRepository.getWord(wordId),
-                vote.equals("yes"),
-                duration
-            );
-            this.activePackageRepository.update(activePackage.increaseProgress());
-
-        } catch (ActivePackageNotFoundException | WordNotFoundException e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-            this.template.set("message", "invalid page");
-        }
     }
 }

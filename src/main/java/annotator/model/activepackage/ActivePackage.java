@@ -1,10 +1,6 @@
 package annotator.model.activepackage;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
-import org.bson.types.ObjectId;
 
 public class ActivePackage {
 
