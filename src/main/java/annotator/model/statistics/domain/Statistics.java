@@ -6,7 +6,8 @@ import com.thoughtworks.xstream.annotations.XStreamInclude;
 @XStreamInclude({
         UserStatistics.class,
         PackageStatistics.class,
-        WordStatistics.class
+        WordStatistics.class,
+        AllStatistics.class
 })
 public abstract class Statistics {
 }

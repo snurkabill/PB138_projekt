@@ -1,4 +1,4 @@
-package annotator.model.statistics;
+package annotator.model.statistics.collector;
 
 import annotator.model.statistics.domain.Statistics;
 import annotator.model.statistics.domain.WordStatistics;
@@ -13,6 +13,10 @@ public class WordStatisticsCollector {
     }
 
     public Statistics getWordStatistics(String wordId) {
-        return new WordStatistics(voteRepository.getVotesByWordId(wordId));
+        return new WordStatistics(voteRepository.getVotesByWordId(wordId), wordId);
+    }
+
+    public WordStatistics getAllWordStatistics() {
+        return new WordStatistics(voteRepository.getAllVotes(), "allUsersCombined");
     }
 }

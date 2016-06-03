@@ -1,4 +1,4 @@
-package annotator.model.statistics;
+package annotator.model.statistics.collector;
 
 import annotator.model.statistics.domain.PackageStatistics;
 import annotator.model.statistics.domain.Statistics;
@@ -26,7 +26,7 @@ public class PackageStatisticsCollector {
         for (Word aWordList : wordList) {
             voteList.addAll(voteRepository.getVotesByWordId(aWordList.getId()));
         }
-        return new PackageStatistics(voteList);
+        return new PackageStatistics(voteList, packageId);
     }
 
 }

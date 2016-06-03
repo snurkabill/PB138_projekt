@@ -8,6 +8,7 @@ public class Vote {
     private final String userId;
     private final String wordId;
     private final String typeId;
+    private final String packageId;
     private final Boolean belongsToType;
     private final Boolean voteBelongsToType;
     private final Integer duration;
@@ -17,6 +18,7 @@ public class Vote {
         String userId,
         String wordId,
         String typeId,
+        String packageId,
         Boolean belongsToType,
         Boolean voteBelongsToType,
         Integer duration
@@ -25,6 +27,7 @@ public class Vote {
         this.userId = userId;
         this.wordId = wordId;
         this.typeId = typeId;
+        this.packageId = packageId;
         this.belongsToType = belongsToType;
         this.voteBelongsToType = voteBelongsToType;
         this.duration = duration;
@@ -36,6 +39,7 @@ public class Vote {
             document.getString("user_id"),
             document.getString("word_id"),
             document.getString("type_id"),
+            document.getString("package_id"),
             document.getBoolean("belongs_to_type"),
             document.getBoolean("vote_belongs_to_type"),
             document.getInteger("duration")
@@ -56,6 +60,10 @@ public class Vote {
 
     public String getTypeId() {
         return this.typeId;
+    }
+
+    public String getPackageId() {
+        return this.packageId;
     }
 
     public Boolean getVoteBelongsToType() {
