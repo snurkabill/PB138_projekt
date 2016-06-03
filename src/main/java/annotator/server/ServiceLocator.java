@@ -4,6 +4,7 @@ import annotator.model.activepackage.ActivePackageCreator;
 import annotator.model.activepackage.ActivePackageProgressKeeper;
 import annotator.model.activepackage.ActivePackageRepository;
 import annotator.model.pack.PackageCreator;
+import annotator.model.pack.PackageImporter;
 import annotator.model.pack.PackageRepository;
 import annotator.model.type.TypeCreator;
 import annotator.model.type.TypeRepository;
@@ -124,6 +125,13 @@ public class ServiceLocator {
         return (ActivePackageProgressKeeper) this.getService(
             "active_package_progress_keeper",
             () -> new ActivePackageProgressKeeper(this.database)
+        );
+    }
+
+    public PackageImporter getPackageImporter() {
+        return (PackageImporter) this.getService(
+            "package_importer",
+            () -> new PackageImporter(this.getPackageCreator(), this.getWordCreator(), this.getTypeCreator())
         );
     }
 }
