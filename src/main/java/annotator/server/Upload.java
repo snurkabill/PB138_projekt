@@ -163,7 +163,4 @@ public class Upload extends Controller {
 
         return wordIds;
     }
-
 }
-
-
