@@ -30,11 +30,17 @@ public class ExportStatistics extends Controller {
 
     private VoteRepository voteRepository;
     private WordRepository wordRepository;
+    private AllStatisticsCollector allStatisticsCollector;
+    private UserStatisticsCollector userStatisticsCollector;
+    private WordStatisticsCollector wordStatisticsCollector;
 
     @Override
     protected void initializeDependencies(ServiceLocator serviceLocator) {
         this.voteRepository = serviceLocator.getVoteRepository();
         this.wordRepository = serviceLocator.getWordRepository();
+        this.allStatisticsCollector = new AllStatisticsCollector(this.voteRepository, this.wordRepository);
+        this.userStatisticsCollector = new UserStatisticsCollector(this.voteRepository);
+        this.wordStatisticsCollector = new WordStatisticsCollector(this.voteRepository);
     }
 
 
@@ -47,23 +53,23 @@ public class ExportStatistics extends Controller {
         switch (request.getParameter("mode")) {
             case "all" :
                 output = new StatisticsToXmlExporter(
-                        new AllStatisticsCollector(this.voteRepository, this.wordRepository).getAllStatistics()
+                        allStatisticsCollector.getAllStatistics()
                 ).getInXml();
                 break;
             case "user" :
                 output = new StatisticsToXmlExporter(
-                        new UserStatisticsCollector(this.voteRepository)
+                        userStatisticsCollector
                                 .getUserStatistics(((User)this.session.getAttribute("loggedUser")).getId())
                 ).getInXml();
                 break;
             case "allUser" :
                 output = new StatisticsToXmlExporter(
-                        new UserStatisticsCollector(this.voteRepository).getAllUserStatistics()
+                        userStatisticsCollector.getAllUserStatistics()
                 ).getInXml();
                 break;
             case "word" :
                 output = new StatisticsToXmlExporter(
-                        new WordStatisticsCollector(this.voteRepository).getAllWordStatistics()
+                        wordStatisticsCollector.getAllWordStatistics()
                 ).getInXml();
                 break;
         }
@@ -72,31 +78,22 @@ public class ExportStatistics extends Controller {
         printWriter.close();
         File downloadFile = new File(filePath);
         FileInputStream inStream = new FileInputStream(downloadFile);
-        // if you want to use a relative path to context root:
-        String relativePath = getServletContext().getRealPath("");
-        System.out.println("relativePath = " + relativePath);
 
-        // obtains ServletContext
         ServletContext context = getServletContext();
 
-        // gets MIME type of the file
         String mimeType = context.getMimeType(filePath);
         if (mimeType == null) {
             // set to binary type if MIME mapping not found
             mimeType = "application/octet-stream";
         }
-        System.out.println("MIME type: " + mimeType);
 
-        // modifies response
         response.setContentType(mimeType);
         response.setContentLength((int) downloadFile.length());
 
-        // forces download
         String headerKey = "Content-Disposition";
         String headerValue = String.format("attachment; filename=\"%s\"", downloadFile.getName());
         response.setHeader(headerKey, headerValue);
 
-        // obtains response's output stream
         OutputStream outStream = response.getOutputStream();
 
         byte[] buffer = new byte[4096];
@@ -109,31 +106,6 @@ public class ExportStatistics extends Controller {
         inStream.close();
         outStream.close();
     }
-
-
-//
-//        // You must tell the browser the file type you are going to send
-//        // for example application/pdf, text/plain, text/html, image/jpg
-//        response.setContentType("text/xml");
-//
-//        // Make sure to show the download dialog
-//        response.setHeader("Content-disposition", "attachment; filename=output.xml");
-//
-//        // Assume file name is retrieved from database
-//        // For example D:\\file\\test.pdf
-//
-//
-//        // This should send the file to browser
-//        OutputStream out = response.getOutputStream();
-//        FileInputStream in = new FileInputStream("auth/output.xml");
-//        byte[] buffer = new byte[4096];
-//        int length;
-//        while ((length = in.read(buffer)) > 0) {
-//            out.write(buffer, 0, length);
-//        }
-//        in.close();
-//        out.flush();
-
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
