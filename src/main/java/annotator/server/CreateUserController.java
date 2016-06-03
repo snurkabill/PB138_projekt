@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(urlPatterns = {"/CreateUser"})
-public class CreateUser extends Controller {
+public class CreateUserController extends Controller {
 
     private UserCreator userCreator;
 

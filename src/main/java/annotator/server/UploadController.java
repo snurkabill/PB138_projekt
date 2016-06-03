@@ -20,7 +20,7 @@ import java.util.Scanner;
 
 @WebServlet(urlPatterns = {"/auth/Upload"})
 @MultipartConfig
-public class Upload extends Controller {
+public class UploadController extends Controller {
 
     private PackageCreator packageCreator;
     private WordCreator wordCreator;
