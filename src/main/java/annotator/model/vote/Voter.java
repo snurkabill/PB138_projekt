@@ -13,11 +13,12 @@ public class Voter {
         this.votes = database.getCollection("votes");
     }
 
-    public void vote(String userId, Word word, Boolean voteResult, Integer duration) {
+    public void vote(String userId, String packageId, Word word, Boolean voteResult, Integer duration) {
         Document newVote = new Document()
             .append("user_id", userId)
             .append("word_id", word.getId())
             .append("type_id", word.getTypeId())
+            .append("package_id", packageId)
             .append("belongs_to_type", word.belongsToType())
             .append("vote_belongs_to_type", voteResult)
             .append("duration", duration);
