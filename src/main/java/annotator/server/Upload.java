@@ -81,7 +81,7 @@ public class Upload extends Controller {
                     /* Create new package */
                     wordIds = insertWordsToDatabase(words);
 
-                    packageCreator.create(typeId, packageName + "-" + packageCounter, wordIds.size(), wordIds);
+                    packageCreator.create(typeId, packageName + "-" + packageCounter, wordIds);
                     ++packageCounter;
                     words.clear();
                     wordIds.clear();
@@ -124,7 +124,7 @@ public class Upload extends Controller {
             }
 
             wordIds = insertWordsToDatabase(words);
-            packageCreator.create(typeId, (packageCounter > 1) ? packageName + "-" + packageCounter : packageName, wordIds.size(), wordIds);
+            packageCreator.create(typeId, (packageCounter > 1) ? packageName + "-" + packageCounter : packageName, wordIds);
             ++packageCounter;
 
             this.template.set("message", "File was successfully uploaded as " + packageCounter + (packageCounter == 1 ? " package" : " packages"));
