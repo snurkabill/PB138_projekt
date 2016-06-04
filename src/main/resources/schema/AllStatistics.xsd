@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:element name="annotator.model.statistics.domain.AllStatistics" type="annotator.model.statistics.domain.AllStatisticsType"/>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
+  <xs:element name="annotator.model.statistics.domain.AllStatistics" type="AllStatisticType"/>
   <xs:complexType name="allUsersType">
     <xs:sequence>
       <xs:element type="xs:string" name="userId"/>
@@ -24,12 +23,12 @@
   </xs:complexType>
   <xs:complexType name="userStatisticsListType">
     <xs:sequence>
-      <xs:element type="annotator.model.statistics.domain.UserStatisticsType" name="annotator.model.statistics.domain.UserStatistics"/>
+      <xs:element type="UserStatisticsType" name="annotator.model.statistics.domain.UserStatistics" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="wordStatisticsListType">
     <xs:sequence>
-      <xs:element type="annotator.model.statistics.domain.WordStatisticsType" name="annotator.model.statistics.domain.WordStatistics" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element type="WordStatisticsType" name="annotator.model.statistics.domain.WordStatistics" maxOccurs="unbounded" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="annotator.model.statistics.domain.PackageStatisticsType">
@@ -67,30 +66,23 @@
       <xs:element type="xs:string" name="f1Negative"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="annotator.model.statistics.domain.AllStatisticsType">
+  <xs:complexType name="AllStatisticType">
     <xs:sequence>
-      <xs:element type="allUsersType" name="allUsers"/>
-      <xs:element type="allWordsType" name="allWords"/>
-      <xs:element type="userStatisticsListType" name="userStatisticsList"/>
-      <xs:element type="wordStatisticsListType" name="wordStatisticsList"/>
-      <xs:element type="packageStatisticsListType" name="packageStatisticsList"/>
+      <xs:element type="allUsersType" name="allUsers" minOccurs="1"/>
+      <xs:element type="allWordsType" name="allWords" minOccurs="1"/>
+      <xs:element type="userStatisticsListType" name="userStatisticsList" minOccurs="1"/>
+      <xs:element type="wordStatisticsListType" name="wordStatisticsList" minOccurs="1"/>
+      <xs:element type="packageStatisticsListType" name="packageStatisticsList" minOccurs="1"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="annotator.model.statistics.domain.WordStatisticsType">
+  <xs:complexType name="WordStatisticsType">
     <xs:sequence>
       <xs:element type="xs:string" name="wordId"/>
-      <xs:element name="trueRatio">
-        <xs:simpleType>
-          <xs:restriction base="xs:string">
-            <xs:enumeration value="1.0"/>
-            <xs:enumeration value="0.0"/>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:element>
+      <xs:element type="xs:string" name="trueRatio"/>
       <xs:element type="xs:string" name="averageDuration"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="annotator.model.statistics.domain.UserStatisticsType">
+  <xs:complexType name="UserStatisticsType">
     <xs:sequence>
       <xs:element type="xs:string" name="userId"/>
       <xs:element type="xs:string" name="trueRatio"/>
