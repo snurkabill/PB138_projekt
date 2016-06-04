@@ -7,23 +7,39 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @XStreamAlias("UserStatistics")
-public class UserStatistics {
+public class UserStatistics extends Statistics {
 
+    private final String userId;
     private final Double trueRatio;
     private final Double averageDuration;
     private final Double averageDurationOnNoisyData;
     private final ConfusionMatrix confusionMatrix;
 
-    public UserStatistics(List<Vote> noisyVoteList, List<Vote> allVoteList) {
-        this.trueRatio = ((Long) allVoteList.stream()
-            .filter(Vote::getBelongsToType)
+    public UserStatistics(List<Vote> noisyVoteList, List<Vote> allVoteList, String userId) {
+        this.userId = userId;
+
+        this.trueRatio = allVoteList.size() == 0 ? Double.NaN : ((Long) allVoteList
+            .stream()
+            .filter(Vote::getVoteBelongsToType)
             .count())
             .doubleValue() / allVoteList.size();
-        this.averageDuration = allVoteList.stream().mapToLong(Vote::getDuration).average().getAsDouble();
-        this.averageDurationOnNoisyData = noisyVoteList.stream().mapToLong(Vote::getDuration).average().getAsDouble();
+        this.averageDuration = allVoteList.size() == 0 ? Double.NaN : allVoteList
+            .stream()
+            .mapToLong(Vote::getDuration)
+            .average()
+            .getAsDouble();
+        this.averageDurationOnNoisyData = noisyVoteList.size() == 0 ? Double.NaN : noisyVoteList
+            .stream()
+            .mapToLong(Vote::getDuration)
+            .average()
+            .getAsDouble();
         confusionMatrix = new ConfusionMatrix(
             noisyVoteList.stream().map(Vote::getVoteBelongsToType).collect(Collectors.toList()),
             noisyVoteList.stream().map(Vote::getBelongsToType).collect(Collectors.toList()));
+    }
+
+    public String getUserId() {
+        return userId;
     }
 
     public Double getTrueRatio() {

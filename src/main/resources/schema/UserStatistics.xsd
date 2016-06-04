@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="annotator.model.statistics.domain.UserStatistics" type="annotator.model.statistics.domain.UserStatisticsType"/>
+  <xs:complexType name="confusionMatrixType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="totalPopulation"/>
+      <xs:element type="xs:string" name="predictedTrueClassesCount"/>
+      <xs:element type="xs:string" name="predictedFalseClassesCount"/>
+      <xs:element type="xs:string" name="trueClassesCount"/>
+      <xs:element type="xs:string" name="falseClassesCount"/>
+      <xs:element type="xs:string" name="truePositive"/>
+      <xs:element type="xs:string" name="falsePositive"/>
+      <xs:element type="xs:string" name="trueNegative"/>
+      <xs:element type="xs:string" name="falseNegative"/>
+      <xs:element type="xs:string" name="trueAccuracy"/>
+      <xs:element type="xs:string" name="falseAccuracy"/>
+      <xs:element type="xs:string" name="predictedTrueAccuracy"/>
+      <xs:element type="xs:string" name="predictedFalseAccuracy"/>
+      <xs:element type="xs:string" name="overallAccuracy"/>
+      <xs:element type="xs:string" name="averageAccuracy"/>
+      <xs:element type="xs:string" name="meanClassificationAccuracy"/>
+      <xs:element type="xs:string" name="randomAgreementProbability"/>
+      <xs:element type="xs:string" name="falsePrecision"/>
+      <xs:element type="xs:string" name="truePrecision"/>
+      <xs:element type="xs:string" name="trueRecall"/>
+      <xs:element type="xs:string" name="falseRecall"/>
+      <xs:element type="xs:string" name="kappa"/>
+      <xs:element type="xs:string" name="f1Positive"/>
+      <xs:element type="xs:string" name="f1Negative"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="annotator.model.statistics.domain.UserStatisticsType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="userId"/>
+      <xs:element type="xs:string" name="trueRatio"/>
+      <xs:element type="xs:string" name="averageDuration"/>
+      <xs:element type="xs:string" name="averageDurationOnNoisyData"/>
+      <xs:element type="confusionMatrixType" name="confusionMatrix"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
