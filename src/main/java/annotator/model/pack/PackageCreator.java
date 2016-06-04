@@ -6,7 +6,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class PackageCreator {
 
@@ -16,7 +16,7 @@ public class PackageCreator {
         this.packages = database.getCollection("packages");
     }
 
-    public Package create(String typeId, String name, ArrayList<String> wordList) throws PackageCreateConflictException {
+    public Package create(String typeId, String name, List<String> wordList) throws PackageCreateConflictException {
         try {
             Document packageDocument = new Document()
                 .append("type_id", typeId)

@@ -42,15 +42,4 @@ public class WordRepository extends AbstractRepository {
         cursor.close();
         return words;
     }
-
-    public void removeWord(String wordId) {
-        Document wordDocument = this.findOneById(
-            this.words,
-            wordId
-        );
-
-        if (wordDocument != null) {
-            this.words.deleteOne(wordDocument);
-        }
-    }
 }

@@ -3,6 +3,10 @@ package annotator.model.type;
 import com.mongodb.MongoWriteException;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.FindOneAndUpdateOptions;
+import com.mongodb.client.model.ReturnDocument;
+import com.mongodb.client.model.Updates;
 import org.bson.Document;
 
 public class TypeCreator {
@@ -13,16 +17,17 @@ public class TypeCreator {
         this.types = database.getCollection("types");
     }
 
-    public Type create(String type) throws TypeCreateConflictException {
-        try {
-            Document typeDocument = new Document()
-                .append("type", type);
+    public Type createIfDoesNotExist(String type) {
+        FindOneAndUpdateOptions options = new FindOneAndUpdateOptions();
+        options.upsert(true);
+        options.returnDocument(ReturnDocument.AFTER);
 
-            this.types.insertOne(typeDocument);
-            return new Type(typeDocument);
+        Document typeDocument = this.types.findOneAndUpdate(
+            Filters.eq("type", type),
+            Updates.set("type", type),
+            options
+        );
 
-        } catch (MongoWriteException e) {
-            throw new TypeCreateConflictException(type);
-        }
+        return new Type(typeDocument);
     }
 }
