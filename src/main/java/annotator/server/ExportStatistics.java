@@ -1,26 +1,16 @@
 package annotator.server;
 
 
-import annotator.model.activepackage.ActivePackageCreator;
-import annotator.model.pack.PackageRepository;
 import annotator.model.statistics.StatisticsToXmlExporter;
 import annotator.model.statistics.collector.AllStatisticsCollector;
 import annotator.model.statistics.collector.UserStatisticsCollector;
 import annotator.model.statistics.collector.WordStatisticsCollector;
-import annotator.model.statistics.domain.AllStatistics;
-import annotator.model.statistics.domain.Statistics;
-import annotator.model.statistics.domain.UserStatistics;
-import annotator.model.statistics.domain.WordStatistics;
-import annotator.model.type.TypeRepository;
 import annotator.model.user.User;
-import annotator.model.user.UserRepository;
 import annotator.model.vote.VoteRepository;
-import annotator.model.word.WordRepository;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
@@ -28,19 +18,16 @@ import java.io.*;
 @WebServlet(urlPatterns = {"/auth/Export"})
 public class ExportStatistics extends Controller {
 
-    private VoteRepository voteRepository;
-    private WordRepository wordRepository;
     private AllStatisticsCollector allStatisticsCollector;
     private UserStatisticsCollector userStatisticsCollector;
     private WordStatisticsCollector wordStatisticsCollector;
 
     @Override
     protected void initializeDependencies(ServiceLocator serviceLocator) {
-        this.voteRepository = serviceLocator.getVoteRepository();
-        this.wordRepository = serviceLocator.getWordRepository();
-        this.allStatisticsCollector = new AllStatisticsCollector(this.voteRepository, this.wordRepository);
-        this.userStatisticsCollector = new UserStatisticsCollector(this.voteRepository);
-        this.wordStatisticsCollector = new WordStatisticsCollector(this.voteRepository);
+        VoteRepository voteRepository = serviceLocator.getVoteRepository();
+        this.allStatisticsCollector = new AllStatisticsCollector(voteRepository);
+        this.userStatisticsCollector = new UserStatisticsCollector(voteRepository);
+        this.wordStatisticsCollector = new WordStatisticsCollector(voteRepository);
     }
 
 
@@ -49,7 +36,6 @@ public class ExportStatistics extends Controller {
         PrintWriter printWriter = new PrintWriter(filePath);
         String output = "";
 
-        System.out.println(this.voteRepository.getAllVotes().toString());
         switch (request.getParameter("mode")) {
             case "all" :
                 output = new StatisticsToXmlExporter(

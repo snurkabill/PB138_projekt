@@ -3,7 +3,6 @@ package annotator.model.statistics.collector;
 import annotator.model.statistics.domain.*;
 import annotator.model.vote.Vote;
 import annotator.model.vote.VoteRepository;
-import annotator.model.word.WordRepository;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -13,20 +12,15 @@ import java.util.Set;
 public class AllStatisticsCollector {
 
     private final VoteRepository voteRepository;
-    private final WordRepository wordRepository;
 
-    public AllStatisticsCollector(VoteRepository voteRepository, WordRepository wordRepository) {
+    public AllStatisticsCollector(VoteRepository voteRepository) {
         this.voteRepository = voteRepository;
-        this.wordRepository = wordRepository;
     }
 
     public Statistics getAllStatistics() {
         UserStatisticsCollector userStatisticsCollector = new UserStatisticsCollector(this.voteRepository);
         WordStatisticsCollector wordStatisticsCollector = new WordStatisticsCollector(this.voteRepository);
-        PackageStatisticsCollector packageStatisticsCollector = new PackageStatisticsCollector(
-                this.voteRepository,
-                this.wordRepository
-        );
+        PackageStatisticsCollector packageStatisticsCollector = new PackageStatisticsCollector(this.voteRepository);
 
         List<Vote> allVotesList = voteRepository.getAllVotes();
         Set<String> userIdSet = new HashSet<>();
