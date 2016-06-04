@@ -2,13 +2,8 @@ package annotator.model.statistics.collector;
 
 import annotator.model.statistics.domain.PackageStatistics;
 import annotator.model.statistics.domain.Statistics;
-import annotator.model.vote.Vote;
 import annotator.model.vote.VoteRepository;
-import annotator.model.word.Word;
 import annotator.model.word.WordRepository;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class PackageStatisticsCollector {
 
@@ -21,12 +16,10 @@ public class PackageStatisticsCollector {
     }
 
     public Statistics getPackageStatistics(String packageId) {
-        List<Word> wordList = wordRepository.getWordByPackageId(packageId);
-        List<Vote> voteList = new ArrayList<>();
-        for (Word aWordList : wordList) {
-            voteList.addAll(voteRepository.getVotesByWordId(aWordList.getId()));
-        }
-        return new PackageStatistics(voteList, packageId);
+        return new PackageStatistics(
+                voteRepository.getVotesByPackageId(packageId),
+                packageId
+        );
     }
 
 }

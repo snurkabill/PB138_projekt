@@ -80,4 +80,11 @@ public class VoteRepository extends AbstractRepository {
         return this.getVotes(cursor);
     }
 
+    public List<Vote> getVotesByPackageId(String packageId) {
+        MongoCursor<Document> cursor = this.votes.find(
+                Filters.eq("package_id", packageId)
+        ).iterator();
+        return this.getVotes(cursor);
+    }
+
 }
