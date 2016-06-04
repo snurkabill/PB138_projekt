@@ -17,13 +17,22 @@ public class UserStatistics extends Statistics {
 
     public UserStatistics(List<Vote> noisyVoteList, List<Vote> allVoteList, String userId) {
         this.userId = userId;
-        this.trueRatio = ((Long) allVoteList.stream()
+
+        this.trueRatio = allVoteList.size() == 0 ? Double.NaN : ((Long) allVoteList
+            .stream()
             .filter(Vote::getVoteBelongsToType)
             .count())
             .doubleValue() / allVoteList.size();
-        this.averageDuration = allVoteList.stream().mapToLong(Vote::getDuration).average().getAsDouble();
-        this.averageDurationOnNoisyData = noisyVoteList.size() == 0 ? Double.NaN :
-                noisyVoteList.stream().mapToLong(Vote::getDuration).average().getAsDouble();
+        this.averageDuration = allVoteList.size() == 0 ? Double.NaN : allVoteList
+            .stream()
+            .mapToLong(Vote::getDuration)
+            .average()
+            .getAsDouble();
+        this.averageDurationOnNoisyData = noisyVoteList.size() == 0 ? Double.NaN : noisyVoteList
+            .stream()
+            .mapToLong(Vote::getDuration)
+            .average()
+            .getAsDouble();
         confusionMatrix = new ConfusionMatrix(
             noisyVoteList.stream().map(Vote::getVoteBelongsToType).collect(Collectors.toList()),
             noisyVoteList.stream().map(Vote::getBelongsToType).collect(Collectors.toList()));
