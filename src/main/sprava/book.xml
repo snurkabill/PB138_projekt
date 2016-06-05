@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "docbook-xml-4.5/docbookx.dtd">
+
+<book lang="cs">
+    <title>Záverečná správa projektu </title>
+    <subtitle> Projekt : Značkování slov </subtitle>
+    <titleabbrev> Predmet PB138: Moderní značkovací jazyky a jejich aplikace</titleabbrev>
+  <bookinfo>
+      <authorgroup>
+          <author>
+              <firstname>
+                  Katarína
+              </firstname>
+              <surname>
+                  Kejstová
+              </surname>
+              <email>
+                  433 820
+              </email>
+          </author>
+          <author>
+              <firstname>
+                  Pavel
+              </firstname>
+              <surname>
+                  Kučera
+              </surname>
+              <email>
+                  422 626
+              </email>
+          </author>
+          <author>
+              <firstname>
+                  Šimon
+              </firstname>
+              <surname>
+                  Struk
+              </surname>
+              <email>
+                  422 522
+              </email>
+          </author>
+          <author>
+              <firstname>
+                  Jiří
+              </firstname>
+              <surname>
+                  Vahala
+              </surname>
+              <email>
+                  422 802
+              </email>
+          </author>
+      </authorgroup>
+      <pubdate>2016-06-07</pubdate>
+  </bookinfo>
+
+    <chapter>
+        <title>Popis projektu</title>
+        <section>
+            <title>Zadanie</title>
+            <para>Pre mnohé úlohy strojového učenia je potrebné získať označkované dáta.
+                Vašou úlohou bude vytvoriť systém, ktorý umožní ich značkovanie.
+                Anotátor odpovedá len na: otázka - odpoveď - hodnotenie (vlastná akcia).
+                Aby sa zabránilo typickým problémom pri značkovaní je potrebné implementovať niekoľko akcií,
+                ktoré napr. pridávajú šum, opakujú otázky, ...
+                Na základe výsledkov, by mali byť prezentované základné štatistiky.
+            </para>
+        </section>
+    </chapter>
+
+
+    <chapter>
+        <title>Rozdelenie úloh</title>
+        <section>
+            <title> Pavel </title>
+            <para>vytvorenie databáze</para>
+            <para> spracovanie dát v csv-formáte</para>
+        </section>
+        <section>
+            <title> Jirka</title>
+            <para> vytvorenie štatistík na základe získaných dát </para>
+            <para> vybrať vhodné štatistiky </para>
+        </section>
+        <section>
+            <title> Šimon </title>
+            <para> Java backend </para>
+            <para> JSP server </para>
+            <para> spracovavanie požiadavkov </para>
+        </section>
+        <section>
+            <title> Katarína </title>
+            <para> html frontend, pomocou bootstrap </para>
+            <para> spracovanie wiki projektu </para>
+        </section>
+    </chapter>
+
+
+    <chapter>
+        <title>Záverečné správy</title>
+        <section>
+            <title>Šimon</title>
+            <para>V rámci môjho podielu na projekte som si naštudoval, ako sa vytvára webová aplikácia
+                pomocou Java Server Pages a Java servletov. Následne som implementoval funkcionalitu zabezpečujúcu
+                prihlasovanie a odhlasovanie užívateľov a ochranu pred neautorizovaným prístupom k privátnym
+                častiam aplikácie. Mojou ďalšou úlohou bolo vyriešenie nahrávania vstupných dát vo forme CSV súborov.</para>
+            <para>Pri prihlásení užívateľa sa skontrolujú predané prihlasovacie údaje voči databáze a pri platných
+                údajoch sa nastaví session atribút, ktorý potom umožňuje prístup k privátnym častiam aplikácie.
+                Tento atribút je kontrolovaný filtrom a pri jeho neexistencii je užívateľ presmerovaný na prihlasovaciu
+                stránku. Pri odhlasení užívateľa sa tento atribút zneplatní.</para>
+            <para>Táto časť aplikácie bola implementovaná ako prvá a poslúžila mojim kolegom ako referencia pri
+                implementovaní ďalších servletov a JSP stránok.</para>
+            <para>Nahrávanie vstupných dát je riešené pomocou servletu, v rámci ktorého sa skontroluje formát CSV
+                súboru a vytvoria sa príslušné balíky po 1000 slovách. Tieto balíky sa potom uložia do databázy
+                a sú pripravené na ďalšie spracovanie. Môj návrh bol potom mojimi kolegami prepracovaný do jeho finálnej podoby.</para>
+        </section>
+        <section>
+            <title>Pavel</title>
+            <section>
+                <title>Návrh databáze</title>
+                <para>
+                    Aplikační data byla potřeba někma ukládat a protože jsem v týmu jediný s reálnou zkušeností používání databází,
+                    dobrovolně jsem se chopil výběru databázové technologie a způsobu, jakým data ukládat. Jelikož jsem nikdy
+                    předtím nepracoval s žádnou NoSQL databází, żačal jsem se poohlížet právě tímto směrem, abych se naučil něco
+                    nového.
+                </para>
+                <para>
+                    Po počátečním hledání padla volba na <ulink url="https://www.mongodb.com/">MongoDB</ulink>, dokumentovou
+                    databázi s některými charektistikami relačních technologií. MongoDB mi přišla jako dobrý mezikrok, kde bych
+                    mohl uplatnit své znalosti a zároveň se naučit práci v jiném paradigmatu. Při návrhu entit samotných jsem
+                    se snažil zohledit budoucí použití, aby dotazy na data byly efektivní, přičemž jsem vyšel ze schématu,
+                    jaké bych navrhnul v relační databázi. Pro zachování efektivity jsem musel místy duplikovat data, což
+                    by sice měla být běžná praktika, ale stejně mi to nebylo úplně po chuti a velmi rád bych viděl nějakou
+                    větší fungující aplikaci nad NoSQL databází, abych se z ní mohl poučit. Nerad znovu vymýšlím kolo.
+                </para>
+                <para>
+                    Navržené schéma šlo, s menšími úpravami, použít pro veškerou zamýšlenou funkčnost aplikace, což beru
+                    jako pozitivum. Při dalším vývoji bych se poohlížel po konzultaci s někým zkušenějším, abych dokázal
+                    určit výkonostní dopady.
+                </para>
+            </section>
+            <section>
+                <title>MVC</title>
+                <para>
+                    Aby aplikace zvládla i „trvale udržitelný růst“ jsem se snažil veškerý napsaný kód uklízet do typických
+                    kategorií model, view a controller. To trochu komplikoval fakt, že jsme nepoužili žádný framework, který
+                    by podobné rozdělení podporoval implicitně, ale po přidání malých komponent a některých knihoven,
+                    se nám podařilo aplikaci rozdělit.
+                </para>
+                <para>
+                    Business logika je nyní kompletně oddělená a k předávání závislostí úoužívá (skoro) výhradně konstruktory,
+                    takže je i lehce přenositelná. Servlety představují jednotlivé controllery a jsp soubory používáme jako
+                    šablony. V případech stránek bez jakékoli logiky jsme jsp soubory použili i bez vytvoření odpovídajícího
+                    servletu.
+                </para>
+            </section>
+        </section>
+        <section>
+            <title>Katarína</title>
+            <para>Mojou úlohou bolo vytvoriť frontend pre našu aplikáciu.
+                Keďže bola požiadavka na responzívnu aplikáciu, zvolili sme framework Bootstrap (http://getbootstrap.com/),
+                populárny HTML, CSS a JS framework na vývoj rezponzívnych mobilných projektov na webe.
+            </para>
+            <para>
+                Celý návrh je vo jsp formáte, a teda HTML + CSS, využívajúce prvky javy. Všetka funkcionalita je teda zabezpečená funkciami a servletom,
+                písaným v jave. Každý request je teda najprv spracovaný servletom, a následne presmerovaný na jsp stránku.
+                Sevrlety zabezpečujú ako prihlasovanie a odhlasovanie, tak aj komunikáciu a zapisovanie do databázy, a taktiež výpis dostupných balíčkov
+                a následné značkovanie slov, ktoré som riešila ja.
+            </para>
+            <para>
+                Návrh som sa pokúšala urobiť čo najviac uživateľsky prívetivý, a jednoducho pochopiteľný.
+                Po spustení aplikácie bolo každému uživateľovi umožnené prihlásiť sa, alebo registrovať.
+                Po následnom prihlásení uživateľ obdržal krátku správu, vysvetlujúcu, čo môže robiť, a kde čo nájde.
+            </para>
+            <para>
+                Menu je situované v hornej časti, a počas celej doby, s výnimkou samotného značkovania, sa nemení. Ponúka možnosti značkovania,
+                a teda výpis aktuálne dostupných balíčkov, export rôznych štatistík, nahranie nového balíčka slov, a odhlásenie.
+            </para>
+            <para>
+                Samotná značkovacia časť je urobená tak, aby bola pohodlne obslúžiteľná aj na tablete, a teda obsahuje veľkú plochu na odpovedanie
+                "áno" vpravo zelenej farby, a "nie" vľavo červenej farby. Odpoveď je zaznamenaná kliknutím na danú plochu.
+            </para>
+
+            <para>
+                Wiki stránku projektu sme spracovali priebežne, obsahuje ako rozdelenie úloh, tak dokumentáciu všetkých častí :
+                databáze, štruktúry, prihlasovanie a autentizácia, forma odpovedania, a následné spracovanie, a teda popis šumu a štatistík.
+            </para>
+        </section>
+        <section>
+            <title>Jiří</title>
+            <para>Mym ukolem bylo zpracovani nashromazdenych dat v databazi a jejich transformace do citelne podoby.</para>
+            <para>Nashromasdena data slouzi hlavne pro vypocitani statistik nad ruznymi uzivateli, ale i baliky slov nebo jednotlivymi slovy. Takova data mohou byt dale ruzne interpretovana a vyhodnocovana spravcem aplikace.</para>
+            <para>Jelikoz se jedna o aplikaci anotujici data, neni mozne pocitat statistiky nad vsim stejne. Proto se rozlisuji dve hlasovani uzivatelu. Prvni typ hlasovani probiha nad slovy, u kterych neni znamy jejich typ. V takovem pripade muzeme generovat statistiky trueRatio a duration nad jednotlivymi slovy a baliky. Druhe hlasovani je nad slovy, u kterych dopredu typ zname. Tato slova jsou pridana do baliku slov schvalne kvuli overovani kvality hlasovani jednotlivych uzivatelu. </para>
+            <para>Pokud nejaky uzivatel nema dostatecne kvalitni odpovedi na nami znamych slovech, je mozne jej z hlasovani vyradit nebo nebrat jeho hlasy v potaz. Pro pocitani uspesnosti jednoho uzivatele jsem zvolil vypocet confusion matrix a nad ni jeji zname metriky, zahrnujici: positive a negative F1-score, Recall, Precision, Random Agreement Probability, Cohen's Kappa coefficient, overall, average a mean classification accuracy.</para>
+            <para>Zalezi jen na spravci, jak se k danym statistikam postavi a ktere si vybere ke svym kriteriim.</para>
+            <para>Statistiky jsou ulozeny do formatu XML pres pouziti XStream knihovny. Pouziti je velice jednoduche a primocare.</para>
+            <para>Jednotlive dotazy do databaze jsou realizovany pouzitim MongoDB knihovny pro jazyk Java.</para>
+            <para>Do budoucna by se pro vyssi efektivitu daly statistiky implementovat do databaze, ktera by je on-the-fly prepocitavala. Tento krok by zajistil vyssi efektivitu. Ovsem ani v soucasne verzi neni s efektivitou zadny problem. </para>
+        </section>
+    </chapter>
+</book>
